@@ -6,7 +6,7 @@
   </div>
   <div class="produk-semua" id="produk_semua">
     <p class="judul">
-      Daftar Produk
+      Semua Produk
     </p>
     <div class="row">
     <?php 
