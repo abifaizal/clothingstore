@@ -1,0 +1,94 @@
+ul.treeview-menu {
+	padding: 7px 5px;
+}
+
+footer.main-footer {
+	font-size: 12px;
+	padding: 5px;
+}
+
+.card {
+  padding: 5px 2px;
+	width: 100%;
+	height: 100%;
+}
+.card img {
+	width: 100%;
+	height: 100%;
+}
+
+.modal-body .kolom-infoproduk {
+	padding: 5px 2px;
+}
+
+.tabel-detailpegawai th, .tabel-detailpegawai td {
+  padding: 5px 0;
+  vertical-align: top;
+}
+.tabel-detailpegawai th {
+  width: 25%;
+  min-width: 25%;
+  padding-right: 15px;
+}
+.tabel-detailpegawai td {
+  width: 75%;
+  min-width: 75%;
+}
+
+.tabel-detail-keranjang {
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+.tabel-detail-keranjang th, .tabel-detail-keranjang td {
+  padding: 3px 3px 3px 8px;
+}
+.tabel-detail-keranjang-produk {
+  font-size: 12px;
+}
+.tabel-detail-keranjang-produk .td-foto {
+  width: 81px;
+}
+.tabel-detail-keranjang-produk .foto-produk {
+  max-width: 65px;
+  max-height: 65px;
+}
+.tabel-detail-keranjang-produk img {
+  max-width: 65px;
+  max-height: 65px;
+}
+
+.box-transaksi .bagian-atas label {
+  font-size: 12px;
+  font-weight: normal;
+}
+.box-transaksi .bagian-atas span {
+  font-size: 16px;
+  font-weight: bold;
+}
+.box-transaksi .bagian-bawah label, .box-transaksi .bagian-bayar label {
+  font-size: 12px;
+}
+.box-transaksi .bagian-bawah .form-produk .form-group {
+  margin-bottom: 10px;
+}
+.box-transaksi .bagian-bawah table {
+  font-size: 12px;
+}
+.box-transaksi .bagian-bayar .total-trans {
+  vertical-align: bottom;
+  font-size: 20px; 
+  font-weight: bold;
+}
+
+/*.foto-produk {
+  width: 35px;
+  height: 35px;
+}*/
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: @screen-md-min) 
+{
+	.modal-body .kolom-infoproduk {
+		padding: 0px 0px;
+	}
+}
