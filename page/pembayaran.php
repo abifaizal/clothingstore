@@ -10,7 +10,7 @@
 <nav aria-label="breadcrumb">
 	<ol class="breadcrumb">
 		<li class="breadcrumb-item"><a href="./">Home</a></li>
-		<li class="breadcrumb-item"><a href="?page=pemesanan">Pemesanan</a></li>
+		<li class="breadcrumb-item"><a href="?page=pemesanan">Order</a></li>
 		<li class="breadcrumb-item active" aria-current="page">Pembayaran</li>
 	</ol>
 </nav>

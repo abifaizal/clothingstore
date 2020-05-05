@@ -9,7 +9,7 @@
 	<ol class="breadcrumb">
 		<li class="breadcrumb-item"><a href="./">Home</a></li>
 		<li class="breadcrumb-item"><a href="?page=keranjang">Keranjang</a></li>
-		<li class="breadcrumb-item active" aria-current="page">Pemesanan</li>
+		<li class="breadcrumb-item active" aria-current="page">Order</li>
 	</ol>
 </nav>
 
