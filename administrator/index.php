@@ -17,8 +17,6 @@
 	  <link rel="stylesheet" href="assets/adminLTE/bower_components/bootstrap/dist/css/bootstrap.min.css">
 	  <!-- Font Awesome -->
 	  <link rel="stylesheet" href="assets/adminLTE/bower_components/font-awesome/css/font-awesome.min.css">
-	  <!-- Ionicons -->
-	  <link rel="stylesheet" href="assets/adminLTE/bower_components/Ionicons/css/ionicons.min.css">
 	  <!-- DataTables -->
 	  <link rel="stylesheet" href="assets/adminLTE/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
 	  <!-- Theme style -->
@@ -213,10 +211,6 @@
 	</div>
 	<!-- ./wrapper -->
 
-	<!-- SlimScroll -->
-	<script src="assets/adminLTE/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-	<!-- FastClick -->
-	<script src="assets/adminLTE/bower_components/fastclick/lib/fastclick.js"></script>
 	<!-- AdminLTE App -->
 	<script src="assets/adminLTE/dist/js/adminlte.min.js"></script>
 	<!-- AdminLTE for demo purposes -->
