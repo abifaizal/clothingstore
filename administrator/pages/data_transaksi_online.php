@@ -130,8 +130,10 @@
           					<?php 
           						if($data_penjualan['status_penjualan'] == 'Menunggu Verifikasi') {
           					?>
-          					<button class="btn btn-xs btn-info" title="verifikasi pembayaran"><i class="fa fa-check"></i></button>
-          					<?php } ?>
+          					 <button class="btn btn-xs btn-warning tmb_verifikasi" id="<?php echo $data_penjualan['no_penjualan']; ?>" title="verifikasi pembayaran" data-toggle="modal" data-target="#modal-verifikasi" data-status ="<?php echo $data_penjualan['status_penjualan']; ?>" data-total = "<?php echo number_format($total_akhir); ?>"><i class="fa fa-check"></i></button>
+          					<?php } else if($data_penjualan['lunas_penjualan'] == 'Lunas') { ?>
+                      <button class="btn btn-xs btn-info tmb_verifikasi" id="<?php echo $data_penjualan['no_penjualan']; ?>" title="detail pembayaran" data-toggle="modal" data-target="#modal-verifikasi" data-status ="<?php echo $data_penjualan['status_penjualan']; ?>" data-total = "<?php echo number_format($total_akhir); ?>"><i class="fa fa-ticket"></i></button>
+                    <?php } ?>
           					<button class="btn btn-xs btn-danger" title="hapus"><i class="fa fa-trash"></i></button>
           				</td>
           			</tr>
@@ -262,7 +264,13 @@
           						>
           						<i class="fa fa-eye"></i>
           					</button>
-          					<button class="btn btn-xs btn-info" title="verifikasi pembayaran"><i class="fa fa-check"></i></button>
+                    <?php 
+                      if($data_penjualan['status_penjualan'] == 'Menunggu Verifikasi') {
+                    ?>
+          					 <button class="btn btn-xs btn-warning tmb_verifikasi" id="<?php echo $data_penjualan['no_penjualan']; ?>" title="verifikasi pembayaran" data-toggle="modal" data-target="#modal-verifikasi" data-status ="<?php echo $data_penjualan['status_penjualan']; ?>" data-total = "<?php echo number_format($total_akhir); ?>"><i class="fa fa-check"></i></button>
+                    <?php } else { ?>
+                      <button class="btn btn-xs btn-info tmb_verifikasi" id="<?php echo $data_penjualan['no_penjualan']; ?>" title="detail pembayaran" data-toggle="modal" data-target="#modal-verifikasi" data-status ="<?php echo $data_penjualan['status_penjualan']; ?>" data-total = "<?php echo number_format($total_akhir); ?>"><i class="fa fa-ticket"></i></button>
+                    <?php } ?>
           					<button class="btn btn-xs btn-danger" title="hapus"><i class="fa fa-trash"></i></button>
           				</td>
           			</tr>
@@ -371,6 +379,67 @@
   <!-- /.modal-dialog -->
 </div>
 
+<!-- MODAL VERIFIKASI -->
+<div class="modal fade" id="modal-verifikasi">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title"><span id="judul_modalverifikasi"></span> <small class="" id="dt_status"></small></h4>
+      </div>
+      <div class="modal-body">
+        <div class="callout callout-danger" style="padding: 12px;" id="callout-verifikasi">
+          <p><i class="fa fa-bullhorn"></i> Pastikan jumlah transfer telah sesuai dengan jumlah yang harus dibayar yaitu sebesar Rp<span id="dt_totalakhir"></span></p>
+        </div>
+        <table class="table table-bordered" style="font-size: 12px;">
+          <tr>
+            <th width="35%">Nama Pengirim</th>
+            <td id="dt_namapengirim">Jamal</td>
+          </tr>
+          <tr>
+            <th>Waktu Transfer</th>
+            <td id="dt_waktutransfer">Jamal</td>
+          </tr>
+          <tr>
+            <th>Bank Transfer</th>
+            <td id="dt_banktransfer">Jamal</td>
+          </tr>
+          <tr>
+            <th>Bukti Transfer</th>
+            <td>
+              <button type="button" style="padding: 0; border: 0;" data-toggle="modal" data-target="#modal-detailgambar">
+                <img id="dt_buktitransfer" src="" class="card-img-top" alt="..." width="90px">
+              </button>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="modal-footer" id="modal-footer_verifikasi">
+        <button type="button" class="btn btn-primary tmb_verifikasipembayaran" id="">Verifikasi Pembayaran ini</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+<!-- MODAL DETAIL GAMBAR BUKTI TRANSFER -->
+<div class="modal fade" id="modal-detailgambar">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-body" style="padding: 0px;">
+        <img id="dt_buktitransferbesar" src="" class="card-img-top" alt="..." width="100%">
+      </div>
+      <div class="modal-footer" style="padding: 10px 15px;">
+        <button type="button" class="btn btn-default" data-dismiss="modal" style="font-size: 12px;">Tutup</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
 <script>
 	$(document).on("click", ".tmb_detailtrans", function() {
     var no_penjualan = $(this).attr('id');
@@ -429,5 +498,79 @@
         $("#dt_totalkrj").text(total);
       }
     });
+  })
+
+  $(document).on("click", ".tmb_verifikasi", function() {
+    var no_penjualan = $(this).attr('id');
+    var status = $(this).data('status');
+    var total = $(this).data('total');
+
+    $("#dt_status").text(status);
+    $("#dt_totalakhir").text(total);
+    $(".tmb_verifikasipembayaran").attr('id', no_penjualan);
+
+    $.ajax({
+      type: "GET",
+      url: "ajax/detail.php?page=transfer",
+      data: "no_penjualan="+no_penjualan,
+      success : function(data_transfer) {
+        var objData = JSON.parse(data_transfer);
+        // console.log(objData);
+        $.each(objData, function(key,val){
+          $("#dt_namapengirim").text(val.nama_pengirim);
+          $("#dt_waktutransfer").text(val.tgl_transfer+" ["+val.jam_transfer+"]");
+          $("#dt_banktransfer").text(val.bank_transfer);
+          $("#dt_buktitransfer").attr('src', '../img/bukti_transfer/'+val.foto_bukti);
+          $("#dt_buktitransferbesar").attr('src', '../img/bukti_transfer/'+val.foto_bukti);
+        })
+      }
+    });
+
+    if(status == 'Verifikasi') {
+      $("#modal-footer_verifikasi").hide();
+      $("#callout-verifikasi").hide();
+      $("#dt_status").attr('class', 'label bg-purple');
+      $("#judul_modalverifikasi").text('Detail Pembayaran');
+    } else {
+      $("#modal-footer_verifikasi").show();
+      $("#callout-verifikasi").show();
+      $("#dt_status").attr('class', 'label bg-yellow');
+      $("#judul_modalverifikasi").text('Verifikasi Pembayaran');
+    }
+  })
+
+  $(document).on("click", ".tmb_verifikasipembayaran", function() {
+    var no_penjualan = $(this).attr('id');
+
+    Swal.fire({
+        title: 'Verifikasi',
+        text: 'anda yakin akan memverifikasi pembayaran dan memastikan transaksi '+no_penjualan+' telah lunas, anda tidak dapat mengubah status verifikasi ini lagi',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya'
+      }).then((verifikasi) => {
+        if (verifikasi.value) {
+          $.ajax({
+            type: "GET",
+            url: "ajax/detail.php?page=ubahverifikasi",
+            data: "no_penjualan="+no_penjualan,
+            success:function(ubahverifikasi) {
+              Swal.fire({
+                title: 'Berhasil',
+                text: 'Pembayaran ini telah diverifikasi',
+                type: 'success',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'OK'
+              }).then((ok) => {
+                if (ok.value) {
+                  location.reload();
+                }
+              })
+            }
+          })
+        }
+      })
   })
 </script>
