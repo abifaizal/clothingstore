@@ -204,7 +204,7 @@
 
 	  <footer class="main-footer">
 	    <div class="pull-right hidden-xs">
-	      <b>Built By : Abdul Kamal Mukmin</b>
+	      <b>Built By : Faizal Nur Abidin</b>
 	    </div>
 	    <strong>Copyright &copy; 2020 Black Sabath Distro.</strong> Kebumen
 	  </footer>
