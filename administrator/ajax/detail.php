@@ -49,4 +49,22 @@
     }
     echo json_encode($data);
   }
+  else if(@$_GET['page']=='transfer')
+  {
+    $no_penjualan = @mysqli_real_escape_string($conn, $_GET['no_penjualan']);
+    $query_transfer = "SELECT * FROM tbl_buktitransfer WHERE no_penjualan = '$no_penjualan'";
+    $sql_transfer = mysqli_query($conn, $query_transfer) or die ($conn->error);
+    $data = array();
+
+    $detail = mysqli_fetch_array($sql_transfer);
+    $data[] = $detail;
+
+    echo json_encode($data);
+  }
+  else if(@$_GET['page']=='ubahverifikasi')
+  {
+    $no_penjualan = @mysqli_real_escape_string($conn, $_GET['no_penjualan']);
+    $query_ubahverifikasi = "UPDATE tbl_penjualan SET lunas_penjualan = 'Lunas', status_penjualan = 'Verifikasi' WHERE no_penjualan = '$no_penjualan'";
+    mysqli_query($conn, $query_ubahverifikasi) or die ($conn->error);
+  }
 ?>
