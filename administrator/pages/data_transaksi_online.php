@@ -416,7 +416,10 @@
         </table>
       </div>
       <div class="modal-footer" id="modal-footer_verifikasi">
-        <button type="button" class="btn btn-primary tmb_verifikasipembayaran" id="">Verifikasi Pembayaran ini</button>
+        <button type="button" class="btn btn-warning tmb_verifikasipembayaran" id="">Verifikasi Pembayaran ini</button>
+      </div>
+      <div class="modal-footer" id="modal-footer_kirimpaket">
+        <button type="button" class="btn btn-primary tmb_kirimpaket" id="">Kirim Paket Transaksi ini</button>
       </div>
     </div>
     <!-- /.modal-content -->
@@ -508,6 +511,7 @@
     $("#dt_status").text(status);
     $("#dt_totalakhir").text(total);
     $(".tmb_verifikasipembayaran").attr('id', no_penjualan);
+    $(".tmb_kirimpaket").attr('id', no_penjualan);
 
     $.ajax({
       type: "GET",
@@ -526,17 +530,26 @@
       }
     });
 
+    $("#judul_modalverifikasi").text('Detail Pembayaran');
+    $("#modal-footer_verifikasi").hide();
+    $("#modal-footer_kirimpaket").hide();
+    $("#callout-verifikasi").hide();
     if(status == 'Verifikasi') {
       $("#modal-footer_verifikasi").hide();
+      $("#modal-footer_kirimpaket").show();
       $("#callout-verifikasi").hide();
       $("#dt_status").attr('class', 'label bg-purple');
-      $("#judul_modalverifikasi").text('Detail Pembayaran');
-    } else {
+    } else if(status == 'Menunggu Verifikasi') {
       $("#modal-footer_verifikasi").show();
+      $("#modal-footer_kirimpaket").hide();
       $("#callout-verifikasi").show();
       $("#dt_status").attr('class', 'label bg-yellow');
       $("#judul_modalverifikasi").text('Verifikasi Pembayaran');
-    }
+    } else if(status == 'Dikirim') {
+      $("#dt_status").attr('class', 'label bg-blue');
+    } else if(status == 'Selesai') {
+      $("#dt_status").attr('class', 'label bg-green');
+    } 
   })
 
   $(document).on("click", ".tmb_verifikasipembayaran", function() {
@@ -572,5 +585,10 @@
           })
         }
       })
+  })
+
+  $(document).on("click", ".tmb_kirimpaket", function() {
+    var no_penjualan = $(this).attr('id');
+    window.location = '?page=form_pengiriman&notransaksi='+no_penjualan;
   })
 </script>
