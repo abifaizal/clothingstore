@@ -135,7 +135,7 @@
 	            <i class="fa fa-shopping-cart"></i> <span>Keranjang</span>
 	          </a>
 	        </li>
-	        <li class="treeview <?php if(@$_GET['page']=='data_transaksi_offline' || @$_GET['page']=='data_transaksi_online' || @$_GET['page']=='transaksi_offline') {echo 'active';} ?>">
+	        <li class="treeview <?php if(@$_GET['page']=='data_transaksi_offline' || @$_GET['page']=='data_transaksi_online' || @$_GET['page']=='transaksi_offline' || @$_GET['page']=='form_pengiriman') {echo 'active';} ?>">
 	          <a href="#">
 	            <i class="fa fa-money"></i> <span>Transaksi Penjualan</span>
 	            <span class="pull-right-container">
@@ -148,7 +148,7 @@
 	                <i class="fa fa-circle-o"></i> Offline
 	              </a>
 	            </li>
-	            <li class="<?php if(@$_GET['page']=='data_transaksi_online') {echo 'active';} ?>">
+	            <li class="<?php if(@$_GET['page']=='data_transaksi_online' || @$_GET['page']=='form_pengiriman') {echo 'active';} ?>">
 	              <a href="?page=data_transaksi_online">
 	                <i class="fa fa-circle-o"></i> Online
 	              </a>
@@ -197,6 +197,8 @@
 	        include "pages/transaksi_offline.php";
 	      } else if(@$_GET['page']=='data_transaksi_online') {
 	        include "pages/data_transaksi_online.php";
+	      } else if(@$_GET['page']=='form_pengiriman') {
+	        include "pages/form_pengiriman.php";
 	      } 
 	     ?>
 	  </div>
@@ -204,7 +206,7 @@
 
 	  <footer class="main-footer">
 	    <div class="pull-right hidden-xs">
-	      <b>Built By : Faizal Nur Abidin</b>
+	      <!-- <b>Built By : Abdul Kamal Mukmin</b> -->
 	    </div>
 	    <strong>Copyright &copy; 2020 Black Sabath Distro.</strong> Kebumen
 	  </footer>
