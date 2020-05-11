@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 06 Bulan Mei 2020 pada 10.08
+-- Waktu pembuatan: 11 Bulan Mei 2020 pada 17.47
 -- Versi server: 10.4.11-MariaDB
 -- Versi PHP: 7.4.4
 
@@ -42,7 +42,8 @@ CREATE TABLE `tbl_buktitransfer` (
 --
 
 INSERT INTO `tbl_buktitransfer` (`id_transfer`, `nama_pengirim`, `tgl_transfer`, `jam_transfer`, `bank_transfer`, `foto_bukti`, `no_penjualan`) VALUES
-(2, 'Jamal ', '2020-04-29', '14:13:32', 'Mandiri', 'bkt-1588407873.jpg', 'PJL/20200424/002');
+(2, 'Jamal Mustafa', '2020-04-29', '14:13:32', 'Mandiri', 'bkt-1588407873.jpg', 'PJL/20200424/002'),
+(3, 'Rangga Putra Rizdilla', '2020-05-09', '10:15:08', 'BRI', 'bkt-1589034138.jpg', 'PJL/20200504/001');
 
 -- --------------------------------------------------------
 
@@ -75,6 +76,31 @@ INSERT INTO `tbl_datapenerima` (`id_datapenerima`, `nama_penerima`, `nohp_peneri
 (9, 'Jamal', '085337337337', 'Jl Angkasa Raya Bimasakti Antariksa No 17, Kotagede', '55160', 'DI Yogyakarta', 'Yogyakarta', 'jne', 'REG', '1-2', 15000, 850, 'PJL/20200424/002', '2020033001'),
 (10, 'Aslan Kemal', '085333417341', 'Jl Janti Kusuma No 17, Gambiran, Semarang', '54327', 'Jawa Tengah', 'Semarang', 'pos', 'Paket Kilat Khusus', '1-2 HARI', 12000, 200, 'PJL/20200427/001', '2020033001'),
 (11, 'Rangga Ika Putra', '088207303222', 'Jl. Pancar Raya 13, Karang Baru, Kota Mataram, Nusa Tenggara Barat.', '40182', 'Nusa Tenggara Barat (NTB)', 'Mataram', 'pos', 'Paket Kilat Khusus', '3-5 HARI', 35000, 350, 'PJL/20200504/001', '2020032901');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `tbl_datapengiriman`
+--
+
+CREATE TABLE `tbl_datapengiriman` (
+  `id_pengiriman` int(11) NOT NULL,
+  `no_resi` varchar(20) NOT NULL,
+  `jasa_kirim` varchar(20) NOT NULL,
+  `tgl_kirim` date NOT NULL,
+  `lama_kirim` varchar(10) NOT NULL,
+  `catatan_kirim` text DEFAULT NULL,
+  `tgl_record` date NOT NULL,
+  `no_penjualan` varchar(16) NOT NULL,
+  `id_pgw` varchar(6) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `tbl_datapengiriman`
+--
+
+INSERT INTO `tbl_datapengiriman` (`id_pengiriman`, `no_resi`, `jasa_kirim`, `tgl_kirim`, `lama_kirim`, `catatan_kirim`, `tgl_record`, `no_penjualan`, `id_pgw`) VALUES
+(3, 'EE200509026YK', 'Pos Indonesia', '2020-05-09', '1-2', 'Segera Konfirmasi Kami jika Paket Telah Diterima, Terima Kasih Bro.', '2020-05-11', 'PJL/20200424/002', 'PGW001');
 
 -- --------------------------------------------------------
 
@@ -168,7 +194,7 @@ CREATE TABLE `tbl_penjualan` (
   `bayar_penjualan` int(11) NOT NULL,
   `metode_penjualan` enum('Offline','Online') NOT NULL,
   `lunas_penjualan` enum('Lunas','Pending') NOT NULL,
-  `status_penjualan` enum('Belum Bayar','Menunggu Verifikasi','Verifikasi','Dikirm','Selesai') NOT NULL,
+  `status_penjualan` enum('Belum Bayar','Menunggu Verifikasi','Verifikasi','Dikirim','Selesai') NOT NULL,
   `kode_plg` varchar(10) DEFAULT NULL,
   `id_pgw` varchar(6) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -183,10 +209,10 @@ INSERT INTO `tbl_penjualan` (`no_penjualan`, `tgl_penjualan`, `jam_penjualan`, `
 ('PJL/20200418/001', '2020-04-18', '18:42:07', 120000, 0, 120000, 'Offline', 'Lunas', 'Selesai', NULL, 'PGW001'),
 ('PJL/20200418/002', '2020-04-18', '23:47:06', 90000, 0, 100000, 'Offline', 'Lunas', 'Selesai', NULL, 'PGW001'),
 ('PJL/20200424/001', '2020-04-24', '13:00:20', 114000, 5, 120000, 'Offline', 'Lunas', 'Selesai', NULL, 'PGW001'),
-('PJL/20200424/002', '2020-04-24', '14:18:11', 317000, 0, 0, 'Online', 'Pending', 'Menunggu Verifikasi', '2020033001', NULL),
+('PJL/20200424/002', '2020-04-24', '14:18:11', 317000, 0, 0, 'Online', 'Lunas', 'Selesai', '2020033001', NULL),
 ('PJL/20200426/001', '2020-04-26', '15:08:28', 90000, 0, 100000, 'Offline', 'Lunas', 'Selesai', NULL, 'PGW001'),
 ('PJL/20200427/001', '2020-04-27', '16:14:00', 120000, 0, 0, 'Online', 'Pending', 'Belum Bayar', '2020033001', NULL),
-('PJL/20200504/001', '2020-05-04', '15:31:08', 155000, 0, 0, 'Online', 'Pending', 'Belum Bayar', '2020032901', NULL);
+('PJL/20200504/001', '2020-05-04', '15:31:08', 155000, 0, 0, 'Online', 'Pending', 'Menunggu Verifikasi', '2020032901', NULL);
 
 -- --------------------------------------------------------
 
@@ -318,6 +344,12 @@ ALTER TABLE `tbl_datapenerima`
   ADD PRIMARY KEY (`id_datapenerima`);
 
 --
+-- Indeks untuk tabel `tbl_datapengiriman`
+--
+ALTER TABLE `tbl_datapengiriman`
+  ADD PRIMARY KEY (`id_pengiriman`);
+
+--
 -- Indeks untuk tabel `tbl_keranjang`
 --
 ALTER TABLE `tbl_keranjang`
@@ -373,7 +405,7 @@ ALTER TABLE `tbl_ukuranprd`
 -- AUTO_INCREMENT untuk tabel `tbl_buktitransfer`
 --
 ALTER TABLE `tbl_buktitransfer`
-  MODIFY `id_transfer` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_transfer` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT untuk tabel `tbl_datapenerima`
@@ -382,10 +414,16 @@ ALTER TABLE `tbl_datapenerima`
   MODIFY `id_datapenerima` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
+-- AUTO_INCREMENT untuk tabel `tbl_datapengiriman`
+--
+ALTER TABLE `tbl_datapengiriman`
+  MODIFY `id_pengiriman` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT untuk tabel `tbl_keranjangdetail`
 --
 ALTER TABLE `tbl_keranjangdetail`
-  MODIFY `id_krjdt` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id_krjdt` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT untuk tabel `tbl_penjualandetail`
