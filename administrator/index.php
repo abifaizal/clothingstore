@@ -135,7 +135,7 @@
 	            <i class="fa fa-shopping-cart"></i> <span>Keranjang</span>
 	          </a>
 	        </li>
-	        <li class="treeview <?php if(@$_GET['page']=='data_transaksi_offline' || @$_GET['page']=='data_transaksi_online' || @$_GET['page']=='transaksi_offline' || @$_GET['page']=='form_pengiriman') {echo 'active';} ?>">
+	        <li class="treeview <?php if(@$_GET['page']=='data_transaksi_offline' || @$_GET['page']=='data_transaksi_online' || @$_GET['page']=='transaksi_offline' || @$_GET['page']=='form_pengiriman' || @$_GET['page']=='form_editpengiriman') {echo 'active';} ?>">
 	          <a href="#">
 	            <i class="fa fa-money"></i> <span>Transaksi Penjualan</span>
 	            <span class="pull-right-container">
@@ -148,7 +148,7 @@
 	                <i class="fa fa-circle-o"></i> Offline
 	              </a>
 	            </li>
-	            <li class="<?php if(@$_GET['page']=='data_transaksi_online' || @$_GET['page']=='form_pengiriman') {echo 'active';} ?>">
+	            <li class="<?php if(@$_GET['page']=='data_transaksi_online' || @$_GET['page']=='form_pengiriman' || @$_GET['page']=='form_editpengiriman') {echo 'active';} ?>">
 	              <a href="?page=data_transaksi_online">
 	                <i class="fa fa-circle-o"></i> Online
 	              </a>
@@ -199,6 +199,8 @@
 	        include "pages/data_transaksi_online.php";
 	      } else if(@$_GET['page']=='form_pengiriman') {
 	        include "pages/form_pengiriman.php";
+	      } else if(@$_GET['page']=='form_editpengiriman') {
+	        include "pages/form_editpengiriman.php";
 	      } 
 	     ?>
 	  </div>
