@@ -134,7 +134,12 @@
           					<?php } else if($data_penjualan['lunas_penjualan'] == 'Lunas') { ?>
                       <button class="btn btn-xs btn-info tmb_verifikasi" id="<?php echo $data_penjualan['no_penjualan']; ?>" title="detail pembayaran" data-toggle="modal" data-target="#modal-verifikasi" data-status ="<?php echo $data_penjualan['status_penjualan']; ?>" data-total = "<?php echo number_format($total_akhir); ?>"><i class="fa fa-ticket"></i></button>
                     <?php } ?>
-          					<button class="btn btn-xs btn-danger" title="hapus"><i class="fa fa-trash"></i></button>
+                    <?php 
+                      if($data_penjualan['status_penjualan'] == 'Dikirim' || $data_penjualan['status_penjualan'] == 'Selesai') {
+                    ?>
+                     <button class="btn btn-xs btn-primary tmb_detailpengiriman" id="<?php echo $data_penjualan['no_penjualan']; ?>" title="detail pengiriman" data-toggle="modal" data-target="#modal-pengiriman" data-status ="<?php echo $data_penjualan['status_penjualan']; ?>"><i class="fa fa-truck"></i></button>
+                    <?php } ?>
+          					<button class="btn btn-xs btn-danger tmb-hapus" id="<?php echo $data_penjualan['no_penjualan']; ?>" title="hapus"><i class="fa fa-trash"></i></button>
           				</td>
           			</tr>
           	<?php } ?>
@@ -197,7 +202,7 @@
           						>
           						<i class="fa fa-eye"></i>
           					</button>
-          					<button class="btn btn-xs btn-danger" title="hapus"><i class="fa fa-trash"></i></button>
+          					<button class="btn btn-xs btn-danger tmb-hapus" id="<?php echo $data_penjualan['no_penjualan']; ?>" title="hapus"><i class="fa fa-trash"></i></button>
           				</td>
           			</tr>
           	<?php } ?>
@@ -271,7 +276,7 @@
                     <?php } else { ?>
                       <button class="btn btn-xs btn-info tmb_verifikasi" id="<?php echo $data_penjualan['no_penjualan']; ?>" title="detail pembayaran" data-toggle="modal" data-target="#modal-verifikasi" data-status ="<?php echo $data_penjualan['status_penjualan']; ?>" data-total = "<?php echo number_format($total_akhir); ?>"><i class="fa fa-ticket"></i></button>
                     <?php } ?>
-          					<button class="btn btn-xs btn-danger" title="hapus"><i class="fa fa-trash"></i></button>
+          					<button class="btn btn-xs btn-danger tmb-hapus" id="<?php echo $data_penjualan['no_penjualan']; ?>" title="hapus"><i class="fa fa-trash"></i></button>
           				</td>
           			</tr>
           	<?php } ?>
@@ -280,11 +285,133 @@
         </div>
         <!-- TAB DIKIRIM -->
         <div class="tab-pane table-responsive no-padding" id="tab_dikirim">
-          tab 4
+          <table class="table" style="font-size: 12px;">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>No Penjualan</th>
+                <th>Waktu</th>
+                <th>Pelanggan</th>
+                <th>Kota</th>
+                <th>Status</th>
+                <th>Total</th>
+                <th>Opsi</th>
+              </tr>
+            </thead>
+            <tbody>
+            <?php 
+              $nomor = 1;
+              $query_penjualan = "SELECT * FROM tbl_penjualan INNER JOIN tbl_datapenerima ON tbl_penjualan.no_penjualan = tbl_datapenerima.no_penjualan INNER JOIN tbl_pelanggan ON tbl_penjualan.kode_plg = tbl_pelanggan.kode_plg WHERE tbl_penjualan.metode_penjualan = 'Online' AND status_penjualan = 'Dikirim'";
+              $sql_penjualan = mysqli_query($conn, $query_penjualan) or die ($conn->error);
+              while($data_penjualan = mysqli_fetch_array($sql_penjualan)){
+            ?>
+                <tr>
+                  <td><?php echo $nomor++; ?></td>
+                  <td><?php echo $data_penjualan['no_penjualan']; ?></td>
+                  <td><?php echo $data_penjualan['tgl_penjualan']; ?> [<?php echo $data_penjualan['jam_penjualan']; ?>]</td>
+                  <td><?php echo $data_penjualan['username_plg']; ?></td>
+                  <td><?php echo $data_penjualan['kabkota_penerima']; ?></td>
+                  <td>
+                    <small class="label bg-blue">
+                      <?php echo $data_penjualan['status_penjualan']; ?>
+                    </small>
+                  </td>
+                  <?php 
+                    $total_penjualan = $data_penjualan['total_penjualan'];
+                    $ongkir = $data_penjualan['ongkir_paket'];
+                    $total_akhir = $total_penjualan + $ongkir;
+                  ?>
+                  <td><?php echo $total_penjualan; ?></td>
+                  <td>
+                    <button class="btn btn-xs btn-success tmb_detailtrans" id="<?php echo $data_penjualan['no_penjualan']; ?>" title="detail transaksi" data-toggle="modal" data-target="#modal-detail_transaksi"
+                      data-diskonpenjualan = "<?php echo $data_penjualan['diskon_penjualan']; ?>"
+                      data-totalpenjualan = "<?php echo $data_penjualan['total_penjualan']; ?>"
+                      data-nama_penerima = "<?php echo $data_penjualan['nama_penerima']; ?>"
+                      data-nohp_penerima = "<?php echo $data_penjualan['nohp_penerima']; ?>"
+                      data-alamat_penerima = "<?php echo $data_penjualan['alamat_penerima']; ?>"
+                      data-kode_pos = "<?php echo $data_penjualan['kode_pos']; ?>"
+                      data-provinsi_penerima = "<?php echo $data_penjualan['provinsi_penerima']; ?>"
+                      data-kabkota_penerima = "<?php echo $data_penjualan['kabkota_penerima']; ?>"
+                      data-kurir_pengiriman = "<?php echo $data_penjualan['kurir_pengiriman']; ?>"
+                      data-paket_pengiriman = "<?php echo $data_penjualan['paket_pengiriman']; ?>"
+                      data-ongkir_paket = "<?php echo $data_penjualan['ongkir_paket']; ?>"
+                      data-berat_kiriman = "<?php echo $data_penjualan['berat_kiriman']; ?>"
+                      >
+                      <i class="fa fa-eye"></i>
+                    </button>
+                    <button class="btn btn-xs btn-info tmb_verifikasi" id="<?php echo $data_penjualan['no_penjualan']; ?>" title="detail pembayaran" data-toggle="modal" data-target="#modal-verifikasi" data-status ="<?php echo $data_penjualan['status_penjualan']; ?>" data-total = "<?php echo number_format($total_akhir); ?>"><i class="fa fa-ticket"></i></button>
+                    <button class="btn btn-xs btn-primary tmb_detailpengiriman" id="<?php echo $data_penjualan['no_penjualan']; ?>" title="detail pengiriman" data-toggle="modal" data-target="#modal-pengiriman" data-status ="<?php echo $data_penjualan['status_penjualan']; ?>"><i class="fa fa-truck"></i></button>
+                    <button class="btn btn-xs btn-danger tmb-hapus" id="<?php echo $data_penjualan['no_penjualan']; ?>" title="hapus"><i class="fa fa-trash"></i></button>
+                  </td>
+                </tr>
+            <?php } ?>
+            </tbody>
+          </table>
         </div>
         <!-- TAB SELESAI -->
         <div class="tab-pane table-responsive no-padding" id="tab_selesai">
-          tab 5
+          <table class="table" style="font-size: 12px;">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>No Penjualan</th>
+                <th>Waktu</th>
+                <th>Pelanggan</th>
+                <th>Kota</th>
+                <th>Status</th>
+                <th>Total</th>
+                <th>Opsi</th>
+              </tr>
+            </thead>
+            <tbody>
+            <?php 
+              $nomor = 1;
+              $query_penjualan = "SELECT * FROM tbl_penjualan INNER JOIN tbl_datapenerima ON tbl_penjualan.no_penjualan = tbl_datapenerima.no_penjualan INNER JOIN tbl_pelanggan ON tbl_penjualan.kode_plg = tbl_pelanggan.kode_plg WHERE tbl_penjualan.metode_penjualan = 'Online' AND status_penjualan = 'Selesai'";
+              $sql_penjualan = mysqli_query($conn, $query_penjualan) or die ($conn->error);
+              while($data_penjualan = mysqli_fetch_array($sql_penjualan)){
+            ?>
+                <tr>
+                  <td><?php echo $nomor++; ?></td>
+                  <td><?php echo $data_penjualan['no_penjualan']; ?></td>
+                  <td><?php echo $data_penjualan['tgl_penjualan']; ?> [<?php echo $data_penjualan['jam_penjualan']; ?>]</td>
+                  <td><?php echo $data_penjualan['username_plg']; ?></td>
+                  <td><?php echo $data_penjualan['kabkota_penerima']; ?></td>
+                  <td>
+                    <small class="label bg-green">
+                      <?php echo $data_penjualan['status_penjualan']; ?>
+                    </small>
+                  </td>
+                  <?php 
+                    $total_penjualan = $data_penjualan['total_penjualan'];
+                    $ongkir = $data_penjualan['ongkir_paket'];
+                    $total_akhir = $total_penjualan + $ongkir;
+                  ?>
+                  <td><?php echo $total_penjualan; ?></td>
+                  <td>
+                    <button class="btn btn-xs btn-success tmb_detailtrans" id="<?php echo $data_penjualan['no_penjualan']; ?>" title="detail transaksi" data-toggle="modal" data-target="#modal-detail_transaksi"
+                      data-diskonpenjualan = "<?php echo $data_penjualan['diskon_penjualan']; ?>"
+                      data-totalpenjualan = "<?php echo $data_penjualan['total_penjualan']; ?>"
+                      data-nama_penerima = "<?php echo $data_penjualan['nama_penerima']; ?>"
+                      data-nohp_penerima = "<?php echo $data_penjualan['nohp_penerima']; ?>"
+                      data-alamat_penerima = "<?php echo $data_penjualan['alamat_penerima']; ?>"
+                      data-kode_pos = "<?php echo $data_penjualan['kode_pos']; ?>"
+                      data-provinsi_penerima = "<?php echo $data_penjualan['provinsi_penerima']; ?>"
+                      data-kabkota_penerima = "<?php echo $data_penjualan['kabkota_penerima']; ?>"
+                      data-kurir_pengiriman = "<?php echo $data_penjualan['kurir_pengiriman']; ?>"
+                      data-paket_pengiriman = "<?php echo $data_penjualan['paket_pengiriman']; ?>"
+                      data-ongkir_paket = "<?php echo $data_penjualan['ongkir_paket']; ?>"
+                      data-berat_kiriman = "<?php echo $data_penjualan['berat_kiriman']; ?>"
+                      >
+                      <i class="fa fa-eye"></i>
+                    </button>
+                    <button class="btn btn-xs btn-info tmb_verifikasi" id="<?php echo $data_penjualan['no_penjualan']; ?>" title="detail pembayaran" data-toggle="modal" data-target="#modal-verifikasi" data-status ="<?php echo $data_penjualan['status_penjualan']; ?>" data-total = "<?php echo number_format($total_akhir); ?>"><i class="fa fa-ticket"></i></button>
+                    <button class="btn btn-xs btn-primary tmb_detailpengiriman" id="<?php echo $data_penjualan['no_penjualan']; ?>" title="detail pengiriman" data-toggle="modal" data-target="#modal-pengiriman" data-status ="<?php echo $data_penjualan['status_penjualan']; ?>"><i class="fa fa-truck"></i></button>
+                    <button class="btn btn-xs btn-danger tmb-hapus" id="<?php echo $data_penjualan['no_penjualan']; ?>" title="hapus"><i class="fa fa-trash"></i></button>
+                  </td>
+                </tr>
+            <?php } ?>
+            </tbody>
+          </table>
         </div>
         <!-- /.tab-pane -->
       </div>
@@ -443,6 +570,53 @@
   <!-- /.modal-dialog -->
 </div>
 
+<!-- MODAL DETAIL PENGIRIMAN -->
+<div class="modal fade" id="modal-pengiriman">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Detail Pengiriman <small class="" id="dtp_status"></small></h4>
+      </div>
+      <div class="modal-body">
+        <table class="table table-bordered" style="font-size: 12px;">
+          <tr>
+            <th width="35%">Nomor Resi</th>
+            <td id="dt_noresi"></td>
+          </tr>
+          <tr>
+            <th>Jasa Kuris</th>
+            <td id="dt_jasakurir">JNE</td>
+          </tr>
+          <tr>
+            <th>Tanggal Dikirm</th>
+            <td id="dt_tglkirim">Jamal</td>
+          </tr>
+          <tr>
+            <th>Lama Pengiriman</th>
+            <td id="dt_lamakirim">Jamal</td>
+          </tr>
+          <tr>
+            <th>Catatan</th>
+            <td id="dt_catatankirim">Jamal</td>
+          </tr>
+          <tr>
+            <th>Pegawai</th>
+            <td id="dt_pengawaikirim">Jamal</td>
+          </tr>
+        </table>
+      </div>
+      <div class="modal-footer" id="modal-footer_pengiriman">
+        <button type="button" class="btn btn-info tmb_editpengiriman" id="">Edit Detail Pengiriman</button>
+        <button type="button" class="btn btn-success tmb_konfirmasiselesai" id="">Konfirmasi Pengiriman Selesai</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
 <script>
 	$(document).on("click", ".tmb_detailtrans", function() {
     var no_penjualan = $(this).attr('id');
@@ -556,39 +730,113 @@
     var no_penjualan = $(this).attr('id');
 
     Swal.fire({
-        title: 'Verifikasi',
-        text: 'anda yakin akan memverifikasi pembayaran dan memastikan transaksi '+no_penjualan+' telah lunas, anda tidak dapat mengubah status verifikasi ini lagi',
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Ya'
-      }).then((verifikasi) => {
-        if (verifikasi.value) {
-          $.ajax({
-            type: "GET",
-            url: "ajax/detail.php?page=ubahverifikasi",
-            data: "no_penjualan="+no_penjualan,
-            success:function(ubahverifikasi) {
-              Swal.fire({
-                title: 'Berhasil',
-                text: 'Pembayaran ini telah diverifikasi',
-                type: 'success',
-                confirmButtonColor: '#3085d6',
-                confirmButtonText: 'OK'
-              }).then((ok) => {
-                if (ok.value) {
-                  location.reload();
-                }
-              })
-            }
-          })
-        }
-      })
+      title: 'Verifikasi',
+      text: 'anda yakin akan memverifikasi pembayaran dan memastikan transaksi '+no_penjualan+' telah lunas, anda tidak dapat mengubah status verifikasi ini lagi',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Ya'
+    }).then((verifikasi) => {
+      if (verifikasi.value) {
+        $.ajax({
+          type: "GET",
+          url: "ajax/detail.php?page=ubahverifikasi",
+          data: "no_penjualan="+no_penjualan,
+          success:function(ubahverifikasi) {
+            Swal.fire({
+              title: 'Berhasil',
+              text: 'Pembayaran ini telah diverifikasi',
+              type: 'success',
+              confirmButtonColor: '#3085d6',
+              confirmButtonText: 'OK'
+            }).then((ok) => {
+              if (ok.value) {
+                location.reload();
+              }
+            })
+          }
+        })
+      }
+    })
   })
 
   $(document).on("click", ".tmb_kirimpaket", function() {
     var no_penjualan = $(this).attr('id');
     window.location = '?page=form_pengiriman&notransaksi='+no_penjualan;
+  })
+
+  $(document).on("click", ".tmb_detailpengiriman", function() {
+    var no_penjualan = $(this).attr('id');
+    var status = $(this).data('status');
+    $(".tmb_konfirmasiselesai").attr('id', no_penjualan);
+
+    $("#dtp_status").text(status);
+    if(status == 'Dikirim') {
+      $("#dtp_status").attr('class', 'label bg-blue');
+      $("#modal-footer_pengiriman").show();
+    } else if(status == 'Selesai') {
+      $("#dtp_status").attr('class', 'label bg-green');
+      $("#modal-footer_pengiriman").hide();
+    }
+
+    $.ajax({
+      type: "GET",
+      url: "ajax/detail.php?page=pengiriman",
+      data: "no_penjualan="+no_penjualan,
+      success : function(data_pengiriman) {
+        var objData = JSON.parse(data_pengiriman);
+        // console.log(objData);
+        $.each(objData, function(key,val){
+          $("#dt_noresi").text(val.no_resi);
+          $("#dt_jasakurir").text(val.jasa_kirim);
+          $("#dt_tglkirim").text(val.tgl_kirim);
+          $("#dt_lamakirim").text(val.lama_kirim+" Hari");
+          $("#dt_catatankirim").text(val.catatan_kirim);
+          $("#dt_pengawaikirim").text(val.nama_pgw);
+          $(".tmb_editpengiriman").attr('id', val.id_pengiriman);
+        })
+      }
+    });
+  })
+
+  $(document).on("click", ".tmb_editpengiriman", function() {
+    var id_pengiriman = $(this).attr('id');
+    window.location = '?page=form_editpengiriman&id='+id_pengiriman;
+  })
+
+  $(document).on("click", ".tmb_konfirmasiselesai", function() {
+    var no_penjualan = $(this).attr('id');
+
+    Swal.fire({
+      title: 'Konfirmasi Selesai',
+      text: 'anda yakin transaksi '+no_penjualan+' telah selesai dan memastikan produk telah diterima oleh customer ? anda tidak dapat mengubah status ini lagi',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Ya'
+    }).then((selesai) => {
+      if (selesai.value) {
+        $.ajax({
+          type: "GET",
+          url: "ajax/detail.php?page=transaksi_selesai",
+          data: "no_penjualan="+no_penjualan,
+          success:function(ubahverifikasi) {
+            Swal.fire({
+              title: 'Berhasil',
+              text: 'Transaksi ini telah dinyatakan selesai',
+              type: 'success',
+              confirmButtonColor: '#3085d6',
+              confirmButtonText: 'OK'
+            }).then((ok) => {
+              if (ok.value) {
+                location.reload();
+              }
+            })
+          }
+        })
+      }
+    })
   })
 </script>
