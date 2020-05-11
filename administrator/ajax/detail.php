@@ -1,4 +1,5 @@
 <?php 
+  session_start();
   include "../../koneksi.php";
 
   if(@$_GET['page']=='keranjang')
@@ -66,5 +67,36 @@
     $no_penjualan = @mysqli_real_escape_string($conn, $_GET['no_penjualan']);
     $query_ubahverifikasi = "UPDATE tbl_penjualan SET lunas_penjualan = 'Lunas', status_penjualan = 'Verifikasi' WHERE no_penjualan = '$no_penjualan'";
     mysqli_query($conn, $query_ubahverifikasi) or die ($conn->error);
+  }
+  else if(@$_GET['page']=='pengiriman')
+  {
+    $no_penjualan = @mysqli_real_escape_string($conn, $_GET['no_penjualan']);
+    $query_pengiriman = "SELECT * FROM tbl_datapengiriman INNER JOIN tbl_pegawai ON tbl_datapengiriman.id_pgw = tbl_pegawai.id_pgw WHERE tbl_datapengiriman.no_penjualan = '$no_penjualan'";
+    $sql_pengiriman = mysqli_query($conn, $query_pengiriman) or die ($conn->error);
+    $data = array();
+
+    $detail = mysqli_fetch_array($sql_pengiriman);
+    $data[] = $detail;
+
+    echo json_encode($data);
+  }
+  else if(@$_GET['page']=='ubah_pengiriman')
+  {
+    $id_pgw = $_SESSION['id_pgw'];
+    $id_pengiriman = $_POST['id_pengiriman'];
+    $no_resi = $_POST['no_resi'];
+    $jasa_kirim = $_POST['jasa_kirim'];
+    $tgl_kirim = $_POST['tgl_kirim'];
+    $lama_pengiriman = $_POST['lama_pengiriman'];
+    $catatan_kirim = $_POST['catatan_kirim'];
+
+    $query_ubah = "UPDATE tbl_datapengiriman SET no_resi = '$no_resi', jasa_kirim = '$jasa_kirim', tgl_kirim = '$tgl_kirim', lama_kirim = '$lama_pengiriman', catatan_kirim = '$catatan_kirim', tgl_record = CURDATE(), id_pgw = '$id_pgw' WHERE id_pengiriman = '$id_pengiriman'";
+    mysqli_query($conn, $query_ubah) or die ($conn->error);
+  }
+  else if(@$_GET['page']=='transaksi_selesai')
+  {
+    $no_penjualan = @mysqli_real_escape_string($conn, $_GET['no_penjualan']);
+    $query_transaksiselesai = "UPDATE tbl_penjualan SET status_penjualan = 'Selesai' WHERE no_penjualan = '$no_penjualan'";
+    mysqli_query($conn, $query_transaksiselesai) or die ($conn->error);
   }
 ?>
