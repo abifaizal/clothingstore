@@ -1,7 +1,7 @@
 <?php 
 	$no_penjualan = @$_GET['nopenjualan'];
 	$kode_plg = @$_SESSION['kode_plg'];
-	$query_cekpjl = "SELECT no_penjualan, status_penjualan FROM tbl_penjualan WHERE metode_penjualan = 'Online' AND kode_plg = '$kode_plg' AND no_penjualan = '$no_penjualan' AND (status_penjualan = 'Menunggu Verifikasi' OR status_penjualan = 'Verifikasi')";
+	$query_cekpjl = "SELECT no_penjualan, status_penjualan FROM tbl_penjualan WHERE metode_penjualan = 'Online' AND kode_plg = '$kode_plg' AND no_penjualan = '$no_penjualan'";
 	$sql_cekpjl = mysqli_query($conn, $query_cekpjl) or die ($conn->error);
   $rows = mysqli_num_rows($sql_cekpjl);
 	if($no_penjualan != '' && $rows > 0) {
@@ -9,6 +9,7 @@
  ?>
 <nav aria-label="breadcrumb">
 	<ol class="breadcrumb">
+		<li class="breadcrumb-item"><a href="?page=datatransaksi">Data Transaksi</a></li>
 		<li class="breadcrumb-item active" aria-current="page">Detail Transaksi</li>
 	</ol>
 </nav>
@@ -30,7 +31,21 @@
 			</tr>
 			<tr>
 				<th>Status Penjualan</th>
-				<td><?php echo $data_pjl['status_penjualan']; ?></td>
+				<td>
+					<span class="badge <?php if($data_pjl['status_penjualan'] == 'Belum Bayar') {
+						echo 'badge-warning';
+					} else if($data_pjl['status_penjualan'] == 'Menunggu Verifikasi') {
+						echo 'badge-secondary';
+					} else if($data_pjl['status_penjualan'] == 'Verifikasi') {
+						echo 'badge-dark';
+					} else if($data_pjl['status_penjualan'] == 'Dikirim') {
+						echo 'badge-primary';
+					} else if($data_pjl['status_penjualan'] == 'Selesai') {
+						echo 'badge-success';
+					} ?>">
+						<?php echo $data_pjl['status_penjualan']; ?>
+					</span>
+				</td>
 			</tr>
 		</table>
 	</div>
@@ -93,9 +108,10 @@
 	  	$sql_penerima = mysqli_query($conn, $query_penerima) or die ($conn->error);
 	  	$data_penerima = mysqli_fetch_array($sql_penerima);
 		?>
+		<h6 style="padding-left: 5px">Data Penerima</h6>
 		<table class="table penerima table-borderless">
 			<tr>
-				<td>Nama Penerima</td>
+				<td width="26%">Nama Penerima</td>
 				<td><?php echo $data_penerima['nama_penerima']; ?></td>
 			</tr>
 			<tr>
@@ -137,7 +153,7 @@
   	<h6 style="padding-left: 5px">Data Transfer</h6>
 		<table class="table penerima table-borderless">
 			<tr>
-				<td width="31%">Nama Pengirim</td>
+				<td width="26%">Nama Pengirim</td>
 				<td><?php echo $data_bukti['nama_pengirim']; ?></td>
 			</tr>
 			<tr>
@@ -161,12 +177,56 @@
 				</td>
 			</tr>
 		</table>
+		<?php if ($data_pjl['status_penjualan'] == "Menunggu Verifikasi") { ?>
 		<div style="text-align: right; padding: 5px;">
 			<button style="font-size: 10px;" class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#modal_ubahdatatrans" id="tmb_ubahdatatrans">
 				ubah
 			</button>
 		</div>
+		<?php } ?>
   </div>
+
+	<?php 
+		if ($data_pjl['status_penjualan'] == "Dikirim" || $data_pjl['status_penjualan'] == "Selesai") {
+	?>
+	<div class="kontainer-tabelpenerima">
+		<?php 
+			$query_pengiriman = "SELECT * FROM tbl_datapengiriman WHERE no_penjualan = '$no_penjualan'";
+	  	$sql_pengiriman = mysqli_query($conn, $query_pengiriman) or die ($conn->error);
+	  	$data_pengiriman = mysqli_fetch_array($sql_pengiriman);
+		?>
+		<h6 style="padding-left: 5px">Data Pengiriman</h6>
+		<table class="table penerima table-borderless">
+			<tr>
+				<td width="26%">Nomor Resi</td>
+				<th><?php echo $data_pengiriman['no_resi']; ?></th>
+			</tr>
+			<tr>
+				<td>Jasa Kurir</td>
+				<td><?php echo $data_pengiriman['jasa_kirim']; ?></td>
+			</tr>
+			<tr>
+				<td>Tanggal Dikirim</td>
+				<td><?php echo $data_pengiriman['tgl_kirim']; ?></td>
+			</tr>
+			<tr>
+				<td>Lama Pengiriman</td>
+				<td><?php echo $data_pengiriman['lama_kirim']; ?> Hari</td>
+			</tr>
+			<tr>
+				<td>Catatan</td>
+				<td><?php echo $data_pengiriman['catatan_kirim']; ?></td>
+			</tr>
+		</table>
+	</div>
+	<?php 
+		if ($data_pjl['status_penjualan'] == "Dikirim") {
+	?>
+	<div style="padding-bottom: 10px; text-align: right;">
+  	<button type="button" class="btn btn-primary btn-sm" id="tmb_konfirmasi" data-nopenjualan = "<?php echo $no_penjualan; ?>">Konfirmasi Produk Telah Diterima</button>
+  </div>
+	<?php } ?>
+	<?php } ?>
 </div>
 
 <style>
@@ -314,6 +374,40 @@
       })
     }
   });
+
+  $("#tmb_konfirmasi").on("click", function() {
+  	var no_penjualan = $(this).data('nopenjualan');
+  	Swal.fire({
+	    title: 'Konfirmasi',
+	    text: 'anda yakin telah menerima produk anda ? jika Ya maka transaksi akan dinyatakan selesai',
+	    type: 'warning',
+	    showCancelButton: true,
+	    confirmButtonColor: '#3085d6',
+	    cancelButtonColor: '#d33',
+	    confirmButtonText: 'Ya'
+	  }).then((selesai) => {
+	    if (selesai.value) {
+	      $.ajax({
+          type: "GET",
+          url: "usrajax/konfirmasi_selesai.php",
+          data: "no_penjualan="+no_penjualan,
+          success:function(konfirmasi) {
+            Swal.fire({
+              title: 'Berhasil',
+              text: 'Transaksi ini telah dinyatakan selesai',
+              type: 'success',
+              confirmButtonColor: '#3085d6',
+              confirmButtonText: 'OK'
+            }).then((ok) => {
+              if (ok.value) {
+                window.location = '?page=datatransaksi';
+              }
+            })
+          }
+        })
+	    }
+	  })
+  })
 </script>
 
 <?php } else { ?>
