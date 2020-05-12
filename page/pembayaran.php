@@ -10,7 +10,7 @@
 <nav aria-label="breadcrumb">
 	<ol class="breadcrumb">
 		<li class="breadcrumb-item"><a href="./">Home</a></li>
-		<li class="breadcrumb-item"><a href="?page=pemesanan">Order</a></li>
+		<li class="breadcrumb-item"><a href="?page=datatransaksi">Data Transaksi</a></li>
 		<li class="breadcrumb-item active" aria-current="page">Pembayaran</li>
 	</ol>
 </nav>
@@ -32,7 +32,21 @@
 			</tr>
 			<tr>
 				<th>Status Penjualan</th>
-				<td><?php echo $data_pjl['status_penjualan']; ?></td>
+				<td>
+					<span class="badge <?php if($data_pjl['status_penjualan'] == 'Belum Bayar') {
+						echo 'badge-warning';
+					} else if($data_pjl['status_penjualan'] == 'Menunggu Verifikasi') {
+						echo 'badge-secondary';
+					} else if($data_pjl['status_penjualan'] == 'Verifikasi') {
+						echo 'badge-dark';
+					} else if($data_pjl['status_penjualan'] == 'Dikirim') {
+						echo 'badge-primary';
+					} else if($data_pjl['status_penjualan'] == 'Selesai') {
+						echo 'badge-success';
+					} ?>">
+						<?php echo $data_pjl['status_penjualan']; ?>
+					</span>
+				</td>
 			</tr>
 		</table>
 	</div>
