@@ -155,16 +155,20 @@
       			<tfoot>
       				<tr>
       					<td colspan="4" style="text-align: right;">
+                  <?php 
+                    if($data_pjl['status_penjualan'] != 'Selesai') {
+                  ?>
       						<button class="btn btn-sm btn-danger tmb-batal" style="font-size: 11px;">Batalkan</button>
+                  <?php } ?>
       						<?php 
       							if($data_pjl['status_penjualan'] == 'Belum Bayar') {
       						?>
       						<a href="?page=pembayaran&nopenjualan=<?php echo $data_pjl['no_penjualan'] ?>">
       							<button class="btn btn-sm btn-success tmb-detailkonf" style="font-size: 11px;">Detail dan Konfirmasi Pembayaran</button>
       						</a>
-      						<?php } else if($data_pjl['status_penjualan'] == 'Menunggu Verifikasi' || $data_pjl['status_penjualan'] == 'Verifikasi') { ?>
+      						<?php } else { ?>
       						<a href="?page=detailpembayaran&nopenjualan=<?php echo $data_pjl['no_penjualan'] ?>">
-      							<button class="btn btn-sm btn-info tmb-detailkonf" style="font-size: 11px;">Detail Pembayaran</button>
+      							<button class="btn btn-sm btn-primary tmb-detailkonf" style="font-size: 11px;">Detail Transaksi</button>
       						</a>
       						<?php } ?>
       					</td>
@@ -315,7 +319,7 @@
       					<td colspan="4" style="text-align: right;">
       						<button class="btn btn-sm btn-danger tmb-batal" style="font-size: 11px;">Batalkan</button>
       						<a href="?page=detailpembayaran&nopenjualan=<?php echo $data_pjl['no_penjualan'] ?>">
-	      						<button class="btn btn-sm btn-info" style="font-size: 11px;">Detail Pembayaran</button>
+	      						<button class="btn btn-sm btn-primary" style="font-size: 11px;">Detail Transaksi</button>
 	      					</a>
       					</td>
       				</tr>
@@ -335,7 +339,66 @@
 	    		Tidak ada Transaksi Saat Ini
 	    	</div>
     	<?php } else { ?>
-    		<!-- html -->
+  		<?php 
+        $query_pjl = "SELECT * FROM tbl_penjualan INNER JOIN tbl_datapenerima ON tbl_penjualan.no_penjualan = tbl_datapenerima.no_penjualan WHERE tbl_penjualan.kode_plg = '$kode_plg' AND tbl_penjualan.metode_penjualan = 'Online' AND tbl_penjualan.status_penjualan = 'Dikirim'";
+        $sql_pjl = mysqli_query($conn, $query_pjl) or die ($conn->error);
+        while($data_pjl = mysqli_fetch_array($sql_pjl)) {
+      ?>
+        <div>
+          <table class="table table-bordered" style="font-size: 12px;">
+            <thead>
+              <tr>
+                <th colspan="3">Kode Transaksi : <?php echo $data_pjl['no_penjualan']; ?> <span class="badge badge-primary"><?php echo $data_pjl['status_penjualan']; ?></span></th>
+                <th style="text-align: right;">Total : Rp <?php echo number_format($data_pjl['total_penjualan'] + $data_pjl['ongkir_paket']); ?></th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php 
+                $no_penjualan = $data_pjl['no_penjualan'];
+                $query_detail = "SELECT * FROM tbl_produk INNER JOIN tbl_penjualandetail ON tbl_produk.id_prd = tbl_penjualandetail.id_prd WHERE tbl_penjualandetail.no_penjualan = '$no_penjualan'";
+                $sql_detail = mysqli_query($conn, $query_detail) or die ($conn->error);
+                while($data_detail = mysqli_fetch_array($sql_detail)) {
+              ?>
+                  <tr>
+                    <td width="15%">
+                      <div class="foto-produk" style="max-width: 55px; max-height: 55px;">
+                        <img src="img/produk/<?php echo $data_detail['gambar_prd']; ?>" class="card-img-top" alt="...">
+                      </div>
+                    </td>
+                    <?php
+                      $id_prd = $data_detail['id_prd'];
+                      $id_ukuran = $data_detail['id_ukuran'];
+                      $query_ukuran = "SELECT * FROM tbl_ukuranprd WHERE id_prd = '$id_prd' AND id_ukuran = '$id_ukuran'";
+                      $sql_ukuran = mysqli_query($conn, $query_ukuran) or die ($conn->error);
+                      $data_ukuran = mysqli_fetch_array($sql_ukuran);
+                    ?>
+                    <td>
+                      <?php echo $data_detail['nama_prd']; ?> <br>
+                      Size : <?php echo $data_ukuran['keterangan_ukr']; ?> <br>
+                      Harga : Rp <?php echo number_format($data_detail['harga_prd']); ?>
+                    </td>
+                    <td>
+                      <?php echo $data_detail['jml_prd']; ?>
+                    </td>
+                    <td style="text-align: right;">
+                      Rp <?php echo number_format($data_detail['subtotal_prd']); ?>
+                    </td>
+                  </tr>
+              <?php } ?>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="4" style="text-align: right;">
+                  <button class="btn btn-sm btn-danger tmb-batal" style="font-size: 11px;">Batalkan</button>
+                  <a href="?page=detailpembayaran&nopenjualan=<?php echo $data_pjl['no_penjualan'] ?>">
+                    <button class="btn btn-sm btn-primary tmb-detailkonf" style="font-size: 11px;">Detail Transaksi</button>
+                  </a>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      <?php } ?>
     	<?php } ?>
     </div>
 
@@ -346,7 +409,65 @@
 	    		Tidak ada Transaksi Saat Ini
 	    	</div>
     	<?php } else { ?>
-    		<!-- html -->
+    	<?php 
+        $query_pjl = "SELECT * FROM tbl_penjualan INNER JOIN tbl_datapenerima ON tbl_penjualan.no_penjualan = tbl_datapenerima.no_penjualan WHERE tbl_penjualan.kode_plg = '$kode_plg' AND tbl_penjualan.metode_penjualan = 'Online' AND tbl_penjualan.status_penjualan = 'Selesai'";
+        $sql_pjl = mysqli_query($conn, $query_pjl) or die ($conn->error);
+        while($data_pjl = mysqli_fetch_array($sql_pjl)) {
+      ?>
+        <div>
+          <table class="table table-bordered" style="font-size: 12px;">
+            <thead>
+              <tr>
+                <th colspan="3">Kode Transaksi : <?php echo $data_pjl['no_penjualan']; ?> <span class="badge badge-success"><?php echo $data_pjl['status_penjualan']; ?></span></th>
+                <th style="text-align: right;">Total : Rp <?php echo number_format($data_pjl['total_penjualan'] + $data_pjl['ongkir_paket']); ?></th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php 
+                $no_penjualan = $data_pjl['no_penjualan'];
+                $query_detail = "SELECT * FROM tbl_produk INNER JOIN tbl_penjualandetail ON tbl_produk.id_prd = tbl_penjualandetail.id_prd WHERE tbl_penjualandetail.no_penjualan = '$no_penjualan'";
+                $sql_detail = mysqli_query($conn, $query_detail) or die ($conn->error);
+                while($data_detail = mysqli_fetch_array($sql_detail)) {
+              ?>
+                  <tr>
+                    <td width="15%">
+                      <div class="foto-produk" style="max-width: 55px; max-height: 55px;">
+                        <img src="img/produk/<?php echo $data_detail['gambar_prd']; ?>" class="card-img-top" alt="...">
+                      </div>
+                    </td>
+                    <?php
+                      $id_prd = $data_detail['id_prd'];
+                      $id_ukuran = $data_detail['id_ukuran'];
+                      $query_ukuran = "SELECT * FROM tbl_ukuranprd WHERE id_prd = '$id_prd' AND id_ukuran = '$id_ukuran'";
+                      $sql_ukuran = mysqli_query($conn, $query_ukuran) or die ($conn->error);
+                      $data_ukuran = mysqli_fetch_array($sql_ukuran);
+                    ?>
+                    <td>
+                      <?php echo $data_detail['nama_prd']; ?> <br>
+                      Size : <?php echo $data_ukuran['keterangan_ukr']; ?> <br>
+                      Harga : Rp <?php echo number_format($data_detail['harga_prd']); ?>
+                    </td>
+                    <td>
+                      <?php echo $data_detail['jml_prd']; ?>
+                    </td>
+                    <td style="text-align: right;">
+                      Rp <?php echo number_format($data_detail['subtotal_prd']); ?>
+                    </td>
+                  </tr>
+              <?php } ?>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="4" style="text-align: right;">
+                  <a href="?page=detailpembayaran&nopenjualan=<?php echo $data_pjl['no_penjualan'] ?>">
+                    <button class="btn btn-sm btn-primary tmb-detailkonf" style="font-size: 11px;">Detail Transaksi</button>
+                  </a>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      <?php } ?>
     	<?php } ?>
     </div>
 	</div>
