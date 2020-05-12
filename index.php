@@ -82,7 +82,12 @@
                     <?php echo $_SESSION['username_plg']; ?>
                   </a>
                   <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="?page=datatransaksi"><i class="fas fa-box"></i> Transaksi</a>
+                    <?php 
+                      $query_pjl = "SELECT * FROM tbl_penjualan WHERE kode_plg = '$kode_plg' AND metode_penjualan = 'Online' AND status_penjualan != 'Selesai'";
+                      $sql_pjl = mysqli_query($conn, $query_pjl) or die ($conn->error);
+                      $count_semua = mysqli_num_rows($sql_pjl);
+                     ?>
+                    <a class="dropdown-item" href="?page=datatransaksi"><i class="fas fa-box"></i> Transaksi <span class="badge badge-warning"><?php echo $count_semua; ?></span></a>
                     <a class="dropdown-item" href="?page=edit_profil&username=<?php echo $_SESSION['username_plg']; ?>">
                       <i class="fas fa-user-cog"></i> Ubah Profil
                     </a>
