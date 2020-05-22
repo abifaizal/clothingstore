@@ -19,14 +19,14 @@
     <link rel="stylesheet" href="assets/style/custom_style.css">
     <link rel="stylesheet" href="assets/sweetalert/dist/sweetalert2.min.css">
 
-    <title>Black Sabath Distro</title>
+    <title>Black Shadow Distro</title>
   </head>
   <body>
     <div id="container">
       <div id="main">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
           <div class="container">
-            <a class="navbar-brand" href="./">Black Sabath</a>
+            <a class="navbar-brand" href="./">Black Shadow</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
@@ -150,12 +150,12 @@
       <div class="container">
         <div class="row">
           <div class="col-6">
-            <i class="far fa-copyright"></i> Black Sabath - Kebumen.
+            <i class="far fa-copyright"></i> Black Shadow - Kebumen.
           </div>
           <div class="col-6 text-right">
-            <a href="https://www.instagram.com/fzlbdn/" target="_blank" class="text-white"><i class="fab fa-instagram"></i></a>
-            <a href="https://twitter.com/faizal_abidin" target="_blank" class="text-white"><i class="fab fa-twitter"></i></a>
-            <a href="https://www.instagram.com/fzlbdn/" target="_blank" class="text-white"><i class="fab fa-facebook"></i></a>
+            <a href="https://www.instagram.com/blackshadow_merchandise/" target="_blank" class="text-white"><i class="fab fa-instagram"></i></a>
+            <!-- <a href="#" class="text-white"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="text-white"><i class="fab fa-facebook"></i></a> -->
           </div>
         </div>
       </div>
