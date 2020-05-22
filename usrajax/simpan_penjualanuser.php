@@ -36,6 +36,12 @@
 
 		$query_pjldetail = "INSERT INTO tbl_penjualandetail (id_prd, id_ukuran, harga_prd, diskon_prd, jml_prd, subtotal_prd, no_penjualan) VALUES ('$id_prd', '$id_ukuran', '$harga_akhir', '$diskon_prd', '$jml_prd', '$subtotal', '$no_penjualan')";
 		mysqli_query($conn, $query_pjldetail) or die ($conn->error);
+
+		$query_stokproduk = "UPDATE tbl_produk SET stok_prd = stok_prd - '$jml_prd' WHERE id_prd = '$id_prd'";
+		mysqli_query($conn, $query_stokproduk) or die ($conn->error);
+
+		$query_stokukuran = "UPDATE tbl_ukuranprd SET stok_ukr = stok_ukr - '$jml_prd' WHERE id_ukuran = '$id_ukuran'";
+		mysqli_query($conn, $query_stokukuran) or die ($conn->error);
 	}
 
 	mysqli_query($conn, "DELETE FROM tbl_keranjang WHERE id_keranjang = '$id_keranjang'") or die ($conn->error);
