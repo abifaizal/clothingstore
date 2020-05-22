@@ -24,7 +24,7 @@
     </div>
     <div class="box-body">
       <div class="table-responsive">
-        <table id="example1" class="table table-bordered table-striped">
+        <table id="tbl_dproduk" class="table table-bordered table-striped">
           <thead>
             <tr>
               <th>No</th>
@@ -103,9 +103,7 @@
       </div>
     </div>
     <!-- /.box-body -->
-    <div class="box-footer">
-      Footer
-    </div>
+    <div class="box-footer"></div>
     <!-- /.box-footer-->
   </div>
   <!-- /.box -->
