@@ -10,7 +10,7 @@
 	<head>
 	  <meta charset="utf-8">
 	  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-	  <title>Black Sabath | Administrator</title>
+	  <title>Black Shadow | Administrator</title>
 	  <!-- Tell the browser to be responsive to screen width -->
 	  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 	  <!-- Bootstrap 3.3.7 -->
@@ -21,6 +21,16 @@
 	  <link rel="stylesheet" href="assets/adminLTE/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
 	  <!-- Theme style -->
 	  <link rel="stylesheet" href="assets/adminLTE/dist/css/AdminLTE.min.css">
+	  <!-- Morris chart -->
+  	<link rel="stylesheet" href="assets/adminLTE/bower_components/morris.js/morris.css">
+  	<!-- jvectormap -->
+	  <link rel="stylesheet" href="assets/adminLTE/bower_components/jvectormap/jquery-jvectormap.css">
+	  <!-- Date Picker -->
+	  <link rel="stylesheet" href="assets/adminLTE/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+	  <!-- Daterange picker -->
+	  <link rel="stylesheet" href="assets/adminLTE/bower_components/bootstrap-daterangepicker/daterangepicker.css">
+	  <!-- bootstrap wysihtml5 - text editor -->
+	  <link rel="stylesheet" href="assets/adminLTE/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
 	  <!-- AdminLTE Skins. Choose a skin from the css/skins
 	       folder instead of downloading all of them to reduce the load. -->
 	  <link rel="stylesheet" href="assets/adminLTE/dist/css/skins/_all-skins.min.css">
@@ -41,7 +51,7 @@
 	      <!-- mini logo for sidebar mini 50x50 pixels -->
 	      <span class="logo-mini" style="font-size: 14px;">BSB</span>
 	      <!-- logo for regular state and mobile devices -->
-	      <span class="logo-lg">Black Sabath | distro</span>
+	      <span class="logo-lg">Black Shadow | distro</span>
 	    </a>
 	    <!-- Header Navbar: style can be found in header.less -->
 	    <nav class="navbar navbar-static-top">
@@ -169,6 +179,11 @@
 	  <script src="assets/adminLTE/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 	  <!-- Sweet Alert 2 -->
 	  <script src="../assets/sweetalert/dist/sweetalert2.min.js"></script>
+	  <!-- Morris.js charts -->
+		<script src="assets/adminLTE/bower_components/raphael/raphael.min.js"></script>
+		<script src="assets/adminLTE/bower_components/morris.js/morris.min.js"></script>
+		<!-- jQuery Knob Chart -->
+		<script src="assets/adminLTE/bower_components/jquery-knob/dist/jquery.knob.min.js"></script>
 
 	  <!-- Content Wrapper. Contains page content -->
 	  <div class="content-wrapper">
@@ -210,7 +225,7 @@
 	    <div class="pull-right hidden-xs">
 	      <!-- <b>Built By : Abdul Kamal Mukmin</b> -->
 	    </div>
-	    <strong>Copyright &copy; 2020 Black Sabath Distro.</strong> Kebumen
+	    <strong>Copyright &copy; 2020 Black Shadow Distro.</strong> Kebumen
 	  </footer>
 	</div>
 	<!-- ./wrapper -->
@@ -228,15 +243,26 @@
 	  })
 
 	  $(function () {
-	    $('#example1').DataTable()
-	    $('#example2').DataTable({
+	    $('#example1').DataTable();
+
+	    $('#tbl_dproduk').DataTable({
 	      'paging'      : true,
-	      'lengthChange': false,
-	      'searching'   : false,
+	      'lengthChange': true,
+	      'searching'   : true,
 	      'ordering'    : true,
-	      'info'        : true,
-	      'autoWidth'   : false
+	      'info'        : false,
+	      'autoWidth'   : true,
+	      'lengthMenu' : [[50, 100, -1], [50, 100, "All"]]
 	    })
+
+	    $('.tabel_transaksi').DataTable({
+	      'paging'      : true,
+	      'lengthChange': true,
+	      'searching'   : true,
+	      'ordering'    : true,
+	      'info'        : false,
+	      'autoWidth'   : true
+	    });
 	  })
 
 	  $("#tmb_logout").click(function(){
