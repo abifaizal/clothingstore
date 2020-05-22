@@ -58,7 +58,7 @@
                   >
                   <i class="fa fa-eye"></i>
                 </button>
-                <button class="btn btn-xs btn-danger tmb_hapus" id="<?php echo $data_pegawai['kode_plg']; ?>" name="tmb_hapus" title="hapus">
+                <button class="btn btn-xs btn-danger tmb_hapus" id="<?php echo $data_pelanggan['kode_plg']; ?>" data-username = "<?php echo $data_pelanggan['username_plg']; ?>" name="tmb_hapus" title="hapus">
                   <i class="fa fa-trash"></i>
                 </button>
               </td>
@@ -150,39 +150,40 @@
     // $("#link_edit").attr('href','?page=edit_pegawai&id_pgw='+id_pgw);
   })
 
-  // $(".tmb_hapus").click(function() {
-  //   var id_pgw = $(this).attr('id');
-  //   Swal.fire({
-  //     title: 'Anda akan menghapus '+id_pgw,
-  //     text: "Data yang telah dihapus tidak dapat dipulihkan kembali",
-  //     icon: 'warning',
-  //     showCancelButton: true,
-  //     confirmButtonColor: '#3085d6',
-  //     cancelButtonColor: '#d33',
-  //     confirmButtonText: 'Hapus',
-  //     cancelButtonText: 'Tidak'
-  //   }).then((result) => {
-  //     if (result.value) {
-  //       $.ajax({
-  //         type: "POST",
-  //         url: "ajax/proses_hapus.php?page=pegawai",
-  //         data: "key="+id_pgw,
-  //         success:function(hasil) {
-  //           Swal.fire({
-  //             title: 'Berhasil',
-  //             text: 'Data Berhasil Dihapus',
-  //             type: 'success',
-  //             confirmButtonColor: '#3085d6',
-  //             confirmButtonText: 'OK'
-  //           }).then((ok) => {
-  //             if (ok.value) {
-  //               window.location='?page=pegawai';
-  //             }
-  //           })
-  //         }
-  //       })
-  //     }
-  //   })
-  // })
+  $(".tmb_hapus").click(function() {
+    var kd_plg = $(this).attr('id');
+    var username = $(this).data('username');
+    Swal.fire({
+      title: 'Anda akan menghapus '+username,
+      text: "Peringatan : Semua transaksi dan keranjang yang berkaitan dengan pelanggan ini akan ikut terhapus. Data yang telah dihapus tidak dapat dipulihkan kembali",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Hapus',
+      cancelButtonText: 'Tidak'
+    }).then((result) => {
+      if (result.value) {
+        $.ajax({
+          type: "POST",
+          url: "ajax/proses_hapus.php?page=pelanggan",
+          data: "key="+kd_plg,
+          success:function(hasil) {
+            Swal.fire({
+              title: 'Berhasil',
+              text: 'Data Berhasil Dihapus',
+              type: 'success',
+              confirmButtonColor: '#3085d6',
+              confirmButtonText: 'OK'
+            }).then((ok) => {
+              if (ok.value) {
+                window.location='?page=pelanggan';
+              }
+            })
+          }
+        })
+      }
+    })
+  })
 </script>
 
