@@ -1,3 +1,6 @@
+<?php 
+  $tab = @$_GET['tab'];
+ ?>
 <section class="content-header">
   <h1>
     Halaman Data Penjualan Online
@@ -34,27 +37,27 @@
 			    $sql_pjl = mysqli_query($conn, $query_pjl) or die ($conn->error);
 			    $count_selesai = mysqli_num_rows($sql_pjl);
 				?>
-        <li class="active">
+        <li class="<?php if($tab=='') {echo 'active';} ?>">
         	<a href="#tab_semua" data-toggle="tab">
         		Semua <sup>( <?php echo $count_semua; ?> )</sup>
         	</a>
         </li>
-        <li>
+        <li class="<?php if($tab=='belumbayar') {echo 'active';} ?>">
         	<a href="#tab_belumbayar" data-toggle="tab">
         		Belum Bayar <sup>( <?php echo $count_belumbayar; ?> )</sup>
         	</a>
         </li>
-        <li>
+        <li class="<?php if($tab=='verifikasi') {echo 'active';} ?>">
         	<a href="#tab_verifikasi" data-toggle="tab">
         		Verifikasi <sup>( <?php echo $count_verifikasi; ?> )</sup>
         	</a>
         </li>
-        <li>
+        <li class="<?php if($tab=='dikirim') {echo 'active';} ?>">
         	<a href="#tab_dikirim" data-toggle="tab">
         		Dikirim <sup>( <?php echo $count_dikirim; ?> )</sup>
         	</a>
         </li>
-        <li>
+        <li class="<?php if($tab=='selesai') {echo 'active';} ?>">
         	<a href="#tab_selesai" data-toggle="tab">
         		Selesai <sup>( <?php echo $count_selesai; ?> )</sup>
         	</a>
@@ -62,8 +65,8 @@
       </ul>
       <div class="tab-content">
       	<!-- TAB SEMUA -->
-        <div class="tab-pane active table-responsive no-padding" id="tab_semua">
-          <table class="table" style="font-size: 12px;">
+        <div class="tab-pane <?php if($tab=='') {echo 'active';} ?> table-responsive no-padding" id="tab_semua">
+          <table class="table tabel_transaksi" id="example2" style="font-size: 12px;">
           	<thead>
           		<tr>
           			<th>No</th>
@@ -139,7 +142,7 @@
                     ?>
                      <button class="btn btn-xs btn-primary tmb_detailpengiriman" id="<?php echo $data_penjualan['no_penjualan']; ?>" title="detail pengiriman" data-toggle="modal" data-target="#modal-pengiriman" data-status ="<?php echo $data_penjualan['status_penjualan']; ?>"><i class="fa fa-truck"></i></button>
                     <?php } ?>
-          					<button class="btn btn-xs btn-danger tmb-hapus" id="<?php echo $data_penjualan['no_penjualan']; ?>" title="hapus"><i class="fa fa-trash"></i></button>
+          					<button class="btn btn-xs btn-danger tmb-hapus" id="<?php echo $data_penjualan['no_penjualan']; ?>" data-status = "<?php echo $data_penjualan['status_penjualan']; ?>" data-plg = "<?php echo $data_penjualan['username_plg']; ?>" title="hapus"><i class="fa fa-trash"></i></button>
           				</td>
           			</tr>
           	<?php } ?>
@@ -147,8 +150,8 @@
           </table>
         </div>
         <!-- TAB BELUMBAYAR -->
-        <div class="tab-pane table-responsive no-padding" id="tab_belumbayar">
-          <table class="table" style="font-size: 12px;">
+        <div class="tab-pane <?php if($tab=='belumbayar') {echo 'active';} ?> table-responsive no-padding" id="tab_belumbayar">
+          <table class="table tabel_transaksi" style="font-size: 12px;">
           	<thead>
           		<tr>
           			<th>No</th>
@@ -202,7 +205,7 @@
           						>
           						<i class="fa fa-eye"></i>
           					</button>
-          					<button class="btn btn-xs btn-danger tmb-hapus" id="<?php echo $data_penjualan['no_penjualan']; ?>" title="hapus"><i class="fa fa-trash"></i></button>
+          					<button class="btn btn-xs btn-danger tmb-hapus" id="<?php echo $data_penjualan['no_penjualan']; ?>" data-status = "<?php echo $data_penjualan['status_penjualan']; ?>" data-plg = "<?php echo $data_penjualan['username_plg']; ?>" title="hapus"><i class="fa fa-trash"></i></button>
           				</td>
           			</tr>
           	<?php } ?>
@@ -210,8 +213,8 @@
           </table>
         </div>
         <!-- TAB VERIFIKASI -->
-        <div class="tab-pane table-responsive no-padding" id="tab_verifikasi">
-          <table class="table" style="font-size: 12px;">
+        <div class="tab-pane <?php if($tab=='verifikasi') {echo 'active';} ?> table-responsive no-padding" id="tab_verifikasi">
+          <table class="table tabel_transaksi" style="font-size: 12px;">
           	<thead>
           		<tr>
           			<th>No</th>
@@ -276,7 +279,7 @@
                     <?php } else { ?>
                       <button class="btn btn-xs btn-info tmb_verifikasi" id="<?php echo $data_penjualan['no_penjualan']; ?>" title="detail pembayaran" data-toggle="modal" data-target="#modal-verifikasi" data-status ="<?php echo $data_penjualan['status_penjualan']; ?>" data-total = "<?php echo number_format($total_akhir); ?>"><i class="fa fa-ticket"></i></button>
                     <?php } ?>
-          					<button class="btn btn-xs btn-danger tmb-hapus" id="<?php echo $data_penjualan['no_penjualan']; ?>" title="hapus"><i class="fa fa-trash"></i></button>
+          					<button class="btn btn-xs btn-danger tmb-hapus" id="<?php echo $data_penjualan['no_penjualan']; ?>" data-status = "<?php echo $data_penjualan['status_penjualan']; ?>" data-plg = "<?php echo $data_penjualan['username_plg']; ?>" title="hapus"><i class="fa fa-trash"></i></button>
           				</td>
           			</tr>
           	<?php } ?>
@@ -284,8 +287,8 @@
           </table>
         </div>
         <!-- TAB DIKIRIM -->
-        <div class="tab-pane table-responsive no-padding" id="tab_dikirim">
-          <table class="table" style="font-size: 12px;">
+        <div class="tab-pane <?php if($tab=='dikirim') {echo 'active';} ?> table-responsive no-padding" id="tab_dikirim">
+          <table class="table tabel_transaksi" style="font-size: 12px;">
             <thead>
               <tr>
                 <th>No</th>
@@ -341,7 +344,7 @@
                     </button>
                     <button class="btn btn-xs btn-info tmb_verifikasi" id="<?php echo $data_penjualan['no_penjualan']; ?>" title="detail pembayaran" data-toggle="modal" data-target="#modal-verifikasi" data-status ="<?php echo $data_penjualan['status_penjualan']; ?>" data-total = "<?php echo number_format($total_akhir); ?>"><i class="fa fa-ticket"></i></button>
                     <button class="btn btn-xs btn-primary tmb_detailpengiriman" id="<?php echo $data_penjualan['no_penjualan']; ?>" title="detail pengiriman" data-toggle="modal" data-target="#modal-pengiriman" data-status ="<?php echo $data_penjualan['status_penjualan']; ?>"><i class="fa fa-truck"></i></button>
-                    <button class="btn btn-xs btn-danger tmb-hapus" id="<?php echo $data_penjualan['no_penjualan']; ?>" title="hapus"><i class="fa fa-trash"></i></button>
+                    <button class="btn btn-xs btn-danger tmb-hapus" id="<?php echo $data_penjualan['no_penjualan']; ?>" data-status = "<?php echo $data_penjualan['status_penjualan']; ?>" data-plg = "<?php echo $data_penjualan['username_plg']; ?>" title="hapus"><i class="fa fa-trash"></i></button>
                   </td>
                 </tr>
             <?php } ?>
@@ -349,8 +352,8 @@
           </table>
         </div>
         <!-- TAB SELESAI -->
-        <div class="tab-pane table-responsive no-padding" id="tab_selesai">
-          <table class="table" style="font-size: 12px;">
+        <div class="tab-pane <?php if($tab=='selesai') {echo 'active';} ?> table-responsive no-padding" id="tab_selesai">
+          <table class="table tabel_transaksi" style="font-size: 12px;">
             <thead>
               <tr>
                 <th>No</th>
@@ -406,7 +409,7 @@
                     </button>
                     <button class="btn btn-xs btn-info tmb_verifikasi" id="<?php echo $data_penjualan['no_penjualan']; ?>" title="detail pembayaran" data-toggle="modal" data-target="#modal-verifikasi" data-status ="<?php echo $data_penjualan['status_penjualan']; ?>" data-total = "<?php echo number_format($total_akhir); ?>"><i class="fa fa-ticket"></i></button>
                     <button class="btn btn-xs btn-primary tmb_detailpengiriman" id="<?php echo $data_penjualan['no_penjualan']; ?>" title="detail pengiriman" data-toggle="modal" data-target="#modal-pengiriman" data-status ="<?php echo $data_penjualan['status_penjualan']; ?>"><i class="fa fa-truck"></i></button>
-                    <button class="btn btn-xs btn-danger tmb-hapus" id="<?php echo $data_penjualan['no_penjualan']; ?>" title="hapus"><i class="fa fa-trash"></i></button>
+                    <button class="btn btn-xs btn-danger tmb-hapus" id="<?php echo $data_penjualan['no_penjualan']; ?>" data-status = "<?php echo $data_penjualan['status_penjualan']; ?>" data-plg = "<?php echo $data_penjualan['username_plg']; ?>" title="hapus"><i class="fa fa-trash"></i></button>
                   </td>
                 </tr>
             <?php } ?>
@@ -831,6 +834,44 @@
               confirmButtonText: 'OK'
             }).then((ok) => {
               if (ok.value) {
+                location.reload();
+              }
+            })
+          }
+        })
+      }
+    })
+  })
+
+  $(".tmb-hapus").click(function() {
+    var no_penjualan = $(this).attr('id');
+    var status = $(this).data('status');
+    var plg = $(this).data('plg');
+    Swal.fire({
+      title: 'Anda akan menghapus penjualan '+no_penjualan+' milik '+plg,
+      text: "Peringatan : Pelanggan tidak akan dapat melanjutkan transaksi ini. Data yang telah dihapus tidak dapat dipulihkan kembali",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Hapus',
+      cancelButtonText: 'Tidak'
+    }).then((result) => {
+      if (result.value) {
+        $.ajax({
+          type: "POST",
+          url: "ajax/proses_hapus.php?page=penjualan",
+          data: "key="+no_penjualan+"&status="+status,
+          success:function(hasil) {
+            Swal.fire({
+              title: 'Berhasil',
+              text: 'Data Berhasil Dihapus',
+              type: 'success',
+              confirmButtonColor: '#3085d6',
+              confirmButtonText: 'OK'
+            }).then((ok) => {
+              if (ok.value) {
+                // window.location='?page=data_transaksi_offline';
                 location.reload();
               }
             })

@@ -72,7 +72,7 @@
                   >
                   <i class="fa fa-eye"></i>
                 </button>
-                <button class="btn btn-xs btn-danger tmb_hapus" id="<?php echo $data_krj['id_keranjang']; ?>" name="tmb_hapus" title="hapus">
+                <button class="btn btn-xs btn-danger tmb_hapus" id="<?php echo $data_krj['id_keranjang']; ?>" data-username = "<?php echo $data_krj['username_plg']; ?>" name="tmb_hapus" title="hapus">
                   <i class="fa fa-trash"></i>
                 </button>
               </td>
@@ -199,6 +199,42 @@
         })
       }
     });
+  })
+
+  $(".tmb_hapus").click(function() {
+    var id_keranjang = $(this).attr('id');
+    var username = $(this).data('username');
+    Swal.fire({
+      title: 'Anda akan menghapus keranjang milik '+username,
+      text: "Peringatan : Data yang telah dihapus tidak dapat dipulihkan kembali",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Hapus',
+      cancelButtonText: 'Tidak'
+    }).then((result) => {
+      if (result.value) {
+        $.ajax({
+          type: "POST",
+          url: "ajax/proses_hapus.php?page=keranjang",
+          data: "key="+id_keranjang,
+          success:function(hasil) {
+            Swal.fire({
+              title: 'Berhasil',
+              text: 'Data Berhasil Dihapus',
+              type: 'success',
+              confirmButtonColor: '#3085d6',
+              confirmButtonText: 'OK'
+            }).then((ok) => {
+              if (ok.value) {
+                window.location='?page=data_keranjang';
+              }
+            })
+          }
+        })
+      }
+    })
   })
 </script>
 

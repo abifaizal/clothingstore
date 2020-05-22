@@ -57,7 +57,7 @@
                   >
                   <i class="fa fa-eye"></i>
                 </button>
-                <button class="btn btn-xs btn-danger tmb_hapus" id="<?php echo $data_pjl['no_penjualan']; ?>" name="tmb_hapus" title="hapus">
+                <button class="btn btn-xs btn-danger tmb_hapus" id="<?php echo $data_pjl['no_penjualan']; ?>" data-status = "<?php echo $data_pjl['status_penjualan']; ?>" name="tmb_hapus" title="hapus">
                   <i class="fa fa-trash"></i>
                 </button>
               </td>
@@ -196,6 +196,42 @@
         $("#dt_totalkrj").text(total);
       }
     });
+  })
+
+  $(".tmb_hapus").click(function() {
+    var no_penjualan = $(this).attr('id');
+    var status = $(this).data('status');
+    Swal.fire({
+      title: 'Anda akan menghapus penjualan '+no_penjualan,
+      text: "Peringatan : Data yang telah dihapus tidak dapat dipulihkan kembali",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Hapus',
+      cancelButtonText: 'Tidak'
+    }).then((result) => {
+      if (result.value) {
+        $.ajax({
+          type: "POST",
+          url: "ajax/proses_hapus.php?page=penjualan",
+          data: "key="+no_penjualan+"&status="+status,
+          success:function(hasil) {
+            Swal.fire({
+              title: 'Berhasil',
+              text: 'Data Berhasil Dihapus',
+              type: 'success',
+              confirmButtonColor: '#3085d6',
+              confirmButtonText: 'OK'
+            }).then((ok) => {
+              if (ok.value) {
+                window.location='?page=data_transaksi_offline';
+              }
+            })
+          }
+        })
+      }
+    })
   })
 </script>
 
