@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 11 Bulan Mei 2020 pada 17.47
+-- Waktu pembuatan: 17 Bulan Mei 2020 pada 15.06
 -- Versi server: 10.4.11-MariaDB
 -- Versi PHP: 7.4.4
 
@@ -43,7 +43,8 @@ CREATE TABLE `tbl_buktitransfer` (
 
 INSERT INTO `tbl_buktitransfer` (`id_transfer`, `nama_pengirim`, `tgl_transfer`, `jam_transfer`, `bank_transfer`, `foto_bukti`, `no_penjualan`) VALUES
 (2, 'Jamal Mustafa', '2020-04-29', '14:13:32', 'Mandiri', 'bkt-1588407873.jpg', 'PJL/20200424/002'),
-(3, 'Rangga Putra Rizdilla', '2020-05-09', '10:15:08', 'BRI', 'bkt-1589034138.jpg', 'PJL/20200504/001');
+(3, 'Rangga Putra Rizdilla', '2020-05-09', '10:15:08', 'BRI', 'bkt-1589034138.jpg', 'PJL/20200504/001'),
+(4, 'Amal Setiawan', '2020-05-17', '19:40:30', 'BRI', 'bkt-1589719359.jpg', 'PJL/20200517/001');
 
 -- --------------------------------------------------------
 
@@ -75,7 +76,9 @@ CREATE TABLE `tbl_datapenerima` (
 INSERT INTO `tbl_datapenerima` (`id_datapenerima`, `nama_penerima`, `nohp_penerima`, `alamat_penerima`, `kode_pos`, `provinsi_penerima`, `kabkota_penerima`, `kurir_pengiriman`, `paket_pengiriman`, `etd_paket`, `ongkir_paket`, `berat_kiriman`, `no_penjualan`, `kode_plg`) VALUES
 (9, 'Jamal', '085337337337', 'Jl Angkasa Raya Bimasakti Antariksa No 17, Kotagede', '55160', 'DI Yogyakarta', 'Yogyakarta', 'jne', 'REG', '1-2', 15000, 850, 'PJL/20200424/002', '2020033001'),
 (10, 'Aslan Kemal', '085333417341', 'Jl Janti Kusuma No 17, Gambiran, Semarang', '54327', 'Jawa Tengah', 'Semarang', 'pos', 'Paket Kilat Khusus', '1-2 HARI', 12000, 200, 'PJL/20200427/001', '2020033001'),
-(11, 'Rangga Ika Putra', '088207303222', 'Jl. Pancar Raya 13, Karang Baru, Kota Mataram, Nusa Tenggara Barat.', '40182', 'Nusa Tenggara Barat (NTB)', 'Mataram', 'pos', 'Paket Kilat Khusus', '3-5 HARI', 35000, 350, 'PJL/20200504/001', '2020032901');
+(11, 'Rangga Ika Putra', '088207303222', 'Jl. Pancar Raya 13, Karang Baru, Kota Mataram, Nusa Tenggara Barat.', '40182', 'Nusa Tenggara Barat (NTB)', 'Mataram', 'pos', 'Paket Kilat Khusus', '3-5 HARI', 35000, 350, 'PJL/20200504/001', '2020032901'),
+(12, 'Haidar Baihaqi', '085337334136', 'Perumahan RSS Baumata Tipe 21 Blok F no 5, Desa Baumata Barat, Kecamatan Taebenu, Kabupaten Kupang.', '55039', 'Nusa Tenggara Timur (NTT)', 'Kupang', 'pos', 'Paket Kilat Khusus', '4-6 HARI', 56000, 200, 'PJL/20200512/001', '2020051201'),
+(13, 'Amal Setiawan', '085333461216', 'Jl Belakang UTY', '56066', 'DI Yogyakarta', 'Sleman', 'jne', 'REG', '1-2', 15000, 200, 'PJL/20200517/001', '2020051701');
 
 -- --------------------------------------------------------
 
@@ -100,7 +103,9 @@ CREATE TABLE `tbl_datapengiriman` (
 --
 
 INSERT INTO `tbl_datapengiriman` (`id_pengiriman`, `no_resi`, `jasa_kirim`, `tgl_kirim`, `lama_kirim`, `catatan_kirim`, `tgl_record`, `no_penjualan`, `id_pgw`) VALUES
-(3, 'EE200509026YK', 'Pos Indonesia', '2020-05-09', '1-2', 'Segera Konfirmasi Kami jika Paket Telah Diterima, Terima Kasih Bro.', '2020-05-11', 'PJL/20200424/002', 'PGW001');
+(3, 'EE200509026YK', 'Pos Indonesia', '2020-05-09', '1-2', 'Segera Konfirmasi Kami jika Paket Telah Diterima, Terima Kasih Bro.', '2020-05-11', 'PJL/20200424/002', 'PGW001'),
+(4, 'YK200512103MR', 'Pos Indonesia', '2020-05-12', '2-3', 'Mohon segera konfirmasi kami jika produk telah diterima. Terima kasih.', '2020-05-12', 'PJL/20200504/001', 'PGW001'),
+(5, 'JNE30455YK', 'JNE', '2020-05-17', '1-2', 'Konfirmasi kami jika telah diterima', '2020-05-17', 'PJL/20200517/001', 'PGW001');
 
 -- --------------------------------------------------------
 
@@ -177,7 +182,9 @@ CREATE TABLE `tbl_pelanggan` (
 INSERT INTO `tbl_pelanggan` (`kode_plg`, `nama_plg`, `gender_plg`, `email_plg`, `username_plg`, `password_plg`, `tglregis_plg`) VALUES
 ('2020032901', 'Rangga Putra Rizdillah', 'Laki-laki', 'ranggaputra@gmail.com', 'rangga', 'rangga', '2020-03-29'),
 ('2020033001', 'Jamal Mustafa', 'Laki-laki', 'jamal@gmail.com', 'jamal', 'jamal', '2020-03-30'),
-('2020040401', 'Arif Setyo', 'Laki-laki', 'arifsetyo@gmail.com', 'arif', 'arif', '2020-04-04');
+('2020040401', 'Arif Setyo', 'Laki-laki', 'arifsetyo@gmail.com', 'arif', 'arif', '2020-04-04'),
+('2020051201', 'Haidar Baihaqi', 'Laki-laki', 'haidarbaihaqi@gmail.com', 'haidar', 'haidar', '2020-05-12'),
+('2020051701', 'Amal Setiawan', 'Laki-laki', 'amal@gmail.com', 'amal', 'amal', '2020-05-17');
 
 -- --------------------------------------------------------
 
@@ -212,7 +219,9 @@ INSERT INTO `tbl_penjualan` (`no_penjualan`, `tgl_penjualan`, `jam_penjualan`, `
 ('PJL/20200424/002', '2020-04-24', '14:18:11', 317000, 0, 0, 'Online', 'Lunas', 'Selesai', '2020033001', NULL),
 ('PJL/20200426/001', '2020-04-26', '15:08:28', 90000, 0, 100000, 'Offline', 'Lunas', 'Selesai', NULL, 'PGW001'),
 ('PJL/20200427/001', '2020-04-27', '16:14:00', 120000, 0, 0, 'Online', 'Pending', 'Belum Bayar', '2020033001', NULL),
-('PJL/20200504/001', '2020-05-04', '15:31:08', 155000, 0, 0, 'Online', 'Pending', 'Menunggu Verifikasi', '2020032901', NULL);
+('PJL/20200504/001', '2020-05-04', '15:31:08', 155000, 0, 0, 'Online', 'Lunas', 'Selesai', '2020032901', NULL),
+('PJL/20200512/001', '2020-05-12', '21:33:31', 120000, 0, 0, 'Online', 'Pending', 'Belum Bayar', '2020051201', NULL),
+('PJL/20200517/001', '2020-05-17', '19:40:02', 120000, 0, 0, 'Online', 'Lunas', 'Selesai', '2020051701', NULL);
 
 -- --------------------------------------------------------
 
@@ -246,7 +255,9 @@ INSERT INTO `tbl_penjualandetail` (`no_pjl_detail`, `id_prd`, `id_ukuran`, `harg
 (10, 'PRD013', 63, 155000, 0, 1, 155000, 'PJL/20200424/002'),
 (11, 'PRD015', 72, 90000, 0, 1, 90000, 'PJL/20200426/001'),
 (12, 'PRD014', 67, 120000, 0, 1, 120000, 'PJL/20200427/001'),
-(13, 'PRD013', 61, 155000, 0, 1, 155000, 'PJL/20200504/001');
+(13, 'PRD013', 61, 155000, 0, 1, 155000, 'PJL/20200504/001'),
+(14, 'PRD012', 31, 120000, 0, 1, 120000, 'PJL/20200512/001'),
+(15, 'PRD012', 31, 120000, 0, 1, 120000, 'PJL/20200517/001');
 
 -- --------------------------------------------------------
 
@@ -405,31 +416,31 @@ ALTER TABLE `tbl_ukuranprd`
 -- AUTO_INCREMENT untuk tabel `tbl_buktitransfer`
 --
 ALTER TABLE `tbl_buktitransfer`
-  MODIFY `id_transfer` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_transfer` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT untuk tabel `tbl_datapenerima`
 --
 ALTER TABLE `tbl_datapenerima`
-  MODIFY `id_datapenerima` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id_datapenerima` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT untuk tabel `tbl_datapengiriman`
 --
 ALTER TABLE `tbl_datapengiriman`
-  MODIFY `id_pengiriman` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_pengiriman` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT untuk tabel `tbl_keranjangdetail`
 --
 ALTER TABLE `tbl_keranjangdetail`
-  MODIFY `id_krjdt` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id_krjdt` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT untuk tabel `tbl_penjualandetail`
 --
 ALTER TABLE `tbl_penjualandetail`
-  MODIFY `no_pjl_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `no_pjl_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT untuk tabel `tbl_ukuranprd`
