@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 17 Bulan Mei 2020 pada 15.06
+-- Waktu pembuatan: 22 Bulan Mei 2020 pada 16.21
 -- Versi server: 10.4.11-MariaDB
 -- Versi PHP: 7.4.4
 
@@ -29,22 +29,13 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `tbl_buktitransfer` (
   `id_transfer` int(11) NOT NULL,
-  `nama_pengirim` varchar(50) NOT NULL,
+  `nama_pengirim` varchar(50) CHARACTER SET latin1 NOT NULL,
   `tgl_transfer` date NOT NULL,
   `jam_transfer` time NOT NULL,
-  `bank_transfer` varchar(20) NOT NULL,
-  `foto_bukti` varchar(50) NOT NULL,
-  `no_penjualan` varchar(16) NOT NULL
+  `bank_transfer` varchar(20) CHARACTER SET latin1 NOT NULL,
+  `foto_bukti` varchar(50) CHARACTER SET latin1 NOT NULL,
+  `no_penjualan` varchar(16) CHARACTER SET latin1 NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data untuk tabel `tbl_buktitransfer`
---
-
-INSERT INTO `tbl_buktitransfer` (`id_transfer`, `nama_pengirim`, `tgl_transfer`, `jam_transfer`, `bank_transfer`, `foto_bukti`, `no_penjualan`) VALUES
-(2, 'Jamal Mustafa', '2020-04-29', '14:13:32', 'Mandiri', 'bkt-1588407873.jpg', 'PJL/20200424/002'),
-(3, 'Rangga Putra Rizdilla', '2020-05-09', '10:15:08', 'BRI', 'bkt-1589034138.jpg', 'PJL/20200504/001'),
-(4, 'Amal Setiawan', '2020-05-17', '19:40:30', 'BRI', 'bkt-1589719359.jpg', 'PJL/20200517/001');
 
 -- --------------------------------------------------------
 
@@ -54,31 +45,20 @@ INSERT INTO `tbl_buktitransfer` (`id_transfer`, `nama_pengirim`, `tgl_transfer`,
 
 CREATE TABLE `tbl_datapenerima` (
   `id_datapenerima` int(11) NOT NULL,
-  `nama_penerima` varchar(60) NOT NULL,
-  `nohp_penerima` varchar(15) NOT NULL,
-  `alamat_penerima` text NOT NULL,
-  `kode_pos` varchar(10) NOT NULL,
-  `provinsi_penerima` varchar(50) NOT NULL,
-  `kabkota_penerima` varchar(50) NOT NULL,
-  `kurir_pengiriman` varchar(8) NOT NULL,
-  `paket_pengiriman` varchar(30) NOT NULL,
-  `etd_paket` varchar(15) NOT NULL,
+  `nama_penerima` varchar(60) CHARACTER SET latin1 NOT NULL,
+  `nohp_penerima` varchar(15) CHARACTER SET latin1 NOT NULL,
+  `alamat_penerima` text CHARACTER SET latin1 NOT NULL,
+  `kode_pos` varchar(10) CHARACTER SET latin1 NOT NULL,
+  `provinsi_penerima` varchar(50) CHARACTER SET latin1 NOT NULL,
+  `kabkota_penerima` varchar(50) CHARACTER SET latin1 NOT NULL,
+  `kurir_pengiriman` varchar(8) CHARACTER SET latin1 NOT NULL,
+  `paket_pengiriman` varchar(30) CHARACTER SET latin1 NOT NULL,
+  `etd_paket` varchar(15) CHARACTER SET latin1 NOT NULL,
   `ongkir_paket` int(11) NOT NULL,
   `berat_kiriman` int(11) NOT NULL,
-  `no_penjualan` varchar(16) NOT NULL,
-  `kode_plg` varchar(10) NOT NULL
+  `no_penjualan` varchar(16) CHARACTER SET latin1 NOT NULL,
+  `kode_plg` varchar(10) CHARACTER SET latin1 NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data untuk tabel `tbl_datapenerima`
---
-
-INSERT INTO `tbl_datapenerima` (`id_datapenerima`, `nama_penerima`, `nohp_penerima`, `alamat_penerima`, `kode_pos`, `provinsi_penerima`, `kabkota_penerima`, `kurir_pengiriman`, `paket_pengiriman`, `etd_paket`, `ongkir_paket`, `berat_kiriman`, `no_penjualan`, `kode_plg`) VALUES
-(9, 'Jamal', '085337337337', 'Jl Angkasa Raya Bimasakti Antariksa No 17, Kotagede', '55160', 'DI Yogyakarta', 'Yogyakarta', 'jne', 'REG', '1-2', 15000, 850, 'PJL/20200424/002', '2020033001'),
-(10, 'Aslan Kemal', '085333417341', 'Jl Janti Kusuma No 17, Gambiran, Semarang', '54327', 'Jawa Tengah', 'Semarang', 'pos', 'Paket Kilat Khusus', '1-2 HARI', 12000, 200, 'PJL/20200427/001', '2020033001'),
-(11, 'Rangga Ika Putra', '088207303222', 'Jl. Pancar Raya 13, Karang Baru, Kota Mataram, Nusa Tenggara Barat.', '40182', 'Nusa Tenggara Barat (NTB)', 'Mataram', 'pos', 'Paket Kilat Khusus', '3-5 HARI', 35000, 350, 'PJL/20200504/001', '2020032901'),
-(12, 'Haidar Baihaqi', '085337334136', 'Perumahan RSS Baumata Tipe 21 Blok F no 5, Desa Baumata Barat, Kecamatan Taebenu, Kabupaten Kupang.', '55039', 'Nusa Tenggara Timur (NTT)', 'Kupang', 'pos', 'Paket Kilat Khusus', '4-6 HARI', 56000, 200, 'PJL/20200512/001', '2020051201'),
-(13, 'Amal Setiawan', '085333461216', 'Jl Belakang UTY', '56066', 'DI Yogyakarta', 'Sleman', 'jne', 'REG', '1-2', 15000, 200, 'PJL/20200517/001', '2020051701');
 
 -- --------------------------------------------------------
 
@@ -88,24 +68,15 @@ INSERT INTO `tbl_datapenerima` (`id_datapenerima`, `nama_penerima`, `nohp_peneri
 
 CREATE TABLE `tbl_datapengiriman` (
   `id_pengiriman` int(11) NOT NULL,
-  `no_resi` varchar(20) NOT NULL,
-  `jasa_kirim` varchar(20) NOT NULL,
+  `no_resi` varchar(20) CHARACTER SET latin1 NOT NULL,
+  `jasa_kirim` varchar(20) CHARACTER SET latin1 NOT NULL,
   `tgl_kirim` date NOT NULL,
-  `lama_kirim` varchar(10) NOT NULL,
-  `catatan_kirim` text DEFAULT NULL,
+  `lama_kirim` varchar(10) CHARACTER SET latin1 NOT NULL,
+  `catatan_kirim` text CHARACTER SET latin1 DEFAULT NULL,
   `tgl_record` date NOT NULL,
-  `no_penjualan` varchar(16) NOT NULL,
-  `id_pgw` varchar(6) NOT NULL
+  `no_penjualan` varchar(16) CHARACTER SET latin1 NOT NULL,
+  `id_pgw` varchar(6) CHARACTER SET latin1 NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data untuk tabel `tbl_datapengiriman`
---
-
-INSERT INTO `tbl_datapengiriman` (`id_pengiriman`, `no_resi`, `jasa_kirim`, `tgl_kirim`, `lama_kirim`, `catatan_kirim`, `tgl_record`, `no_penjualan`, `id_pgw`) VALUES
-(3, 'EE200509026YK', 'Pos Indonesia', '2020-05-09', '1-2', 'Segera Konfirmasi Kami jika Paket Telah Diterima, Terima Kasih Bro.', '2020-05-11', 'PJL/20200424/002', 'PGW001'),
-(4, 'YK200512103MR', 'Pos Indonesia', '2020-05-12', '2-3', 'Mohon segera konfirmasi kami jika produk telah diterima. Terima kasih.', '2020-05-12', 'PJL/20200504/001', 'PGW001'),
-(5, 'JNE30455YK', 'JNE', '2020-05-17', '1-2', 'Konfirmasi kami jika telah diterima', '2020-05-17', 'PJL/20200517/001', 'PGW001');
 
 -- --------------------------------------------------------
 
@@ -181,10 +152,8 @@ CREATE TABLE `tbl_pelanggan` (
 
 INSERT INTO `tbl_pelanggan` (`kode_plg`, `nama_plg`, `gender_plg`, `email_plg`, `username_plg`, `password_plg`, `tglregis_plg`) VALUES
 ('2020032901', 'Rangga Putra Rizdillah', 'Laki-laki', 'ranggaputra@gmail.com', 'rangga', 'rangga', '2020-03-29'),
-('2020033001', 'Jamal Mustafa', 'Laki-laki', 'jamal@gmail.com', 'jamal', 'jamal', '2020-03-30'),
 ('2020040401', 'Arif Setyo', 'Laki-laki', 'arifsetyo@gmail.com', 'arif', 'arif', '2020-04-04'),
-('2020051201', 'Haidar Baihaqi', 'Laki-laki', 'haidarbaihaqi@gmail.com', 'haidar', 'haidar', '2020-05-12'),
-('2020051701', 'Amal Setiawan', 'Laki-laki', 'amal@gmail.com', 'amal', 'amal', '2020-05-17');
+('2020051201', 'Haidar Baihaqi', 'Laki-laki', 'haidarbaihaqi@gmail.com', 'haidar', 'haidar', '2020-05-12');
 
 -- --------------------------------------------------------
 
@@ -211,17 +180,7 @@ CREATE TABLE `tbl_penjualan` (
 --
 
 INSERT INTO `tbl_penjualan` (`no_penjualan`, `tgl_penjualan`, `jam_penjualan`, `total_penjualan`, `diskon_penjualan`, `bayar_penjualan`, `metode_penjualan`, `lunas_penjualan`, `status_penjualan`, `kode_plg`, `id_pgw`) VALUES
-('PJL/20200416/001', '2020-04-16', '22:04:27', 371450, 5, 380000, 'Offline', 'Lunas', 'Selesai', NULL, 'PGW001'),
-('PJL/20200416/002', '2020-04-16', '22:06:39', 120000, 0, 150000, 'Offline', 'Lunas', 'Selesai', NULL, 'PGW001'),
-('PJL/20200418/001', '2020-04-18', '18:42:07', 120000, 0, 120000, 'Offline', 'Lunas', 'Selesai', NULL, 'PGW001'),
-('PJL/20200418/002', '2020-04-18', '23:47:06', 90000, 0, 100000, 'Offline', 'Lunas', 'Selesai', NULL, 'PGW001'),
-('PJL/20200424/001', '2020-04-24', '13:00:20', 114000, 5, 120000, 'Offline', 'Lunas', 'Selesai', NULL, 'PGW001'),
-('PJL/20200424/002', '2020-04-24', '14:18:11', 317000, 0, 0, 'Online', 'Lunas', 'Selesai', '2020033001', NULL),
-('PJL/20200426/001', '2020-04-26', '15:08:28', 90000, 0, 100000, 'Offline', 'Lunas', 'Selesai', NULL, 'PGW001'),
-('PJL/20200427/001', '2020-04-27', '16:14:00', 120000, 0, 0, 'Online', 'Pending', 'Belum Bayar', '2020033001', NULL),
-('PJL/20200504/001', '2020-05-04', '15:31:08', 155000, 0, 0, 'Online', 'Lunas', 'Selesai', '2020032901', NULL),
-('PJL/20200512/001', '2020-05-12', '21:33:31', 120000, 0, 0, 'Online', 'Pending', 'Belum Bayar', '2020051201', NULL),
-('PJL/20200517/001', '2020-05-17', '19:40:02', 120000, 0, 0, 'Online', 'Lunas', 'Selesai', '2020051701', NULL);
+('PJL/20200522/001', '2020-05-22', '12:33:46', 90000, 0, 90000, 'Offline', 'Lunas', 'Selesai', NULL, 'PGW001');
 
 -- --------------------------------------------------------
 
@@ -245,19 +204,7 @@ CREATE TABLE `tbl_penjualandetail` (
 --
 
 INSERT INTO `tbl_penjualandetail` (`no_pjl_detail`, `id_prd`, `id_ukuran`, `harga_prd`, `diskon_prd`, `jml_prd`, `subtotal_prd`, `no_penjualan`) VALUES
-(1, 'PRD011', 53, 81000, 10, 1, 81000, 'PJL/20200416/001'),
-(2, 'PRD013', 63, 155000, 0, 2, 310000, 'PJL/20200416/001'),
-(3, 'PRD014', 67, 120000, 0, 1, 120000, 'PJL/20200416/002'),
-(4, 'PRD012', 32, 120000, 0, 1, 120000, 'PJL/20200418/001'),
-(5, 'PRD015', 72, 90000, 0, 1, 90000, 'PJL/20200418/002'),
-(6, 'PRD014', 67, 120000, 0, 1, 120000, 'PJL/20200424/001'),
-(9, 'PRD011', 53, 81000, 10, 2, 162000, 'PJL/20200424/002'),
-(10, 'PRD013', 63, 155000, 0, 1, 155000, 'PJL/20200424/002'),
-(11, 'PRD015', 72, 90000, 0, 1, 90000, 'PJL/20200426/001'),
-(12, 'PRD014', 67, 120000, 0, 1, 120000, 'PJL/20200427/001'),
-(13, 'PRD013', 61, 155000, 0, 1, 155000, 'PJL/20200504/001'),
-(14, 'PRD012', 31, 120000, 0, 1, 120000, 'PJL/20200512/001'),
-(15, 'PRD012', 31, 120000, 0, 1, 120000, 'PJL/20200517/001');
+(19, 'PRD003', 87, 90000, 0, 1, 90000, 'PJL/20200522/001');
 
 -- --------------------------------------------------------
 
@@ -282,20 +229,21 @@ CREATE TABLE `tbl_produk` (
 --
 
 INSERT INTO `tbl_produk` (`id_prd`, `nama_prd`, `kategori_prd`, `harga_prd`, `diskon_prd`, `stok_prd`, `berat_prd`, `deskripsi_prd`, `gambar_prd`) VALUES
-('PRD001', 'Kaus Playstation Hitam', 'Kaus', 90000, 0, 13, 250, 'Cotton 30s', '07fdd10557fefffdae314e0677ab2133.jpg'),
-('PRD002', 'Kaus Astronot On a Rocket', 'Kaus', 90000, 0, 11, 250, 'Cotton 30s', '297e365435bd93b324c09fb4e946fd06.jpg'),
-('PRD003', 'Kaus Astronot Coffe', 'Kaus', 90000, 10, 7, 250, 'Cotton 30s', '89183006f83126c6e155e7116d338148.jpg'),
-('PRD004', 'Kaus Sail Away Hitam', 'Kaus', 90000, 0, 12, 250, 'Cotton 30s', '518345ce0c5484748995ebd1374afd21.jpg'),
-('PRD005', 'Blue Skinny Jeans', 'Celana', 155000, 0, 18, 350, 'Jeans yang dapat melar menyesuaikan bentuk tubuh', 'b357627a8847c25ef7a2aed37702b6c0.jpg'),
-('PRD007', 'Jaket Bomber Dreambirds', 'Jaket', 190000, 0, 19, 500, '', '795338ce159da78cc55977005537061a.jpg'),
-('PRD008', 'Jaket Bomber Warehouse Hitam', 'Jaket', 180000, 0, 17, 500, NULL, '0c452a2a72bfe2514bd9d7ace8f6a77a.jpg'),
-('PRD009', 'Sweater Single Stone', 'Sweater', 160000, 0, 14, 400, NULL, '9b4e07c633f97054532ecd8288ba1820.jpg'),
-('PRD010', 'Jaket Hoodie Keeping Promise Hitam', 'Jaket', 170000, 0, 16, 400, NULL, '5154ca2a646e0e771711ff327e3f63ca.jpg'),
-('PRD011', 'Kaus Garis Kuning Hitam', 'Kaus', 90000, 10, 65, 250, 'Cotton 30s', 'prd-1585127477.jpg'),
-('PRD012', 'Kemeja Hitam Lengan Panjang', 'Kemeja', 120000, 0, 45, 200, 'dengan bahan kain yang nyaman untuk setiap kegiatan anda', 'prd-1584967402.jpg'),
-('PRD013', 'Loose Jeans Biru Muda', 'Celana', 155000, 0, 55, 350, 'Celana jeans longgar, nyaman untuk segala aktifitas anda', 'prd-1585154936.jpg'),
-('PRD014', 'Kemeja Abu Polos Lengan Panjang', 'Kemeja', 120000, 0, 42, 200, 'Dengan bahan kain yang nyaman untuk setiap kegiatan anda', 'prd-1585155380.jpg'),
-('PRD015', 'Kaus Jepang Putih', 'Kaus', 90000, 0, 46, 200, 'Cotton 30s', 'prd-1587228380.jpg');
+('PRD001', 'Turbidity Black', 'Kaus', 90000, 0, 55, 250, '', 'prd-1589990222.jpg'),
+('PRD002', 'Aester Earthshaker Black', 'Kaus', 90000, 0, 42, 250, '', 'prd-1589990332.jpg'),
+('PRD003', 'Noxa Grind Viruses Black', 'Kaus', 90000, 0, 39, 250, '', 'prd-1589990388.jpg'),
+('PRD005', 'Death Vertical Black', 'Kaus', 90000, 0, 26, 250, '', 'prd-1589990584.jpg'),
+('PRD006', 'Death Vomit Black Orange', 'Kaus', 90000, 0, 28, 250, '', 'prd-1589990639.jpg'),
+('PRD007', 'Jihad Black', 'Kaus', 90000, 0, 13, 250, '', 'prd-1589990686.jpg'),
+('PRD008', 'Turbidity Knife Black', 'Kaus', 90000, 0, 27, 250, '', 'prd-1589990742.jpg'),
+('PRD009', 'Gerogot Skull Black', 'Kaus', 90000, 0, 30, 250, '', 'prd-1589990859.jpg'),
+('PRD010', 'Noxa Propaganda', 'Kaus', 90000, 0, 44, 250, '', 'prd-1589990919.jpg'),
+('PRD011', 'BLCKSDW Hoodie C1', 'Jaket', 170000, 0, 41, 500, '', 'prd-1589991113.jpg'),
+('PRD012', 'Black Shadow UFO Hoodie', 'Jaket', 170000, 0, 16, 500, '', 'prd-1589991249.jpg'),
+('PRD013', 'BLCKSDW Tricolor', 'Kaus', 90000, 0, 47, 250, '', 'prd-1589991304.jpg'),
+('PRD014', 'Black Shadow est013 Hoodie', 'Jaket', 170000, 0, 31, 500, '', 'prd-1590124908.jpg'),
+('PRD015', 'Black Shadow Flannel C1', 'Kemeja', 130000, 0, 17, 250, '', 'prd-1590125004.jpg'),
+('PRD016', 'Black Shadow Flannel C2', 'Kemeja', 130000, 0, 17, 250, '', 'prd-1590125068.jpg');
 
 -- --------------------------------------------------------
 
@@ -315,28 +263,66 @@ CREATE TABLE `tbl_ukuranprd` (
 --
 
 INSERT INTO `tbl_ukuranprd` (`id_ukuran`, `keterangan_ukr`, `stok_ukr`, `id_prd`) VALUES
-(30, 'S', 10, 'PRD012'),
-(31, 'M', 10, 'PRD012'),
-(32, 'L', 15, 'PRD012'),
-(33, 'XL', 10, 'PRD012'),
-(51, 'S', 15, 'PRD011'),
-(52, 'M', 20, 'PRD011'),
-(53, 'L', 20, 'PRD011'),
-(54, 'XL', 10, 'PRD011'),
-(60, '29', 12, 'PRD013'),
-(61, '30', 15, 'PRD013'),
-(62, '31', 10, 'PRD013'),
-(63, '32', 8, 'PRD013'),
-(64, '33', 10, 'PRD013'),
-(65, 'S', 5, 'PRD014'),
-(66, 'M', 14, 'PRD014'),
-(67, 'L', 17, 'PRD014'),
-(68, 'XL', 6, 'PRD014'),
-(69, 'XXL', 0, 'PRD014'),
-(70, 'S', 12, 'PRD015'),
-(71, 'M', 10, 'PRD015'),
-(72, 'L', 18, 'PRD015'),
-(73, 'XL', 6, 'PRD015');
+(78, 'S', 12, 'PRD001'),
+(79, 'M', 18, 'PRD001'),
+(80, 'L', 17, 'PRD001'),
+(81, 'XL', 8, 'PRD001'),
+(82, 'S', 8, 'PRD002'),
+(83, 'M', 12, 'PRD002'),
+(84, 'L', 19, 'PRD002'),
+(85, 'XL', 3, 'PRD002'),
+(86, 'S', 18, 'PRD003'),
+(87, 'M', 7, 'PRD003'),
+(88, 'L', 4, 'PRD003'),
+(89, 'XL', 10, 'PRD003'),
+(94, 'S', 6, 'PRD005'),
+(95, 'M', 7, 'PRD005'),
+(96, 'L', 3, 'PRD005'),
+(97, 'XL', 10, 'PRD005'),
+(98, 'S', 3, 'PRD006'),
+(99, 'M', 14, 'PRD006'),
+(100, 'L', 10, 'PRD006'),
+(101, 'XL', 1, 'PRD006'),
+(102, 'S', 2, 'PRD007'),
+(103, 'M', 3, 'PRD007'),
+(104, 'L', 2, 'PRD007'),
+(105, 'XL', 6, 'PRD007'),
+(106, 'S', 14, 'PRD008'),
+(107, 'M', 8, 'PRD008'),
+(108, 'L', 4, 'PRD008'),
+(109, 'XL', 1, 'PRD008'),
+(110, 'S', 4, 'PRD009'),
+(111, 'M', 12, 'PRD009'),
+(112, 'L', 11, 'PRD009'),
+(113, 'XL', 3, 'PRD009'),
+(114, 'S', 12, 'PRD010'),
+(115, 'M', 23, 'PRD010'),
+(116, 'L', 7, 'PRD010'),
+(117, 'XL', 2, 'PRD010'),
+(118, 'S', 0, 'PRD011'),
+(119, 'M', 12, 'PRD011'),
+(120, 'L', 18, 'PRD011'),
+(121, 'XL', 11, 'PRD011'),
+(122, 'S', 3, 'PRD012'),
+(123, 'M', 2, 'PRD012'),
+(124, 'L', 10, 'PRD012'),
+(125, 'XL', 1, 'PRD012'),
+(126, 'S', 17, 'PRD013'),
+(127, 'M', 12, 'PRD013'),
+(128, 'L', 16, 'PRD013'),
+(129, 'XL', 2, 'PRD013'),
+(130, 'S', 6, 'PRD014'),
+(131, 'M', 9, 'PRD014'),
+(132, 'L', 12, 'PRD014'),
+(133, 'XL', 4, 'PRD014'),
+(134, 'S', 3, 'PRD015'),
+(135, 'M', 7, 'PRD015'),
+(136, 'L', 5, 'PRD015'),
+(137, 'XL', 2, 'PRD015'),
+(138, 'S', 2, 'PRD016'),
+(139, 'M', 8, 'PRD016'),
+(140, 'L', 4, 'PRD016'),
+(141, 'XL', 3, 'PRD016');
 
 --
 -- Indexes for dumped tables
@@ -346,31 +332,37 @@ INSERT INTO `tbl_ukuranprd` (`id_ukuran`, `keterangan_ukr`, `stok_ukr`, `id_prd`
 -- Indeks untuk tabel `tbl_buktitransfer`
 --
 ALTER TABLE `tbl_buktitransfer`
-  ADD PRIMARY KEY (`id_transfer`);
+  ADD PRIMARY KEY (`id_transfer`),
+  ADD KEY `bkt_nopjl` (`no_penjualan`);
 
 --
 -- Indeks untuk tabel `tbl_datapenerima`
 --
 ALTER TABLE `tbl_datapenerima`
-  ADD PRIMARY KEY (`id_datapenerima`);
+  ADD PRIMARY KEY (`id_datapenerima`),
+  ADD KEY `pnrm_nopjl` (`no_penjualan`);
 
 --
 -- Indeks untuk tabel `tbl_datapengiriman`
 --
 ALTER TABLE `tbl_datapengiriman`
-  ADD PRIMARY KEY (`id_pengiriman`);
+  ADD PRIMARY KEY (`id_pengiriman`),
+  ADD KEY `pngrmn_nopjl` (`no_penjualan`);
 
 --
 -- Indeks untuk tabel `tbl_keranjang`
 --
 ALTER TABLE `tbl_keranjang`
-  ADD PRIMARY KEY (`id_keranjang`);
+  ADD PRIMARY KEY (`id_keranjang`),
+  ADD KEY `krj_kodeplg` (`kode_plg`);
 
 --
 -- Indeks untuk tabel `tbl_keranjangdetail`
 --
 ALTER TABLE `tbl_keranjangdetail`
-  ADD PRIMARY KEY (`id_krjdt`);
+  ADD PRIMARY KEY (`id_krjdt`),
+  ADD KEY `krjd_idprd` (`id_prd`),
+  ADD KEY `krjd_idkrj` (`id_keranjang`);
 
 --
 -- Indeks untuk tabel `tbl_pegawai`
@@ -388,13 +380,17 @@ ALTER TABLE `tbl_pelanggan`
 -- Indeks untuk tabel `tbl_penjualan`
 --
 ALTER TABLE `tbl_penjualan`
-  ADD PRIMARY KEY (`no_penjualan`);
+  ADD PRIMARY KEY (`no_penjualan`),
+  ADD KEY `pjl_idpgw` (`id_pgw`),
+  ADD KEY `pjl_kdplg` (`kode_plg`);
 
 --
 -- Indeks untuk tabel `tbl_penjualandetail`
 --
 ALTER TABLE `tbl_penjualandetail`
-  ADD PRIMARY KEY (`no_pjl_detail`);
+  ADD PRIMARY KEY (`no_pjl_detail`),
+  ADD KEY `pjld_idprd` (`id_prd`),
+  ADD KEY `pjld_nopjl` (`no_penjualan`);
 
 --
 -- Indeks untuk tabel `tbl_produk`
@@ -406,7 +402,8 @@ ALTER TABLE `tbl_produk`
 -- Indeks untuk tabel `tbl_ukuranprd`
 --
 ALTER TABLE `tbl_ukuranprd`
-  ADD PRIMARY KEY (`id_ukuran`);
+  ADD PRIMARY KEY (`id_ukuran`),
+  ADD KEY `ukuran_idprd` (`id_prd`);
 
 --
 -- AUTO_INCREMENT untuk tabel yang dibuang
@@ -422,7 +419,7 @@ ALTER TABLE `tbl_buktitransfer`
 -- AUTO_INCREMENT untuk tabel `tbl_datapenerima`
 --
 ALTER TABLE `tbl_datapenerima`
-  MODIFY `id_datapenerima` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id_datapenerima` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT untuk tabel `tbl_datapengiriman`
@@ -434,19 +431,74 @@ ALTER TABLE `tbl_datapengiriman`
 -- AUTO_INCREMENT untuk tabel `tbl_keranjangdetail`
 --
 ALTER TABLE `tbl_keranjangdetail`
-  MODIFY `id_krjdt` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id_krjdt` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT untuk tabel `tbl_penjualandetail`
 --
 ALTER TABLE `tbl_penjualandetail`
-  MODIFY `no_pjl_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `no_pjl_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT untuk tabel `tbl_ukuranprd`
 --
 ALTER TABLE `tbl_ukuranprd`
-  MODIFY `id_ukuran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
+  MODIFY `id_ukuran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=142;
+
+--
+-- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
+--
+
+--
+-- Ketidakleluasaan untuk tabel `tbl_buktitransfer`
+--
+ALTER TABLE `tbl_buktitransfer`
+  ADD CONSTRAINT `bkt_nopjl` FOREIGN KEY (`no_penjualan`) REFERENCES `tbl_penjualan` (`no_penjualan`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Ketidakleluasaan untuk tabel `tbl_datapenerima`
+--
+ALTER TABLE `tbl_datapenerima`
+  ADD CONSTRAINT `pnrm_nopjl` FOREIGN KEY (`no_penjualan`) REFERENCES `tbl_penjualan` (`no_penjualan`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Ketidakleluasaan untuk tabel `tbl_datapengiriman`
+--
+ALTER TABLE `tbl_datapengiriman`
+  ADD CONSTRAINT `pngrmn_nopjl` FOREIGN KEY (`no_penjualan`) REFERENCES `tbl_penjualan` (`no_penjualan`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Ketidakleluasaan untuk tabel `tbl_keranjang`
+--
+ALTER TABLE `tbl_keranjang`
+  ADD CONSTRAINT `krj_kodeplg` FOREIGN KEY (`kode_plg`) REFERENCES `tbl_pelanggan` (`kode_plg`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Ketidakleluasaan untuk tabel `tbl_keranjangdetail`
+--
+ALTER TABLE `tbl_keranjangdetail`
+  ADD CONSTRAINT `krjd_idkrj` FOREIGN KEY (`id_keranjang`) REFERENCES `tbl_keranjang` (`id_keranjang`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `krjd_idprd` FOREIGN KEY (`id_prd`) REFERENCES `tbl_produk` (`id_prd`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Ketidakleluasaan untuk tabel `tbl_penjualan`
+--
+ALTER TABLE `tbl_penjualan`
+  ADD CONSTRAINT `pjl_idpgw` FOREIGN KEY (`id_pgw`) REFERENCES `tbl_pegawai` (`id_pgw`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `pjl_kdplg` FOREIGN KEY (`kode_plg`) REFERENCES `tbl_pelanggan` (`kode_plg`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Ketidakleluasaan untuk tabel `tbl_penjualandetail`
+--
+ALTER TABLE `tbl_penjualandetail`
+  ADD CONSTRAINT `pjld_idprd` FOREIGN KEY (`id_prd`) REFERENCES `tbl_produk` (`id_prd`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `pjld_nopjl` FOREIGN KEY (`no_penjualan`) REFERENCES `tbl_penjualan` (`no_penjualan`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Ketidakleluasaan untuk tabel `tbl_ukuranprd`
+--
+ALTER TABLE `tbl_ukuranprd`
+  ADD CONSTRAINT `ukuran_idprd` FOREIGN KEY (`id_prd`) REFERENCES `tbl_produk` (`id_prd`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
