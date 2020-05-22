@@ -156,9 +156,9 @@
       				<tr>
       					<td colspan="4" style="text-align: right;">
                   <?php 
-                    if($data_pjl['status_penjualan'] != 'Selesai') {
+                    if($data_pjl['status_penjualan'] != 'Dikirim' || $data_pjl['status_penjualan'] != 'Selesai') {
                   ?>
-      						<button class="btn btn-sm btn-danger tmb-batal" style="font-size: 11px;">Batalkan</button>
+      						<button class="btn btn-sm btn-danger tmb_batal" id="<?php echo $no_penjualan; ?>" data-status="<?php echo $data_pjl['status_penjualan']; ?>" style="font-size: 11px;">Batalkan</button>
                   <?php } ?>
       						<?php 
       							if($data_pjl['status_penjualan'] == 'Belum Bayar') {
@@ -236,7 +236,7 @@
       			<tfoot>
       				<tr>
       					<td colspan="4" style="text-align: right;">
-      						<button class="btn btn-sm btn-danger tmb-batal" style="font-size: 11px;">Batalkan</button>
+      						<button class="btn btn-sm btn-danger tmb_batal" id="<?php echo $no_penjualan; ?>" data-status="<?php echo $data_pjl['status_penjualan']; ?>" style="font-size: 11px;">Batalkan</button>
       						<a href="?page=pembayaran&nopenjualan=<?php echo $data_pjl['no_penjualan'] ?>">
       							<button class="btn btn-sm btn-success tmb-detailkonf" style="font-size: 11px;">Detail dan Konfirmasi Pembayaran</button>
       						</a>
@@ -317,7 +317,7 @@
       			<tfoot>
       				<tr>
       					<td colspan="4" style="text-align: right;">
-      						<button class="btn btn-sm btn-danger tmb-batal" style="font-size: 11px;">Batalkan</button>
+      						<button class="btn btn-sm btn-danger tmb_batal" id="<?php echo $no_penjualan; ?>" data-status="<?php echo $data_pjl['status_penjualan']; ?>" style="font-size: 11px;">Batalkan</button>
       						<a href="?page=detailpembayaran&nopenjualan=<?php echo $data_pjl['no_penjualan'] ?>">
 	      						<button class="btn btn-sm btn-primary" style="font-size: 11px;">Detail Transaksi</button>
 	      					</a>
@@ -332,7 +332,7 @@
     	?>
     </div>
 
-    <!-- TAB TRANSAKSI DIKIRM -->
+    <!-- TAB TRANSAKSI DIKIRIM -->
     <div class="tab-pane fade" id="dikirim" role="tabpanel" aria-labelledby="dikirim-tab">
     	<?php if($count_dikirim == 0) { ?>
     		<div class="transaksi-kosong">
@@ -389,7 +389,7 @@
             <tfoot>
               <tr>
                 <td colspan="4" style="text-align: right;">
-                  <button class="btn btn-sm btn-danger tmb-batal" style="font-size: 11px;">Batalkan</button>
+                  <!-- <button class="btn btn-sm btn-danger tmb-batal" style="font-size: 11px;">Batalkan</button> -->
                   <a href="?page=detailpembayaran&nopenjualan=<?php echo $data_pjl['no_penjualan'] ?>">
                     <button class="btn btn-sm btn-primary tmb-detailkonf" style="font-size: 11px;">Detail Transaksi</button>
                   </a>
@@ -472,6 +472,45 @@
     </div>
 	</div>
 </div>
+
+<script>
+  $(".tmb_batal").click(function() {
+    var no_penjualan = $(this).attr('id');
+    var status = $(this).data('status');
+    Swal.fire({
+      title: 'Anda akan membatalkan transaksi '+no_penjualan+' dengan status saat ini '+status,
+      text: "Peringatan : Pelanggan tidak akan dapat melanjutkan transaksi ini.",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Ya, Batalkan',
+      cancelButtonText: 'Tidak'
+    }).then((result) => {
+      if (result.value) {
+        $.ajax({
+          type: "POST",
+          url: "usrajax/proses_hapus.php?page=transaksi",
+          data: "key="+no_penjualan+"&status="+status,
+          success:function(hasil) {
+            Swal.fire({
+              title: 'Berhasil',
+              text: 'Data Berhasil Dihapus',
+              type: 'success',
+              confirmButtonColor: '#3085d6',
+              confirmButtonText: 'OK'
+            }).then((ok) => {
+              if (ok.value) {
+                // window.location='?page=data_transaksi_offline';
+                location.reload();
+              }
+            })
+          }
+        })
+      }
+    })
+  })
+</script>
 
 <?php } else { ?>
   <script>
