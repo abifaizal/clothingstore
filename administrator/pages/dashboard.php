@@ -1,115 +1,147 @@
-<!-- Content Header (Page header) -->
+
 <section class="content-header">
   <h1>
     Dashboard
     <small></small>
   </h1>
   <ol class="breadcrumb">
-    <!-- <li><a href="./"><i class="fa fa-dashboard"></i> Dashboard</a></li> -->
-    <!-- <li><a href="#"></a></li> -->
     <li class="active">Dashboard</li>
   </ol>
 </section>
 
 <!-- Main content -->
 <section class="content">
-  <!-- Default box -->
   <?php 
-    // $array_prov = array();
-    // $array_prov = rajaongkir_provinsi();
-    $curl = curl_init();
+    $query_dash = "SELECT * FROM tbl_penjualan WHERE metode_penjualan = 'Online' AND status_penjualan = 'Belum Bayar'";
+    $sql_pjl = mysqli_query($conn, $query_dash) or die ($conn->error);
+    $count_belumbayar = mysqli_num_rows($sql_pjl);
 
-    curl_setopt_array($curl, array(
-      CURLOPT_URL => "https://api.rajaongkir.com/starter/city?id=&province=23",
-      CURLOPT_RETURNTRANSFER => true,
-      CURLOPT_ENCODING => "",
-      CURLOPT_MAXREDIRS => 10,
-      CURLOPT_TIMEOUT => 30,
-      CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-      CURLOPT_CUSTOMREQUEST => "GET",
-      CURLOPT_HTTPHEADER => array(
-        "key: 73f69249ba117e6902674578252fa15f"
-      ),
-    ));
+    $query_dash = "SELECT * FROM tbl_penjualan WHERE metode_penjualan = 'Online' AND status_penjualan = 'Menunggu Verifikasi'";
+    $sql_pjl = mysqli_query($conn, $query_dash) or die ($conn->error);
+    $count_menungguverifikasi = mysqli_num_rows($sql_pjl);
 
-    $array_city = array();
-    $response = curl_exec($curl);
-    $err = curl_error($curl);
+    $query_dash = "SELECT * FROM tbl_penjualan WHERE metode_penjualan = 'Online' AND status_penjualan = 'Verifikasi'";
+    $sql_pjl = mysqli_query($conn, $query_dash) or die ($conn->error);
+    $count_verifikasi = mysqli_num_rows($sql_pjl);
 
-    curl_close($curl);
+    $query_dash = "SELECT * FROM tbl_penjualan WHERE metode_penjualan = 'Online' AND status_penjualan = 'Dikirim'";
+    $sql_pjl = mysqli_query($conn, $query_dash) or die ($conn->error);
+    $count_dikirim = mysqli_num_rows($sql_pjl);
 
-    $result = json_decode($response, true);
-    if(count($result['rajaongkir']['results'])>1) {
-      foreach ($result['rajaongkir']['results'] as $key => $value) {
-        $array_city[] = array(
-          'id' => $value['city_id'],
-          'type' => $value['type'],
-          'name' => $value['city_name'],
-          'kode_pos' => $value['postal_code']
-        );
-      }
-    }
+    $query_dash = "SELECT * FROM tbl_penjualan WHERE metode_penjualan = 'Online' AND status_penjualan = 'Selesai'";
+    $sql_pjl = mysqli_query($conn, $query_dash) or die ($conn->error);
+    $count_selesai = mysqli_num_rows($sql_pjl);
 
-    $curl = curl_init();
-    curl_setopt_array($curl, array(
-      CURLOPT_URL => "https://api.rajaongkir.com/starter/cost",
-      CURLOPT_RETURNTRANSFER => true,
-      CURLOPT_ENCODING => "",
-      CURLOPT_MAXREDIRS => 10,
-      CURLOPT_TIMEOUT => 30,
-      CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-      CURLOPT_CUSTOMREQUEST => "POST",
-      CURLOPT_POSTFIELDS => "origin=177&destination=213&weight=350&courier=jne",
-      CURLOPT_HTTPHEADER => array(
-        "content-type: application/x-www-form-urlencoded",
-        "key: 73f69249ba117e6902674578252fa15f"
-      ),
-    ));
+    $query_dash = "SELECT * FROM tbl_keranjang";
+    $sql_pjl = mysqli_query($conn, $query_dash) or die ($conn->error);
+    $count_keranjang = mysqli_num_rows($sql_pjl);
 
-    $array_cost = array();
-    $response = curl_exec($curl);
-    $err = curl_error($curl);
+    $query_dash = "SELECT * FROM tbl_produk";
+    $sql_pjl = mysqli_query($conn, $query_dash) or die ($conn->error);
+    $count_produk = mysqli_num_rows($sql_pjl);
 
-    curl_close($curl);
-
-    $result = json_decode($response, true);
-    // if(count($result['rajaongkir']['results'])>1) 
-    foreach ($result['rajaongkir']['results'] as $key => $value) {
-      foreach ($value['costs'] as $key => $value) {
-        $array_cost[] = array(
-          'service' => $value['service'],
-          'description' => $value['description'],
-          'cost' => $value['cost'][0]['value'],
-          'etd' => $value['cost'][0]['etd']
-        );
-      }
-    }
-    
-    print_r($array_cost);
-    // print_r($array_city);
-    // $count = mysqli_num_rows($data);
-   ?>
-  <div class="box">
-    <div class="box-header with-border">
-      <h3 class="box-title">Title</h3>
+    $query_dash = "SELECT * FROM tbl_pelanggan";
+    $sql_pjl = mysqli_query($conn, $query_dash) or die ($conn->error);
+    $count_pelanggan = mysqli_num_rows($sql_pjl);
+  ?>
+  <div class="row">
+    <div class="col-lg-3 col-xs-6">
+      <!-- small box -->
+      <a href="?page=data_transaksi_online&tab=belumbayar">
+        <div class="small-box bg-red">
+          <div class="inner">
+            <h3><?php echo $count_belumbayar; ?></h3>
+            <p>Transaksi Belum Bayar</p>
+          </div>
+        </div>
+      </a>
     </div>
-    <div class="box-body">
-      Start creating your amazing application!
-      <select name="" id="" style="">
-        <?php 
-          for($i = 0; $i < count($array_city); $i++) {
-        ?>
-            <option value="<?php echo $array_city[$i]['id']; ?>"><?php echo $array_city[$i]['name']; ?> (<?php echo $array_city[$i]['type']; ?>)</option>
-        <?php } ?>
-      </select>
+    <!-- ./col -->
+    <div class="col-lg-3 col-xs-6">
+      <!-- small box -->
+      <a href="?page=data_transaksi_online&tab=verifikasi">
+        <div class="small-box bg-yellow">
+          <div class="inner">
+            <h3><?php echo $count_menungguverifikasi; ?></h3>
+            <p>Transaksi Menunggu Verifikasi</p>
+          </div>
+        </div>
+      </a>
     </div>
-    <!-- /.box-body -->
-    <div class="box-footer">
-      Footer
+    <!-- ./col -->
+    <div class="col-lg-3 col-xs-6">
+      <!-- small box -->
+      <a href="?page=data_transaksi_online&tab=verifikasi">
+        <div class="small-box bg-purple">
+          <div class="inner">
+            <h3><?php echo $count_verifikasi; ?></h3>
+            <p>Transaksi Belum Dikirim</p>
+          </div>
+        </div>
+      </a>
     </div>
-    <!-- /.box-footer-->
+    <!-- ./col -->
+    <div class="col-lg-3 col-xs-6">
+      <!-- small box -->
+      <a href="?page=data_transaksi_online&tab=dikirim">
+        <div class="small-box bg-blue">
+          <div class="inner">
+            <h3><?php echo $count_dikirim; ?></h3>
+            <p>Transaksi dalam Proses Pengiriman</p>
+          </div>
+        </div>
+      </a>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-3 col-xs-6">
+      <!-- small box -->
+      <a href="?page=data_transaksi_online&tab=selesai">
+        <div class="small-box bg-green">
+          <div class="inner">
+            <h3><?php echo $count_selesai; ?></h3>
+            <p>Transaksi Selesai</p>
+          </div>
+        </div>
+      </a>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-3 col-xs-6">
+      <!-- small box -->
+      <a href="?page=data_keranjang">
+        <div class="small-box bg-navy">
+          <div class="inner">
+            <h3><?php echo $count_keranjang; ?></h3>
+            <p>Keranjang Aktif</p>
+          </div>
+        </div>
+      </a>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-3 col-xs-6">
+      <!-- small box -->
+      <a href="?page=produk">
+        <div class="small-box bg-aqua">
+          <div class="inner">
+            <h3><?php echo $count_produk; ?></h3>
+            <p>Jumlah Produk Saat ini</p>
+          </div>
+        </div>
+      </a>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-3 col-xs-6">
+      <!-- small box -->
+      <a href="?page=pelanggan">
+        <div class="small-box" style="background-color: #222D32;">
+          <div class="inner" style="color: #FFFFFF;">
+            <h3><?php echo $count_pelanggan; ?></h3>
+            <p>Jumlah Pelanggan Online</p>
+          </div>
+        </div>
+      </a>
+    </div>
+    <!-- ./col -->
   </div>
-  <!-- /.box -->
 
 </section>
 <!-- /.content -->
