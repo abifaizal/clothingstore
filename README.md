@@ -1,4 +1,4 @@
-# Website Penjualan Produk Pakaian Distro (75% Finish)
+# Website Penjualan Produk Pakaian Distro 
 
 terdiri dari halaman landing page untuk user dan sistem adminitrator
 
