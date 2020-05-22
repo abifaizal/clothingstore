@@ -67,8 +67,8 @@
           Hubungi Kami
         </h5>
         <p class="alamat">
-          Jl. Bhayangkara No.01, Panggel, Kembaran, Kec. Kebumen, Kabupaten Kebumen, Jawa Tengah 54315. <br>
-          Telp. 0877 1507 9394 <br>
+          BlackShadow Merchandise Jln. Tentara No 17, Selatan Polres Kebumen. <br>
+          Telp. 0896 0251 3757 <br>
           Buka  09:00 - 20:00
         </p>
         <div class="">
