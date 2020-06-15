@@ -40,6 +40,10 @@
 	  <link rel="stylesheet" href="assets/style/admin_style.css">
 
 	  <link rel="stylesheet" href="../assets/sweetalert/dist/sweetalert2.min.css">
+		
+		<!-- Select 2 -->
+	  <!-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" /> -->
+	  <link rel="stylesheet" href="assets/adminLTE/bower_components/select2/dist/css/select2.min.css">
 	</head>
 	<body class="hold-transition skin-blue sidebar-mini">
 	<!-- Site wrapper -->
@@ -78,13 +82,13 @@
 
 	                <p>
 	                  <?php echo $_SESSION['username_pgw']; ?> - <?php echo $_SESSION['posisi_pgw']; ?> <br>
-	                  00:58:21
+	                  <span class="text-white tanggal-jam" id="tanggal"><?php echo date('d M Y'); ?> - </span><span class="text-white tanggal-jam" id="jam"></span>
 	                </p>
 	              </li>
 	              <!-- Menu Footer-->
 	              <li class="user-footer">
 	                <div class="pull-left">
-	                  <a href="#" class="btn btn-default btn-flat">Profile</a>
+	                  <a href="?page=edit_pegawai&id_pgw=<?php echo $_SESSION['id_pgw']; ?>" class="btn btn-default btn-flat">Profile</a>
 	                </div>
 	                <div class="pull-right">
 	                  <button type="button" class="btn btn-default btn-flat" id="tmb_logout">Log out</button>
@@ -145,7 +149,7 @@
 	            <i class="fa fa-shopping-cart"></i> <span>Keranjang</span>
 	          </a>
 	        </li>
-	        <li class="treeview <?php if(@$_GET['page']=='data_transaksi_offline' || @$_GET['page']=='data_transaksi_online' || @$_GET['page']=='transaksi_offline' || @$_GET['page']=='form_pengiriman' || @$_GET['page']=='form_editpengiriman') {echo 'active';} ?>">
+	        <li class="treeview <?php if(@$_GET['page']=='data_transaksi_offline' || @$_GET['page']=='data_transaksi_online' || @$_GET['page']=='transaksi_offline' || @$_GET['page']=='form_pengiriman' || @$_GET['page']=='form_editpengiriman' || @$_GET['page']=='laporan_penjualan') {echo 'active';} ?>">
 	          <a href="#">
 	            <i class="fa fa-money"></i> <span>Transaksi Penjualan</span>
 	            <span class="pull-right-container">
@@ -161,6 +165,11 @@
 	            <li class="<?php if(@$_GET['page']=='data_transaksi_online' || @$_GET['page']=='form_pengiriman' || @$_GET['page']=='form_editpengiriman') {echo 'active';} ?>">
 	              <a href="?page=data_transaksi_online">
 	                <i class="fa fa-circle-o"></i> Online
+	              </a>
+	            </li>
+	            <li class="<?php if(@$_GET['page']=='laporan_penjualan') {echo 'active';} ?>">
+	              <a href="?page=laporan_penjualan">
+	                <i class="fa fa-circle-o"></i> Laporan Penjualan
 	              </a>
 	            </li>
 	          </ul>
@@ -184,6 +193,9 @@
 		<script src="assets/adminLTE/bower_components/morris.js/morris.min.js"></script>
 		<!-- jQuery Knob Chart -->
 		<script src="assets/adminLTE/bower_components/jquery-knob/dist/jquery.knob.min.js"></script>
+		<!-- Select 2 JS -->
+		<!-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script> -->
+		<script src="assets/adminLTE/bower_components/select2/dist/js/select2.full.min.js"></script>
 
 	  <!-- Content Wrapper. Contains page content -->
 	  <div class="content-wrapper">
@@ -216,6 +228,8 @@
 	        include "pages/form_pengiriman.php";
 	      } else if(@$_GET['page']=='form_editpengiriman') {
 	        include "pages/form_editpengiriman.php";
+	      } else if(@$_GET['page']=='laporan_penjualan') {
+	        include "pages/laporan_penjualan.php";
 	      } 
 	     ?>
 	  </div>
@@ -288,6 +302,27 @@
         }
       })
       });
+
+    function checkTime(i) {
+      if (i < 10) {
+        i = "0" + i;
+      }
+      return i;
+    }
+    function startTime() {
+      var today = new Date();
+      var h = today.getHours();
+      var m = today.getMinutes();
+      var s = today.getSeconds();
+      // add a zero in front of numbers<10
+      m = checkTime(m);
+      s = checkTime(s);
+      document.getElementById('jam').innerHTML = h + ":" + m + ":" + s;
+      t = setTimeout(function() {
+        startTime()
+      }, 500);
+    }
+    startTime();
 	</script>
 	</body>
 </html>
