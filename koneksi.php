@@ -1,73 +1,63 @@
 <?php 
 	$conn = new mysqli("localhost", "root", "", "clothstore");
 
-	function rajaongkir_provinsi() {
-		$array_prov = array();
-		$curl = curl_init();
-    curl_setopt_array($curl, array(
-      CURLOPT_URL => "https://api.rajaongkir.com/starter/province?id=",
-      CURLOPT_RETURNTRANSFER => true,
-      CURLOPT_ENCODING => "",
-      CURLOPT_MAXREDIRS => 10,
-      CURLOPT_TIMEOUT => 30,
-      CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-      CURLOPT_CUSTOMREQUEST => "GET",
-      CURLOPT_HTTPHEADER => array(
-        "key: 73f69249ba117e6902674578252fa15f"
-      ),
-    ));
-
-    $response = curl_exec($curl);
-    $err = curl_error($curl);
-
-    curl_close($curl);
-    $result = json_decode($response, true);
-
-    if(count($result['rajaongkir']['results'])>1) {
-      foreach ($result['rajaongkir']['results'] as $key => $value) {
-        $array_prov[] = array(
-          'id' => $value['province_id'],
-          'name' => $value['province']
-        );
-      }
-    }
-
-    return $array_prov;
+  function tgl_indo($tgl) {
+    $tanggal = substr($tgl,8,2);
+    $bulan = substr($tgl,5,2);
+    if($bulan==1) {
+      $bulan = "Jan";
+    } else if($bulan==2) {
+      $bulan = "Feb";
+    } else if($bulan==3) {
+      $bulan = "Mar";
+    } else if($bulan==4) {
+      $bulan = "Apr";
+    } else if($bulan==5) {
+      $bulan = "Mei";
+    } else if($bulan==6) {
+      $bulan = "Jun";
+    } else if($bulan==7) {
+      $bulan = "Jul";
+    } else if($bulan==8) {
+      $bulan = "Agu";
+    } else if($bulan==9) {
+      $bulan = "Sep";
+    } else if($bulan==10) {
+      $bulan = "Okt";
+    } else if($bulan==11) {
+      $bulan = "Nov";
+    } else if($bulan==12) {
+      $bulan = "Des";
+    } 
+    $tahun = substr($tgl,0,4);
+    return $tanggal.' '.$bulan.' '.$tahun;     
   }
 
-  function rajaongkir_kabkota() {
-		$array_city = array();
-		$curl = curl_init();
-    curl_setopt_array($curl, array(
-      CURLOPT_URL => "https://api.rajaongkir.com/starter/city?id=&province=1",
-      CURLOPT_RETURNTRANSFER => true,
-      CURLOPT_ENCODING => "",
-      CURLOPT_MAXREDIRS => 10,
-      CURLOPT_TIMEOUT => 30,
-      CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-      CURLOPT_CUSTOMREQUEST => "GET",
-      CURLOPT_HTTPHEADER => array(
-        "key: 73f69249ba117e6902674578252fa15f"
-      ),
-    ));
-
-    $response = curl_exec($curl);
-    $err = curl_error($curl);
-
-    curl_close($curl);
-    $result = json_decode($response, true);
-
-    if(count($result['rajaongkir']['results'])>1) {
-      foreach ($result['rajaongkir']['results'] as $key => $value) {
-        $array_city[] = array(
-          'id' => $value['city_id'],
-          'type' => $value['type'],
-          'name' => $value['city_name'],
-          'kode_pos' => $value['postal_code']
-        );
-      }
-    }
-
-    return $array_city;
+  function bulan_indo($bulan) {
+    if($bulan==1) {
+      return "Januari";
+    } else if($bulan==2) {
+      return "Februari";
+    } else if($bulan==3) {
+      return "Maret";
+    } else if($bulan==4) {
+      return "April";
+    } else if($bulan==5) {
+      return "Mei";
+    } else if($bulan==6) {
+      return "Juni";
+    } else if($bulan==7) {
+      return "Juli";
+    } else if($bulan==8) {
+      return "Agustus";
+    } else if($bulan==9) {
+      return "September";
+    } else if($bulan==10) {
+      return "Oktober";
+    } else if($bulan==11) {
+      return "November";
+    } else if($bulan==12) {
+      return "Desember";
+    } 
   }
  ?>
