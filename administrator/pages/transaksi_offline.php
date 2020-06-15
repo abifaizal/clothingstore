@@ -588,6 +588,7 @@
     }
     else {
       // alert();
+      var no_penjualan = $("#no_penjualan").val();
       var form_data = $("#form_transaksi_penjualan").serialize();
       Swal.fire({
         title: 'Simpan ?',
@@ -614,6 +615,7 @@
                     if (ok.value) {
                       // window.location='?page=entry_datapenjualan';
                       // window.open("laporan/?page=nota_penjualan&no_pjl="+no_penjualan);
+                      window.open("../arsip/?page=npjl_offline&npjl="+no_penjualan);
                       location.reload();
                       // alert('berhasil');
                     }
