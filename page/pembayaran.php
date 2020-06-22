@@ -67,9 +67,7 @@
 		 ?>
 			<tr>
 				<td>
-					<div class="foto-produk">
-		        <img src="img/produk/<?php echo $data_pjldetail['gambar_prd']; ?>" class="card-img-top" alt="...">
-		      </div>
+		      <img src="img/produk/<?php echo $data_pjldetail['gambar_prd']; ?>" class="card-img-top" alt="..." style="width: 70px;">
 				</td>
 				<?php 
 					$total_belanja = $total_belanja + $data_pjldetail['subtotal_prd'];
