@@ -41,6 +41,12 @@
         $format = new HTML2PDF('P', 'A4', 'en');
         $nama_file = "laporan_penjualan_rangkuman.pdf";
     }
+    else if(@$_GET['page']=='invoice') {
+        include(dirname(__FILE__).'/konten/invoice.php');
+        $content = ob_get_clean();
+        $format = new HTML2PDF('P', 'A4', 'en');
+        $nama_file = "invoice.pdf";
+    }
 
 
     // convert in PDF
