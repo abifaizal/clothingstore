@@ -142,6 +142,11 @@
                     ?>
                      <button class="btn btn-xs btn-primary tmb_detailpengiriman" id="<?php echo $data_penjualan['no_penjualan']; ?>" title="detail pengiriman" data-toggle="modal" data-target="#modal-pengiriman" data-status ="<?php echo $data_penjualan['status_penjualan']; ?>"><i class="fa fa-truck"></i></button>
                     <?php } ?>
+                    <?php 
+                      if($data_penjualan['status_penjualan'] != 'Belum Bayar') {
+                    ?>
+                      <a href="../arsip/?page=invoice&npjl=<?php echo $data_penjualan['no_penjualan']; ?>" target="_blank"><button class="btn btn-xs btn-warning tmb-invoice" id="<?php echo $data_penjualan['no_penjualan']; ?>" title="invoice"><i class="fa fa-sticky-note"></i></button></a>
+                    <?php } ?>
           					<button class="btn btn-xs btn-danger tmb-hapus" id="<?php echo $data_penjualan['no_penjualan']; ?>" data-status = "<?php echo $data_penjualan['status_penjualan']; ?>" data-plg = "<?php echo $data_penjualan['username_plg']; ?>" title="hapus"><i class="fa fa-trash"></i></button>
           				</td>
           			</tr>
@@ -279,6 +284,7 @@
                     <?php } else { ?>
                       <button class="btn btn-xs btn-info tmb_verifikasi" id="<?php echo $data_penjualan['no_penjualan']; ?>" title="detail pembayaran" data-toggle="modal" data-target="#modal-verifikasi" data-status ="<?php echo $data_penjualan['status_penjualan']; ?>" data-total = "<?php echo number_format($total_akhir); ?>"><i class="fa fa-ticket"></i></button>
                     <?php } ?>
+                    <a href="../arsip/?page=invoice&npjl=<?php echo $data_penjualan['no_penjualan']; ?>" target="_blank"><button class="btn btn-xs btn-warning tmb-invoice" id="<?php echo $data_penjualan['no_penjualan']; ?>" title="invoice"><i class="fa fa-sticky-note"></i></button></a>
           					<button class="btn btn-xs btn-danger tmb-hapus" id="<?php echo $data_penjualan['no_penjualan']; ?>" data-status = "<?php echo $data_penjualan['status_penjualan']; ?>" data-plg = "<?php echo $data_penjualan['username_plg']; ?>" title="hapus"><i class="fa fa-trash"></i></button>
           				</td>
           			</tr>
@@ -344,6 +350,7 @@
                     </button>
                     <button class="btn btn-xs btn-info tmb_verifikasi" id="<?php echo $data_penjualan['no_penjualan']; ?>" title="detail pembayaran" data-toggle="modal" data-target="#modal-verifikasi" data-status ="<?php echo $data_penjualan['status_penjualan']; ?>" data-total = "<?php echo number_format($total_akhir); ?>"><i class="fa fa-ticket"></i></button>
                     <button class="btn btn-xs btn-primary tmb_detailpengiriman" id="<?php echo $data_penjualan['no_penjualan']; ?>" title="detail pengiriman" data-toggle="modal" data-target="#modal-pengiriman" data-status ="<?php echo $data_penjualan['status_penjualan']; ?>"><i class="fa fa-truck"></i></button>
+                    <a href="../arsip/?page=invoice&npjl=<?php echo $data_penjualan['no_penjualan']; ?>" target="_blank"><button class="btn btn-xs btn-warning tmb-invoice" id="<?php echo $data_penjualan['no_penjualan']; ?>" title="invoice"><i class="fa fa-sticky-note"></i></button></a>
                     <button class="btn btn-xs btn-danger tmb-hapus" id="<?php echo $data_penjualan['no_penjualan']; ?>" data-status = "<?php echo $data_penjualan['status_penjualan']; ?>" data-plg = "<?php echo $data_penjualan['username_plg']; ?>" title="hapus"><i class="fa fa-trash"></i></button>
                   </td>
                 </tr>
@@ -409,6 +416,7 @@
                     </button>
                     <button class="btn btn-xs btn-info tmb_verifikasi" id="<?php echo $data_penjualan['no_penjualan']; ?>" title="detail pembayaran" data-toggle="modal" data-target="#modal-verifikasi" data-status ="<?php echo $data_penjualan['status_penjualan']; ?>" data-total = "<?php echo number_format($total_akhir); ?>"><i class="fa fa-ticket"></i></button>
                     <button class="btn btn-xs btn-primary tmb_detailpengiriman" id="<?php echo $data_penjualan['no_penjualan']; ?>" title="detail pengiriman" data-toggle="modal" data-target="#modal-pengiriman" data-status ="<?php echo $data_penjualan['status_penjualan']; ?>"><i class="fa fa-truck"></i></button>
+                    <a href="../arsip/?page=invoice&npjl=<?php echo $data_penjualan['no_penjualan']; ?>" target="_blank"><button class="btn btn-xs btn-warning tmb-invoice" id="<?php echo $data_penjualan['no_penjualan']; ?>" title="invoice"><i class="fa fa-sticky-note"></i></button></a>
                     <button class="btn btn-xs btn-danger tmb-hapus" id="<?php echo $data_penjualan['no_penjualan']; ?>" data-status = "<?php echo $data_penjualan['status_penjualan']; ?>" data-plg = "<?php echo $data_penjualan['username_plg']; ?>" title="hapus"><i class="fa fa-trash"></i></button>
                   </td>
                 </tr>
