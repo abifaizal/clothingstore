@@ -13,7 +13,7 @@
   $sumber = $_FILES['bukti_transfer']['tmp_name'];
   move_uploaded_file($sumber, "../img/bukti_transfer/".$bukti_trans);
 
-  $query_konf = "INSERT INTO tbl_buktitransfer VALUES ('', '$nama_pengirim', '$tgl_transfer', '$jam_transfer', '$bank_transfer', '$bukti_trans', '$no_penjualan')";
+  $query_konf = "INSERT INTO tbl_buktitransfer (nama_pengirim, tgl_transfer, jam_transfer, bank_transfer, foto_bukti, no_penjualan) VALUES ('$nama_pengirim', '$tgl_transfer', '$jam_transfer', '$bank_transfer', '$bukti_trans', '$no_penjualan')";
   mysqli_query($conn, $query_konf) or die ($conn->error);
 
   $query_updpjl = "UPDATE tbl_penjualan SET status_penjualan = 'Menunggu Verifikasi' WHERE no_penjualan = '$no_penjualan'";
