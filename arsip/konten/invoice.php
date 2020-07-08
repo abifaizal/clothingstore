@@ -111,10 +111,10 @@
 		</table>
 	</div>
 	<?php 
-		$query_pjl = "SELECT * FROM tbl_penjualan INNER JOIN tbl_pelanggan ON tbl_penjualan.kode_plg = tbl_pelanggan.kode_plg INNER JOIN tbl_datapenerima ON tbl_penjualan.no_penjualan = tbl_datapenerima.no_penjualan INNER JOIN tbl_datapengiriman ON tbl_penjualan.no_penjualan = tbl_datapengiriman.no_penjualan WHERE tbl_penjualan.no_penjualan = '$no_penjualan'";
+		$query_pjl = "SELECT * FROM tbl_penjualan INNER JOIN tbl_pelanggan ON tbl_penjualan.kode_plg = tbl_pelanggan.kode_plg INNER JOIN tbl_datapenerima ON tbl_penjualan.no_penjualan = tbl_datapenerima.no_penjualan WHERE tbl_penjualan.no_penjualan = '$no_penjualan'";
 		$sql_pjl = mysqli_query($conn, $query_pjl) or die ($conn->error);
 		$data_pjl = mysqli_fetch_array($sql_pjl);
-			$total_pembayaran = $data_pjl['total_penjualan'] + $data_pjl['ongkir_paket'];
+		$total_pembayaran = $data_pjl['total_penjualan'] + $data_pjl['ongkir_paket'];
 	?>
 	<div class="div-bagiandua">
 		<table class="tabel-bagiandua">
