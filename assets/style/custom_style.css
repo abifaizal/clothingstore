@@ -1,0 +1,321 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+html, body {
+	height: 100%;
+}
+
+#container {
+	min-height: 100%;
+}
+
+#main {
+	/*overflow: auto;*/
+	padding-bottom: 40px;
+}
+
+footer {
+	border-top: 3px solid #DFDFDF;
+	position: relative;
+	height: 40px;
+	margin-top: -40px;
+	clear: both;
+	font-size: 14px;
+	text-align: left;
+	vertical-align: middle;
+	padding: 5px;
+	font-weight: lighter;
+	background-color: #343A40;
+	color: #F2FFFF;
+}
+
+.modal_login .modal-header, .modal_login .modal-body, .modal_login .modal-footer {
+	padding: 10px 16px;
+}
+.modal_login .modal-title {
+	font-size: 14px;
+}
+.modal_login .close {
+	font-size: 14px;
+}
+
+.navbar {
+	margin-bottom: 3px;
+}
+
+.nav-link, .dropdown-item {
+	font-size: 14px;
+}
+
+.dropdown-menu {
+	padding: 1px 0;
+}
+.dropdown-item {
+	padding: 3px 10px;
+}
+.dropdown-divider {
+	margin: 1px 0px;
+}
+
+.jumbotron {
+	/*padding: 2px;*/
+	height: 90vh;
+	/*background-image: url("../../img/slide/slide (3).jpg");*/
+	background-image: linear-gradient(to top, rgba(0,0,0,1), rgba(0,0,0,0.01)), url("../../img/slide/slide (3)b.jpg");
+	background-size: cover;
+	text-align: center;
+}
+.display-4 {
+	color: white;
+	text-shadow: 1px 1px 1px rgba(0,0,0,0.8);
+	font-weight: 200;
+	font-size: 40px;
+	margin-top: 150px;
+}
+
+
+.carousel-item img {
+	max-width: 100%;
+	max-height: 100%;
+	margin-right: auto;
+	margin-left: auto;
+	/*width: 80%;*/
+}
+.carousel-item {
+	height: 100%;
+	width: 100%;
+}
+.carousel-inner {
+	/*max-height: 500px;*/
+}
+
+.produk-semua {
+	padding: 5px;
+	padding-top: 15px;
+}
+.produk-semua p.judul, .kontak p.judul {
+	text-align: center;
+	font-weight: lighter;
+	font-size: 20px;
+}
+.kotak-produk {
+	/*height: 350px;*/
+	padding: 5px;
+}
+.isi-kotak-produk {
+	/*background-color: yellow;*/
+	/*height: 100%;*/
+}
+.produk-semua .card {
+	/*min-height: 371px;*/
+}
+.produk-semua .card-body {
+	font-size: 12px;
+	padding: 13px 10px;
+}
+.produk-semua .card-body .card-title{
+	font-size: 14px;
+	margin-bottom: 8px;
+	text-align: center;
+	overflow: hidden;
+  	text-overflow: ellipsis;
+  	white-space: nowrap; 
+  	width: auto;
+}
+.produk-semua .card-body .card-title a{
+	color: #212529;
+}
+.produk-semua .card-body .card-title a:hover{
+	text-decoration: none;
+}
+.produk-semua .card-body .card-text{
+	/*text-align: justify;*/
+	font-size: 16px;
+	font-weight: lighter;
+}
+.badge-harga {
+	background-color: #ededed;
+	font-size: 14px;
+}
+
+.kontak {
+	margin-top: 20px;
+	margin-bottom: 10px;
+}
+
+.kotak-hubungi {
+	padding: 10px;
+	text-align: center;
+}
+
+.card-home:hover {
+	transform: scale(1.025);
+	box-shadow: 2px 2px 2px rgba(0,0,0,0.2);
+}
+
+ol.breadcrumb {
+	background-color: #FFFFFF;
+	font-size: 12px;
+	color: #FFFFFF;
+}
+ol.breadcrumb li a{
+	color: #000000;
+}
+
+.kontainer-produk, .kontainer-keranjang {
+	margin-bottom: 10px;
+}
+.halamanproduk-namaproduk {
+	padding-left: 12px;
+}
+
+.kotak-detail table {
+	font-weight: lighter;
+}
+.tombol-tambah-keranjang {
+	text-align: right;
+}
+
+.tabel-keranjang thead th {
+  font-size: 12px;
+}
+.tabel-keranjang tbody td {
+  font-size: 14px;
+}
+.tabel-keranjang .foto-produk {
+  max-width: 90px;
+  max-height: 90px;
+}
+
+.tabel-keranjang select, .tabel-keranjang input{
+  padding: 1px;
+}
+.tabel-keranjang input{
+  width: 90px;
+}
+.tabel-keranjang button{
+  font-size: 8px;
+}
+.total-belanja {
+  text-align: right;
+  font-size: 12px;
+  margin: 15px 0;
+}
+.total-belanja span{
+  font-weight: bold;
+}
+.total-belanja .total-akhir{
+  font-size: 16px;
+  margin-top: 4px;
+}
+.total-belanja button{
+  margin-top: 4px;
+  font-size: 14px;
+}
+
+.checkout .foto-produk {
+  max-width: 35px;
+  max-height: 35px;
+}
+.checkout td, .checkout th {
+  font-size: 10px;
+  padding: 5px;
+}
+.data-pemesanan {
+	font-size: 14px;
+}
+
+.form-datapemesanan h6, .form-register h6 {
+	font-size: 12px;
+	border-bottom: 1px solid #CED4DA;
+	padding-bottom: 3px;
+	font-weight: lighter;
+	text-align: right;
+}
+.form-datapemesanan, .form-datapemesanan .form-control, .form-register, .form-register .form-control {
+	font-size: 14px;
+}
+
+.detail-order .foto-produk {
+  max-width: 65px;
+  max-height: 65px;
+}
+.detail-order td, .detail-order th {
+  font-size: 12px;
+  padding: 5px;
+}
+.kontainer-tabelpenerima {
+	border: 1px solid #DEE2E6;
+	margin-bottom: 16px;
+}
+table.penerima td, table.penerima th {
+  font-size: 12px;
+  padding: 5px;
+}
+.kontainer-pembayaran .alert {
+	padding: 5px 10px;
+	font-size: 14px;
+}
+.kontainer-petunjukbayar {
+	font-size: 14px;
+}
+table.petunjuk-bayar th, table.petunjuk-bayar td {
+	padding: 5px;
+}
+
+.transaksi-kosong {
+	border: 1px solid #DEE2E6;
+	height: 410px;
+	text-align: center;
+	vertical-align: middle;
+	line-height: 410px;
+	margin-bottom: 10px;
+	font-size: 28px;
+}
+
+@media (max-width: 768px) {
+	.modal_login button {
+		font-size: 12px;
+	}
+
+	.display-4 {
+		color: white;
+		text-shadow: 1px 1px 1px rgba(0,0,0,0.8);
+		font-weight: 200;
+		font-size: 30px;
+		margin-top: 150px;
+	}
+
+	ol.breadcrumb {
+		font-size: 8px;
+	}
+
+	.produk-semua p.judul, .kontak p.judul {
+		font-size: 30px;
+	}
+	
+	.kotak-detail {
+		margin-top: 15px;
+	}
+	.halamanproduk-namaproduk {
+		font-size: 20px;
+	}
+	.kotak-detail table {
+		font-size: 14px;
+	}
+	.tombol-tambah-keranjang {
+		text-align: left;
+	}
+	.tabel-keranjang td input {
+		width: 50px;
+	}
+
+	.form-datapemesanan, .form-datapemesanan .form-control, .form-register, .form-register .form-control {
+		font-size: 12px;
+	}
+	table.penerima td, table.penerima th {
+	  min-width: 139px;
+	}
+}
