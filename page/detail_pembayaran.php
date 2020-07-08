@@ -219,15 +219,20 @@
 			</tr>
 		</table>
 	</div>
-	<?php 
-		if ($data_pjl['status_penjualan'] == "Dikirim") {
-	?>
+	<?php } ?>
 	<div style="padding-bottom: 10px; text-align: right;">
+		<?php 
+			if ($data_pjl['status_penjualan'] != "Belum Bayar") {
+		?>
 		<a href="arsip/?page=invoice&npjl=<?php echo $no_penjualan; ?>" target="_blank"><button type="button" class="btn btn-warning btn-sm" id="tmb_invoice" data-nopenjualan = "<?php echo $no_penjualan; ?>">Lihat Invoice</button></a>
+		<?php } ?>
+		<?php 
+			if ($data_pjl['status_penjualan'] == "Dikirim") {
+		?>
   	<button type="button" class="btn btn-primary btn-sm" id="tmb_konfirmasi" data-nopenjualan = "<?php echo $no_penjualan; ?>">Konfirmasi Produk Telah Diterima</button>
+  	<?php } ?>
   </div>
-	<?php } ?>
-	<?php } ?>
+	
 </div>
 
 <style>

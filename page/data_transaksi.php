@@ -156,16 +156,23 @@
       				<tr>
       					<td colspan="4" style="text-align: right;">
                   <?php 
-                    if($data_pjl['status_penjualan'] != 'Dikirim' || $data_pjl['status_penjualan'] != 'Selesai') {
+                    if($data_pjl['status_penjualan'] != 'Dikirim' && $data_pjl['status_penjualan'] != 'Selesai') {
                   ?>
-      						<button class="btn btn-sm btn-danger tmb_batal" id="<?php echo $no_penjualan; ?>" data-status="<?php echo $data_pjl['status_penjualan']; ?>" style="font-size: 11px;">Batalkan</button>
+      						  <button class="btn btn-sm btn-danger tmb_batal" id="<?php echo $no_penjualan; ?>" data-status="<?php echo $data_pjl['status_penjualan']; ?>" style="font-size: 11px;">Batalkan</button>
                   <?php } ?>
+
+                  <?php 
+                    if($data_pjl['status_penjualan'] == 'Selesai') {
+                  ?>
+                    <button class="btn btn-sm btn-warning tmb_ulasan" id="<?php echo $no_penjualan; ?>" data-status="<?php echo $data_pjl['status_penjualan']; ?>" data-toggle="modal" data-target="#modal_form_ulasan" style="font-size: 11px;">Beri Ulasan</button>
+                  <?php } ?>
+
       						<?php 
       							if($data_pjl['status_penjualan'] == 'Belum Bayar') {
       						?>
-      						<a href="?page=pembayaran&nopenjualan=<?php echo $data_pjl['no_penjualan'] ?>">
-      							<button class="btn btn-sm btn-success tmb-detailkonf" style="font-size: 11px;">Detail dan Konfirmasi Pembayaran</button>
-      						</a>
+        						<a href="?page=pembayaran&nopenjualan=<?php echo $data_pjl['no_penjualan'] ?>">
+        							<button class="btn btn-sm btn-success tmb-detailkonf" style="font-size: 11px;">Detail dan Konfirmasi Pembayaran</button>
+        						</a>
       						<?php } else { ?>
       						<a href="?page=detailpembayaran&nopenjualan=<?php echo $data_pjl['no_penjualan'] ?>">
       							<button class="btn btn-sm btn-primary tmb-detailkonf" style="font-size: 11px;">Detail Transaksi</button>
@@ -459,6 +466,8 @@
             <tfoot>
               <tr>
                 <td colspan="4" style="text-align: right;">
+                  <button class="btn btn-sm btn-warning tmb_ulasan" id="<?php echo $no_penjualan; ?>" data-status="<?php echo $data_pjl['status_penjualan']; ?>" data-toggle="modal" data-target="#modal_form_ulasan" style="font-size: 11px;">Beri Ulasan</button>
+
                   <a href="?page=detailpembayaran&nopenjualan=<?php echo $data_pjl['no_penjualan'] ?>">
                     <button class="btn btn-sm btn-primary tmb-detailkonf" style="font-size: 11px;">Detail Transaksi</button>
                   </a>
@@ -473,14 +482,135 @@
 	</div>
 </div>
 
+<!-- style untuk div rating dan animasi rating -->
+<style>
+  .rating {
+    position: relative;
+    /*top: 50%;*/
+    /*left: 50%;*/
+    right: 68%;
+    display: flex;
+    /*transform: rotateY(180deg);*/
+    flex-direction: row-reverse;
+    margin-bottom: 10px;
+  }
+  .rating input {
+    display: none;
+  }
+  .rating label {
+    display: block;
+    cursor: pointer;
+    width: 30px;
+    margin: 0;
+    /*background: grey;*/
+  }
+  .rating label:before {
+    content: '\f005';
+    font-weight: 900;
+    font-family: 'Font Awesome\ 5 Free';
+    position: relative;
+    display: block;    
+    font-size: 25px;
+    color: #bab3a8;
+    /*color: #bab3a8;*/
+  }
+  .rating label:after {
+    content: '\f005';
+    font-weight: 900;
+    font-family: 'Font Awesome\ 5 Free';
+    position: absolute;
+    display: block;
+    font-size: 25px;
+    color: #f5a82c;
+    top: 0;
+    opacity: 0;
+    transition: .5s;
+    /*text-shadow: 0 2px 5px rgba(0,0,0,.5);*/
+  }
+  .rating label:hover:after,
+  .rating label:hover ~ label:after,
+  .rating input:checked ~ label:after {
+    opacity: 1;
+  }
+</style>
+<!-- Modal Beri Ulasan -->
+<div class="modal fade" id="modal_form_ulasan" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Ulasan</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="" id="form_ulasan" autocomplete="off" enctype="multipart/form-data">
+        <div class="modal-body">
+            <!-- <i class="fas fa-star"></i> -->
+            <label for="rating" style="font-size: 12px;">Rating <small>(wajib)</small></label>
+            <div class="rating">
+              <input type="radio" name="rating" id="star1" value="5"><label for="star1"></label>
+              <input type="radio" name="rating" id="star2" value="4"><label for="star2"></label>
+              <input type="radio" name="rating" id="star3" value="3"><label for="star3"></label>
+              <input type="radio" name="rating" id="star4" value="2"><label for="star4"></label>
+              <input type="radio" name="rating" id="star5" value="1"><label for="star5"></label>
+            </div>
+            <div class="form-group">
+              <label for="komentar" style="font-size: 12px;">Komentar <small>(anda dapat membiarkan kosong)</small></label>
+              <textarea class="form-control form-control-sm" name="komentar" id="komentar" placeholder="bagaimana komentar anda . . ." rows="4"></textarea>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-sm btn-primary" name="submit_ulasan">Simpan Ulasan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 <script>
+  // $("input[name=rating]").change(function() {
+  //   var value = $(this).val();
+  //   console.log(value);
+  // });
+
+  $("#form_ulasan").submit(function() {
+    event.preventDefault();
+    var rating = $("input[name=rating]:checked").val();
+    // alert(rating);
+    if(rating == "" || rating == null) {
+      Swal.fire({
+        title: 'Maaf',
+        text: 'Anda harus memberi rating terlebih dulu',
+        type: 'warning'
+      })
+    }
+    else {
+      Swal.fire({
+        title: 'Peringatan',
+        text: 'apakah anda yakin memberikan ulasan ini?',
+        type: 'warning',
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        showCancelButton: true,
+        confirmButtonText: 'Ya',
+        cancelButtonText: 'Tidak'
+      }).then((ok) => {
+        if (ok.value) {
+          // Simpan form ulasan
+          location.reload();
+        }
+      })
+    }
+  })
+
   $(".tmb_batal").click(function() {
     var no_penjualan = $(this).attr('id');
     var status = $(this).data('status');
     Swal.fire({
-      title: 'Anda akan membatalkan transaksi '+no_penjualan+' dengan status saat ini '+status,
-      text: "Peringatan : Pelanggan tidak akan dapat melanjutkan transaksi ini.",
-      icon: 'warning',
+      title: "Peringatan",
+      text: "Anda akan membatalkan transaksi "+no_penjualan+" dengan status saat ini "+status+". Pelanggan tidak akan dapat melanjutkan transaksi ini.",
+      type: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
