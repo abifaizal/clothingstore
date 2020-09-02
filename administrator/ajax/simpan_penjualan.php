@@ -8,7 +8,7 @@
 	$diskon_penjualan = $_POST['diskon_tran'];
 	$bayar_penjualan = $_POST['jml_bayar'];
 
-	$query_penjualan = "INSERT INTO tbl_penjualan VALUES ('$no_penjualan', CURDATE(), CURTIME(), '$total_penjualan', '$diskon_penjualan', '$bayar_penjualan', 'Offline', 'Lunas', 'Selesai', NULL, '$id_pgw')";
+	$query_penjualan = "INSERT INTO tbl_penjualan VALUES ('$no_penjualan', CURDATE(), CURTIME(), '$total_penjualan', '$diskon_penjualan', '$bayar_penjualan', 'Offline', 'Lunas', 'Selesai', 'Kosong', NULL, '$id_pgw')";
 	mysqli_query($conn, $query_penjualan) or die ($conn->error);
 
 	for($i = 0; $i < count($_POST['hidden_id_prd']); $i++) {

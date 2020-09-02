@@ -144,11 +144,19 @@
 	            </li>
 	          </ul>
 	        </li>
+
 	        <li class="<?php if(@$_GET['page']=='data_keranjang') {echo 'active';} ?>">
 	          <a href="?page=data_keranjang">
 	            <i class="fa fa-shopping-cart"></i> <span>Keranjang</span>
 	          </a>
 	        </li>
+
+	        <li class="<?php if(@$_GET['page']=='data_ulasan') {echo 'active';} ?>">
+	          <a href="?page=data_ulasan">
+	            <i class="fa fa-comment"></i> <span>Ulasan Pelanggan</span>
+	          </a>
+	        </li>
+
 	        <li class="treeview <?php if(@$_GET['page']=='data_transaksi_offline' || @$_GET['page']=='data_transaksi_online' || @$_GET['page']=='transaksi_offline' || @$_GET['page']=='form_pengiriman' || @$_GET['page']=='form_editpengiriman' || @$_GET['page']=='laporan_penjualan') {echo 'active';} ?>">
 	          <a href="#">
 	            <i class="fa fa-money"></i> <span>Transaksi Penjualan</span>
@@ -218,6 +226,8 @@
 	        include "pages/data_pelanggan.php";
 	      } else if(@$_GET['page']=='data_keranjang') {
 	        include "pages/data_keranjang.php";
+	      } else if(@$_GET['page']=='data_ulasan') {
+	        include "pages/data_ulasan.php";
 	      } else if(@$_GET['page']=='data_transaksi_offline') {
 	        include "pages/data_transaksi_offline.php";
 	      } else if(@$_GET['page']=='transaksi_offline') {

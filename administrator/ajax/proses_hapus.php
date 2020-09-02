@@ -56,4 +56,12 @@
       }
     }
   }
+  else if(@$_GET['page']=='ulasan_dan_balasan')
+  {
+    $query_ulasan = "DELETE tbl_ulasan, tbl_balasan FROM tbl_ulasan INNER JOIN tbl_balasan ON tbl_ulasan.no_penjualan = tbl_balasan.no_penjualan WHERE tbl_ulasan.no_penjualan = '$key'";
+    mysqli_query($conn, $query_ulasan) or die ($conn->error);
+
+    $query_upd = "UPDATE tbl_penjualan SET status_ulasan = 'Kosong' WHERE no_penjualan = '$key'";
+    mysqli_query($conn, $query_upd) or die ($conn->error);
+  }
 ?>

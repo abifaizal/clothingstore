@@ -111,6 +111,101 @@
     </form>
   </div>
 </div>
+<style>
+  .kontainer-ulasan-produk {
+    /*margin-top: 20px;*/
+    margin-bottom: 5px;
+    font-size: 12px;
+  }
+  .kontainer-ulasan-balasan {
+    margin-bottom: 2%;
+  }
+</style>
+<hr>
+<div class="kontainer-ulasan-produk">
+  <h6><i class="fas fa-comment-alt"></i> Ulasan Produk</h6>
+  <?php 
+    $query_ulasan = "SELECT * FROM tbl_ulasan INNER JOIN tbl_penjualandetail ON tbl_ulasan.no_penjualan = tbl_penjualandetail.no_penjualan INNER JOIN tbl_pelanggan ON tbl_ulasan.kode_plg = tbl_pelanggan.kode_plg WHERE tbl_penjualandetail.id_prd = '$id_prd'";
+    $sql_ulasan = mysqli_query($conn, $query_ulasan) or die ($conn->error);
+    $jml_ulasan = mysqli_num_rows($sql_ulasan);
+    if($jml_ulasan == 0) {
+  ?>
+  <div class="kontainer-belumada-ulasan">
+    <i>(belum ada ulasan)</i>
+  </div>
+  <?php 
+    }
+    else {
+      while($data_ulasan = mysqli_fetch_array($sql_ulasan)) {
+  ?>
+    <div class="kontainer-ulasan-balasan" style="display: ;">
+      <div class="ulasan-pelanggan">
+        <div class="card">
+          <div class="card-header">
+            <b><?php echo $data_ulasan['username_plg']; ?></b> - 
+            <small id="waktu_ulasan_plg">
+              <?php echo tgl_indo($data_ulasan['tgl_ulasan']); ?> [<?php echo $data_ulasan['jam_ulasan']; ?>]
+            </small>
+          </div>
+          <div class="card-body">
+            <h6 class="card-title" id="rating_ulasan_plg">
+              <?php 
+                $bintang = $data_ulasan['rating_ulasan'];
+                for($i=0; $i<$bintang; $i++) {
+              ?>
+                  <i class="fas fa-star" style="color: #f5a82c;"></i>
+              <?php 
+                }
+                for($i=0; $i<5-$bintang; $i++) {
+              ?>
+                  <i class="fas fa-star" style="color: #bab3a8;"></i>
+              <?php } ?>
+            </h6>
+            <p class="card-text" id="kometar_ulasan_plg">
+              <?php 
+                if($data_ulasan['komentar_ulasan'] == "") { ?>
+                  <small><i>(tidak ada komentar)</i></small>
+              <?php 
+                } 
+                else {
+                  echo $data_ulasan['komentar_ulasan'];
+                }
+              ?>
+            </p>
+          </div>
+        </div>
+      </div>
+      <?php 
+        if($data_ulasan['status_balasan'] == "Ada") {
+          $no_penjualan = $data_ulasan['no_penjualan'];
+          $query_balasan = "SELECT * FROM tbl_balasan WHERE no_penjualan = '$no_penjualan'";
+          $sql_ulasan = mysqli_query($conn, $query_balasan) or die ($conn->error);
+          $data_balasan = mysqli_fetch_array($sql_ulasan);
+      ?>
+          <div class="balasan-ulasan" id="balasan-ulasan" style="margin-top: 10px; margin-left: 1%; padding-left: 3%; border-left: 2px solid #DCDCDC;">
+            <div class="card">
+              <div class="card-header">
+                <b>Blackshadow</b> - 
+                <small id="waktu_balasan">
+                  <?php echo tgl_indo($data_balasan['tgl_balasan']); ?> [<?php echo $data_balasan['jam_balasan']; ?>]
+                </small>
+              </div>
+              <div class="card-body">
+                <p class="card-text" id="komentar_balasan">
+                  <?php echo $data_balasan['komentar_balasan']; ?>
+                </p>
+              </div>
+            </div>
+          </div>
+      <?php 
+        }
+      ?>
+    </div>
+  <?php 
+      }
+    } 
+  ?>
+</div>
 
 <script>
   // alert('<?php echo $data_produk['nama_prd']; ?>');

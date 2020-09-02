@@ -127,9 +127,7 @@
       				?>
 									<tr>
 										<td width="15%">
-					            <div class="foto-produk" style="max-width: 55px; max-height: 55px;">
-					              <img src="img/produk/<?php echo $data_detail['gambar_prd']; ?>" class="card-img-top" alt="...">
-					            </div>
+					            <img src="img/produk/<?php echo $data_detail['gambar_prd']; ?>" class="card-img-top" alt="..." style="width: 60px;">
 					          </td>
 					          <?php
 					          	$id_prd = $data_detail['id_prd'];
@@ -156,15 +154,21 @@
       				<tr>
       					<td colspan="4" style="text-align: right;">
                   <?php 
-                    if($data_pjl['status_penjualan'] != 'Dikirim' && $data_pjl['status_penjualan'] != 'Selesai') {
+                    if($data_pjl['status_penjualan'] != 'Verifikasi' && $data_pjl['status_penjualan'] != 'Dikirim' && $data_pjl['status_penjualan'] != 'Selesai') {
                   ?>
       						  <button class="btn btn-sm btn-danger tmb_batal" id="<?php echo $no_penjualan; ?>" data-status="<?php echo $data_pjl['status_penjualan']; ?>" style="font-size: 11px;">Batalkan</button>
                   <?php } ?>
 
                   <?php 
-                    if($data_pjl['status_penjualan'] == 'Selesai') {
+                    // $data_pjl['status_ulasan'] = "Ada";
+                    if($data_pjl['status_penjualan'] == 'Selesai' && $data_pjl['status_ulasan'] == 'Kosong') {
                   ?>
                     <button class="btn btn-sm btn-warning tmb_ulasan" id="<?php echo $no_penjualan; ?>" data-status="<?php echo $data_pjl['status_penjualan']; ?>" data-toggle="modal" data-target="#modal_form_ulasan" style="font-size: 11px;">Beri Ulasan</button>
+                  <?php 
+                    } 
+                    else if($data_pjl['status_penjualan'] == 'Selesai' && $data_pjl['status_ulasan'] == 'Ada') {
+                  ?>
+                    <button class="btn btn-sm btn-info tmb_lihat_ulasan" id="<?php echo $no_penjualan; ?>" data-status="<?php echo $data_pjl['status_penjualan']; ?>" data-toggle="modal" data-target="#modal_lihat_ulasan" style="font-size: 11px;">Lihat Ulasan</button>
                   <?php } ?>
 
       						<?php 
@@ -324,7 +328,9 @@
       			<tfoot>
       				<tr>
       					<td colspan="4" style="text-align: right;">
-      						<button class="btn btn-sm btn-danger tmb_batal" id="<?php echo $no_penjualan; ?>" data-status="<?php echo $data_pjl['status_penjualan']; ?>" style="font-size: 11px;">Batalkan</button>
+                  <?php if($data_pjl['status_penjualan'] != 'Verifikasi') { ?>
+      						  <button class="btn btn-sm btn-danger tmb_batal" id="<?php echo $no_penjualan; ?>" data-status="<?php echo $data_pjl['status_penjualan']; ?>" style="font-size: 11px;">Batalkan</button>
+                  <?php } ?>
       						<a href="?page=detailpembayaran&nopenjualan=<?php echo $data_pjl['no_penjualan'] ?>">
 	      						<button class="btn btn-sm btn-primary" style="font-size: 11px;">Detail Transaksi</button>
 	      					</a>
@@ -466,7 +472,14 @@
             <tfoot>
               <tr>
                 <td colspan="4" style="text-align: right;">
-                  <button class="btn btn-sm btn-warning tmb_ulasan" id="<?php echo $no_penjualan; ?>" data-status="<?php echo $data_pjl['status_penjualan']; ?>" data-toggle="modal" data-target="#modal_form_ulasan" style="font-size: 11px;">Beri Ulasan</button>
+                  <?php if($data_pjl['status_ulasan'] == 'Kosong') { ?>
+                    <button class="btn btn-sm btn-warning tmb_ulasan" id="<?php echo $no_penjualan; ?>" data-status="<?php echo $data_pjl['status_penjualan']; ?>" data-toggle="modal" data-target="#modal_form_ulasan" style="font-size: 11px;">Beri Ulasan</button>
+                  <?php 
+                    } 
+                    else if($data_pjl['status_ulasan'] == 'Ada') {
+                  ?>
+                    <button class="btn btn-sm btn-info tmb_lihat_ulasan" id="<?php echo $no_penjualan; ?>" data-status="<?php echo $data_pjl['status_penjualan']; ?>" data-toggle="modal" data-target="#modal_lihat_ulasan" style="font-size: 11px;">Lihat Ulasan</button>
+                  <?php } ?>
 
                   <a href="?page=detailpembayaran&nopenjualan=<?php echo $data_pjl['no_penjualan'] ?>">
                     <button class="btn btn-sm btn-primary tmb-detailkonf" style="font-size: 11px;">Detail Transaksi</button>
@@ -538,7 +551,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Ulasan</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Beri Ulasan</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -546,6 +559,10 @@
       <form action="" id="form_ulasan" autocomplete="off" enctype="multipart/form-data">
         <div class="modal-body">
             <!-- <i class="fas fa-star"></i> -->
+            <div>
+              <label for="" style="font-size: 12px;">Kode Transaksi : <span id="ulasan_kd_transaksi"></span></label>
+              <input type="hidden" name="hidden_kdtransaksi_ulasan" id="hidden_kdtransaksi_ulasan">
+            </div>
             <label for="rating" style="font-size: 12px;">Rating <small>(wajib)</small></label>
             <div class="rating">
               <input type="radio" name="rating" id="star1" value="5"><label for="star1"></label>
@@ -568,11 +585,70 @@
   </div>
 </div>
 
+<div class="modal fade" id="modal_lihat_ulasan" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Lihat Ulasan</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="font-size: 14px;">
+        <div class="ulasan-pelanggan">
+          <div class="card">
+            <div class="card-header">
+              <b>Anda</b> - <small id="waktu_ulasan_plg">10 Juli 2020 [13:17:02]</small>
+            </div>
+            <div class="card-body">
+              <h6 class="card-title" id="rating_ulasan_plg">
+                <i class="fas fa-star" style="color: #f5a82c;"></i>
+                <i class="fas fa-star" style="color: #f5a82c;"></i>
+                <i class="fas fa-star" style="color: #f5a82c;"></i>
+                <i class="fas fa-star" style="color: #f5a82c;"></i>
+                <i class="fas fa-star" style="color: #bab3a8;"></i>
+              </h6>
+              <p class="card-text" id="kometar_ulasan_plg">
+                <small><i>(tidak ada komentar)</i></small>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="belum-ada-balasan" id="belum-ada-balasan" style="text-align: right; padding: 5px;">
+          <small><i>(belum ada balasan)</i></small>
+        </div>
+
+        <div class="balasan-ulasan" id="balasan-ulasan" style="margin-top: 10px; margin-left: 1%; padding-left: 4%; border-left: 2px solid #DCDCDC; display: none;">
+          <div class="card">
+            <div class="card-header">
+              <b>Blackshadow</b> - <small id="waktu_balasan">11 Juli 2020 [09:21:16]</small>
+            </div>
+            <div class="card-body">
+              <p class="card-text" id="komentar_balasan">
+                Terima kasih telah memberi ulasan positif terhadap pelayanan kami.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
   // $("input[name=rating]").change(function() {
   //   var value = $(this).val();
   //   console.log(value);
   // });
+  $(".tmb_ulasan").click(function() {
+    var kode_transaksi = $(this).attr("id");
+    $("#ulasan_kd_transaksi").text(kode_transaksi);
+    $("#hidden_kdtransaksi_ulasan").val(kode_transaksi);
+  })
 
   $("#form_ulasan").submit(function() {
     event.preventDefault();
@@ -595,13 +671,76 @@
         showCancelButton: true,
         confirmButtonText: 'Ya',
         cancelButtonText: 'Tidak'
-      }).then((ok) => {
-        if (ok.value) {
+      }).then((ya) => {
+        if (ya.value) {
           // Simpan form ulasan
-          location.reload();
+          var form_ulasan_data = $(this).serialize();
+          $.ajax({
+            type: "POST",
+            url: "usrajax/simpan_ulasan.php",
+            data: form_ulasan_data,
+            success:function(hasil) {
+              Swal.fire({
+                title: 'Terima Kasih',
+                text: 'semoga anda puas dengan pelayanan kami',
+                type: 'success',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'OK'
+              }).then((ok) => {
+                if (ok.value) {
+                  // window.location='?page=data_transaksi_offline';
+                  location.reload();
+                }
+              })
+            }
+          })
+          // location.reload();
         }
       })
     }
+  })
+
+  $(".tmb_lihat_ulasan").click(function() {
+    var kode_transaksi = $(this).attr("id");
+    $.ajax({
+      type: "GET",
+      url: "usrajax/detail.php?page=lihat_ulasan",
+      data: "no_penjualan="+kode_transaksi,
+      success : function(data) {
+        var objData = JSON.parse(data);
+        console.log(objData);
+        $.each(objData, function(key,val){
+          $("#waktu_ulasan_plg").text(val.tglformat_ulasan+" ["+val.jam_ulasan+"]");
+          // mengisi jumlah bintang sesuai rating pelanggan
+          var rating = Number(val.rating_ulasan);
+          $("#rating_ulasan_plg").html("");
+          for(var i = 0; i < rating; i++) {
+            var bintang = '<i class="fas fa-star" style="color: #f5a82c;"></i>';
+            $("#rating_ulasan_plg").append(bintang);
+          }
+          for(var i = 0; i < 5-rating; i++) {
+            var bintang = '<i class="fas fa-star" style="color: #bab3a8;"></i>';
+            $("#rating_ulasan_plg").append(bintang);
+          }
+          // mengisi komentar ulasan pelanggan
+          if(val.komentar_ulasan == "") {
+            $("#kometar_ulasan_plg").html('<small><i>(tidak ada komentar)</i></small>');
+          } else {
+            $("#kometar_ulasan_plg").html(val.komentar_ulasan);
+          }
+          // mengisi kotak balasan
+          if(val.status_balasan == "Kosong") {
+            $("#belum-ada-balasan").show();
+            $("#balasan-ulasan").hide();
+          } else {
+            $("#belum-ada-balasan").hide();
+            $("#waktu_balasan").text(val.tglformat_balasan+" ["+val.jam_balasan+"]");
+            $("#komentar_balasan").text(val.komentar_balasan);
+            $("#balasan-ulasan").show();
+          }
+        })
+      }
+    }); 
   })
 
   $(".tmb_batal").click(function() {

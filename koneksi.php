@@ -1,5 +1,6 @@
 <?php 
-	$conn = new mysqli("localhost", "root", "", "clothstore");
+	// $conn = new mysqli("localhost", "blacksha_admin", "aFsPgun]09]w", "blacksha_dbase");
+  $conn = new mysqli("localhost", "root", "", "blacksha_sidang");
 
   function tgl_indo($tgl) {
     $tanggal = substr($tgl,8,2);

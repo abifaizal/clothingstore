@@ -4,7 +4,8 @@
 
   if(@$_GET['page']=='keranjang')
   {
-    $id_keranjang = @mysqli_real_escape_string($conn, $_GET['id_krj']);
+    // $id_keranjang = @mysqli_real_escape_string($conn, $_GET['id_krj']);
+    $id_keranjang = $_GET['id_krj'];
     $query_krj = "SELECT * FROM tbl_keranjang INNER JOIN tbl_keranjangdetail ON tbl_keranjang.id_keranjang = tbl_keranjangdetail.id_keranjang INNER JOIN tbl_produk ON tbl_keranjangdetail.id_prd = tbl_produk.id_prd INNER JOIN tbl_ukuranprd ON tbl_keranjangdetail.id_ukuran = tbl_ukuranprd.id_ukuran WHERE tbl_keranjang.id_keranjang = '$id_keranjang'";
   	$sql_krj = mysqli_query($conn, $query_krj) or die ($conn->error);
   	$data = array();
@@ -12,12 +13,12 @@
 
   	while($detail = mysqli_fetch_array($sql_krj)) {
   		$jml_prd = $detail['jml_prd'];
-          $harga_prd = $detail['harga_prd'];
-          $diskon_prd = $detail['diskon_prd'];
-          $harga_akhir = $harga_prd - ($harga_prd * ($diskon_prd / 100));
-          $subtotal = $harga_akhir * $jml_prd;
-          $harga_akhir = number_format($harga_akhir);
-          $subtotal = number_format($subtotal);
+      $harga_prd = $detail['harga_prd'];
+      $diskon_prd = $detail['diskon_prd'];
+      $harga_akhir = $harga_prd - ($harga_prd * ($diskon_prd / 100));
+      $subtotal = $harga_akhir * $jml_prd;
+      $harga_akhir = number_format($harga_akhir);
+      $subtotal = number_format($subtotal);
 
   		$data2 = array('harga_akhir' => $harga_akhir, 'subtotal' => $subtotal);
   		$detail += $data2;
@@ -98,5 +99,16 @@
     $no_penjualan = @mysqli_real_escape_string($conn, $_GET['no_penjualan']);
     $query_transaksiselesai = "UPDATE tbl_penjualan SET status_penjualan = 'Selesai' WHERE no_penjualan = '$no_penjualan'";
     mysqli_query($conn, $query_transaksiselesai) or die ($conn->error);
+  }
+  else if(@$_GET['page']=='balasan')
+  {
+    $no_penjualan = @mysqli_real_escape_string($conn, $_GET['no_penjualan']);
+    $data = array();
+    $query_balasan = "SELECT *, DATE_FORMAT(tgl_balasan, '%d %M %Y') AS tglformat_balasan FROM tbl_balasan INNER JOIN tbl_pegawai ON tbl_balasan.id_pgw = tbl_pegawai.id_pgw WHERE tbl_balasan.no_penjualan = '$no_penjualan'";
+    $sql_balasan = mysqli_query($conn, $query_balasan) or die ($conn->error);
+    $data_balasan = mysqli_fetch_array($sql_balasan);
+    $data[] = $data_balasan;
+
+    echo json_encode($data);
   }
 ?>

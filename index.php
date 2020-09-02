@@ -37,19 +37,19 @@
                 <li class="nav-item <?php if(@$_GET['page']=='') {echo 'active';} ?>">
                   <a class="nav-link" href="./">Home <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item <?php if(@$_GET['page']=='produk') {echo 'active';} ?>">
+                <!-- <li class="nav-item <?php if(@$_GET['page']=='produk') {echo 'active';} ?>">
                   <a class="nav-link" href="./#produk_semua">Produk</a>
-                </li>
-                <!-- <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Produk
+                </li> -->
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle <?php if(@$_GET['page']=='produk_semua' || @$_GET['page']=='produk_kaus' || @$_GET['page']=='produk_jaket' || @$_GET['page']=='produk_kemeja') {echo 'active';} ?>" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Kategori Produk
                   </a>
                   <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">T-Shirt</a>
-                    <a class="dropdown-item" href="#">Kemeja</a>
-                    <a class="dropdown-item" href="#">Jaket</a>
-                    <a class="dropdown-item" href="#">Celana</a>
-                </li> -->
+                    <a class="dropdown-item" href="?page=produk_semua#produk_semua">Semua</a>
+                    <a class="dropdown-item" href="?page=produk_kaus#produk_semua">Kaus</a>
+                    <a class="dropdown-item" href="?page=produk_jaket#produk_semua">Jaket</a>
+                    <a class="dropdown-item" href="?page=produk_kemeja#produk_semua">Kemeja</a>
+                </li>
                 <li class="nav-item">
                   <a class="nav-link" href="./#kontak">Hubungi kami</a>
                 </li>
@@ -123,6 +123,18 @@
             }
             else if(@$_GET['page']=='produk') {
               include 'page/produk.php';
+            }
+            else if(@$_GET['page']=='produk_semua') {
+              include 'page/home.php';
+            }
+            else if(@$_GET['page']=='produk_kaus') {
+              include 'page/produk_kaus.php';
+            }
+            else if(@$_GET['page']=='produk_jaket') {
+              include 'page/produk_jaket.php';
+            }
+            else if(@$_GET['page']=='produk_kemeja') {
+              include 'page/produk_kemeja.php';
             }
             else if(@$_GET['page']=='keranjang') {
               include 'page/keranjang.php';

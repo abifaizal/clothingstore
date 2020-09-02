@@ -25,7 +25,7 @@
 		$id_keranjang = $datakrj['id_keranjang'];
 	}
 
-	$cariproduk = mysqli_query($conn, "SELECT id_krjdt, jml_prd FROM tbl_keranjangdetail WHERE id_prd = '$id_prd' AND id_ukuran = '$ukuran'") or die (mysql_error());
+	$cariproduk = mysqli_query($conn, "SELECT id_krjdt, jml_prd FROM tbl_keranjangdetail WHERE id_prd = '$id_prd' AND id_ukuran = '$ukuran' AND id_keranjang = '$id_keranjang'") or die (mysql_error());
   $dataprd = mysqli_fetch_array($cariproduk);
   if($dataprd) {
   	$id_krjdt = $dataprd['id_krjdt'];

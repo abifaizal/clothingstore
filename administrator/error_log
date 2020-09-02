@@ -1,0 +1,1 @@
+[06-Jul-2020 13:34:17 Asia/Jakarta] PHP Warning:  mysqli::__construct(): (08004/1040): Too many connections in /home/blacksha/public_html/clothingstore/koneksi.php on line 2

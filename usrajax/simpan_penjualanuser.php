@@ -18,7 +18,7 @@
 	$ip_total_belanja = $_POST['ip_total_belanja'];
 	$diskon_penjualan = 0;
 
-	$query_penjualanuser = "INSERT INTO tbl_penjualan VALUES ('$no_penjualan', CURDATE(), CURTIME(), '$ip_total_belanja', '$diskon_penjualan', '0', 'Online', 'Pending', 'Belum Bayar','$kode_plg', NULL)";
+	$query_penjualanuser = "INSERT INTO tbl_penjualan VALUES ('$no_penjualan', CURDATE(), CURTIME(), '$ip_total_belanja', '$diskon_penjualan', '0', 'Online', 'Pending', 'Belum Bayar', 'Kosong', '$kode_plg', NULL)";
 	mysqli_query($conn, $query_penjualanuser) or die ($conn->error);
 
 	$id_keranjang = '';
@@ -45,8 +45,8 @@
 	}
 
 	mysqli_query($conn, "DELETE FROM tbl_keranjang WHERE id_keranjang = '$id_keranjang'") or die ($conn->error);
-	mysqli_query($conn, "DELETE FROM tbl_keranjangdetail WHERE id_keranjang = '$id_keranjang'") or die ($conn->error);
+	// mysqli_query($conn, "DELETE FROM tbl_keranjangdetail WHERE id_keranjang = '$id_keranjang'") or die ($conn->error);
 
-	$query_datapenerima = "INSERT INTO tbl_datapenerima VALUES ('', '$nama_penerima', '$no_hpaktif', '$almt_lengkap', '$kd_pos', '$ip_provinsi', '$kota_kab', '$jasa_pengirim', '$paket_pengiriman', '$ip_etd_paket', '$ip_cost_paket', '$berat_kiriman', '$no_penjualan', '$kode_plg')";
+	$query_datapenerima = "INSERT INTO tbl_datapenerima (nama_penerima, nohp_penerima, alamat_penerima, kode_pos, provinsi_penerima, kabkota_penerima, kurir_pengiriman, paket_pengiriman, etd_paket, ongkir_paket, berat_kiriman, no_penjualan, kode_plg) VALUES ('$nama_penerima', '$no_hpaktif', '$almt_lengkap', '$kd_pos', '$ip_provinsi', '$kota_kab', '$jasa_pengirim', '$paket_pengiriman', '$ip_etd_paket', '$ip_cost_paket', '$berat_kiriman', '$no_penjualan', '$kode_plg')";
 	mysqli_query($conn, $query_datapenerima) or die ($conn->error);
  ?>
