@@ -84,6 +84,54 @@
 				</td>
 			</tr>
 		</table>
+
+		<table class="table table-bordered tabel-alamat-tersimpan" style="font-size: 10px;">
+			<thead>
+				<tr>
+					<th colspan="2">Riwayat alamat pengiriman sebelumnya</th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php
+					$query_alamat = "SELECT * FROM tbl_alamatplg WHERE kode_plg = $kode_plg AND status_alamatplg = 'Aktif'";
+					$sql_alamat = mysqli_query($conn, $query_alamat) or die ($conn->error);
+					$row_alamat = mysqli_num_rows($sql_alamat);
+					if($row_alamat > 0) { 
+						while($data_alamat = mysqli_fetch_array($sql_alamat)) {
+				?>
+							<tr>
+								<td>
+									<?=$data_alamat['nama_alamatplg']?> (<?=$data_alamat['nohp_alamatplg']?>) <br>
+									<?=$data_alamat['alamat_plg']?> <br>
+									kode pos : <?=$data_alamat['kodepos_alamatplg']?> <br>
+									Prov : <?=$data_alamat['provinsi_alamatplg']?> <br>
+									Kab/kota : <?=$data_alamat['kabkota_alamatplg']?>
+								</td>
+								<td align="center">
+									<button class="btn btn-sm btn-dark pilih_alamat" style="font-size: 8px;"
+										data-nama_alamatplg = "<?=$data_alamat['nama_alamatplg']?>"
+										data-nohp_alamatplg = "<?=$data_alamat['nohp_alamatplg']?>"
+										data-alamat_plg = "<?=$data_alamat['alamat_plg']?>"
+										data-kodepos_alamatplg = "<?=$data_alamat['kodepos_alamatplg']?>"
+										data-id_provinsi = "<?=$data_alamat['id_provinsi']?>"
+									>
+										pilih
+									</button>
+								</td>
+							</tr>
+				<?php 
+						}
+					} 
+					else {
+				?>
+						<tr>
+							<td colspan="2" align="center">Belum ada data</td>
+						</tr>
+				<?php 
+					} 
+				?>
+			</tbody>
+		</table>
 	</div>
 	<div class="col-12 col-md-8 data-pemesanan">
 		<!-- <div class="alert alert-dark" role="alert">
@@ -138,7 +186,7 @@
 			      <?php 
 			      for($i=0; $i<count($array_prov); $i++) {
 			      ?>
-			      	<option value="<?php echo $array_prov[$i]['id']; ?>" data-namaprov="<?php echo $array_prov[$i]['name']; ?>">
+			      	<option value="<?php echo $array_prov[$i]['id']; ?>" id="prov_<?php echo $array_prov[$i]['id']; ?>" data-namaprov="<?php echo $array_prov[$i]['name']; ?>">
 			      		<?php echo $array_prov[$i]['name']; ?>
 			      	</option>
 			    	<?php } ?>
@@ -150,6 +198,12 @@
 			    <select class="form-control form-control-sm" id="kota_kab" name="kota_kab">
 			      <option value="0">Pilih Provinsi Dulu</option>
 			    </select>
+			  </div>
+			  <div class="form-group">
+			  	<div class="custom-control custom-switch">
+					  <input type="checkbox" class="custom-control-input" id="check_alamatbaru" name="check_alamatbaru" value="simpan_alamatbaru" checked="">
+					  <label class="custom-control-label" for="check_alamatbaru">Simpan sebagai alamat baru</label>
+					</div>
 			  </div>
 			  <div class="form-group">
 			    <label for="jasa_pengirim">Pilih Jasa Pengiriman</label>
@@ -216,6 +270,7 @@
 			    <input type="hidden" name="ip_total_belanja" id="ip_total_belanja" value="<?php echo $total; ?>">
 			    <input type="hidden" name="ip_total_bayar" id="ip_total_bayar" value="<?php echo $total; ?>">
 			  </div>
+			  
 			  <div class="form-group" style="text-align: right;">
 			  	<button type="button" class="btn btn-dark" id="tmb_lanjutpembayaran" style="font-size: 14px;">Lanjutkan Pembayaran</button>
 			  </div>
@@ -232,6 +287,22 @@
 		var nama_kota = $("#kota_kab").find(':selected').data('namakota');
 		$("#ip_kabkota").val(nama_kota);
 	}
+
+	$(".pilih_alamat").click(function() {
+		var nama_alamatplg = $(this).data('nama_alamatplg');
+		var nohp_alamatplg = $(this).data('nohp_alamatplg');
+		var alamat_plg = $(this).data('alamat_plg');
+		var kodepos_alamatplg = $(this).data('kodepos_alamatplg');
+		var id_provinsi = $(this).data('id_provinsi');
+
+		$("#nm_penerima").val(nama_alamatplg);
+		$("#no_hpaktif").val(nohp_alamatplg);
+		$("#almt_lengkap").val(alamat_plg);
+		$("#kd_pos").val(kodepos_alamatplg);
+		$("#check_alamatbaru").attr('checked', false);
+		$("#prov_"+id_provinsi).attr('selected', true);
+		$("#provinsi_tujuan").change();
+	})
 
 	$("#provinsi_tujuan").change(function() {
 		var id_prov = $(this).val();
@@ -252,7 +323,7 @@
           // console.log(objData);
           $.each(objData, function(key,val){
 	          var option_city = '';
-	          option_city = '<option value="'+val.name+'" data-idkota="'+val.id+'">'+val.name+' ('+val.type+')</option>';
+	          option_city = '<option value="'+val.name+'" id="kabkota_'+val.id+'" data-idkota="'+val.id+'">'+val.name+' ('+val.type+')</option>';
             $("#kota_kab").append(option_city);
 	        })
         }
@@ -312,7 +383,7 @@
         success: function(ongkir) {
           var objData = JSON.parse(ongkir);
           $("#tbody_paket_pengiriman").html('');
-          console.log(objData);
+          // console.log(objData);
           if(objData.length > 0) {
 	          $.each(objData, function(key,val){
 	          	count++;
@@ -414,7 +485,7 @@
 		else if(typeof jasa_pengirim === "undefined") {
 			Swal.fire(
         'Data Belum Lengkap',
-        'maaf, tolong pilih jasa pengirima dulu',
+        'maaf, tolong pilih jasa pengiriman dulu',
         'warning'
       )
 		}

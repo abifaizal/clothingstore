@@ -87,10 +87,17 @@
                       $query_pjl = "SELECT * FROM tbl_penjualan WHERE kode_plg = '$kode_plg' AND metode_penjualan = 'Online' AND status_penjualan != 'Selesai'";
                       $sql_pjl = mysqli_query($conn, $query_pjl) or die ($conn->error);
                       $count_semua = mysqli_num_rows($sql_pjl);
-                     ?>
+
+                      $query_alamat = "SELECT * FROM tbl_alamatplg WHERE kode_plg = '$kode_plg'";
+                      $sql_alamat = mysqli_query($conn, $query_alamat) or die ($conn->error);
+                      $count_alamat = mysqli_num_rows($sql_alamat);
+                    ?>
                     <a class="dropdown-item" href="?page=datatransaksi"><i class="fas fa-box"></i> Transaksi <span class="badge badge-warning"><?php echo $count_semua; ?></span></a>
                     <a class="dropdown-item" href="?page=edit_profil&username=<?php echo $_SESSION['username_plg']; ?>">
                       <i class="fas fa-user-cog"></i> Ubah Profil
+                    </a>
+                    <a class="dropdown-item <?=$count_alamat > 0 ? null : 'disabled'?>" href="?page=daftar_alamatplg&kode_plg=<?php echo $_SESSION['kode_plg']; ?>">
+                      <i class="fas fa-address-book"></i> Daftar Alamat
                     </a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="#" id="log_out">
@@ -120,6 +127,9 @@
             }
             else if(@$_GET['page']=='edit_profil') {
               include 'page/edit_profil.php';
+            }
+            else if(@$_GET['page']=='daftar_alamatplg') {
+              include 'page/daftar_alamatplg.php';
             }
             else if(@$_GET['page']=='produk') {
               include 'page/produk.php';

@@ -10,7 +10,102 @@
   </ol>
 </nav>
 <div class="row kontainer-register">
-  <div class="col-lg-6 offset-lg-3">
+  <div class="col-lg-5">
+    <table class="table table-bordered" style="font-size: 10px">
+      <thead>
+        <tr>
+          <th colspan="4">Kode Transaksi : <?=$no_penjualan?></th>
+        </tr>
+        <tr>
+          <th colspan="2">Produk</th>
+          <th>Qty</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php 
+          $query_pjldetail = "SELECT * FROM tbl_produk INNER JOIN tbl_penjualandetail ON tbl_produk.id_prd = tbl_penjualandetail.id_prd WHERE tbl_penjualandetail.no_penjualan = '$no_penjualan'";
+          $sql_pjldetail = mysqli_query($conn, $query_pjldetail) or die ($conn->error);
+          $total_belanja = 0;
+          while($data_pjldetail = mysqli_fetch_array($sql_pjldetail)) {
+         ?>
+         <tr>
+          <td>
+            <img src="img/produk/<?php echo $data_pjldetail['gambar_prd']; ?>" class="card-img-top" alt="..." style="width: 30px;">
+          </td>
+          <?php 
+            $total_belanja = $total_belanja + $data_pjldetail['subtotal_prd'];
+            $id_prd = $data_pjldetail['id_prd'];
+            $id_ukuran = $data_pjldetail['id_ukuran'];
+            $query_ukuran = "SELECT * FROM tbl_ukuranprd WHERE id_prd = '$id_prd' AND id_ukuran = '$id_ukuran'";
+            $sql_ukuran = mysqli_query($conn, $query_ukuran) or die ($conn->error);
+            $data_ukuran = mysqli_fetch_array($sql_ukuran);
+           ?>
+          <td>
+            <?php echo $data_pjldetail['nama_prd']; ?> <br>
+            Size : <?php echo $data_ukuran['keterangan_ukr']; ?> <br>
+            Harga : Rp <?php echo $data_pjldetail['harga_prd']; ?>
+          </td>
+          <td>
+            <?php echo $data_pjldetail['jml_prd']; ?>
+          </td>
+          <td>
+            Rp. <?php echo $data_pjldetail['subtotal_prd']; ?>
+          </td>
+        </tr>
+        <?php } ?>
+      </tbody>
+      <tr>
+        <th colspan="3">
+          Total Belanja
+        </th>
+        <th>
+          Rp <?php echo $total_belanja; ?>
+        </th>
+      </tr>
+    </table>
+    <div class="kontainer-tabelpenerima" style="font-size: 10px;">
+      <?php 
+        $query_penerima = "SELECT * FROM tbl_datapenerima WHERE no_penjualan = '$no_penjualan'";
+        $sql_penerima = mysqli_query($conn, $query_penerima) or die ($conn->error);
+        $data_penerima = mysqli_fetch_array($sql_penerima);
+      ?>
+      <table class="table penerima table-borderless" style="font-size: 10px;">
+        <tr>
+          <td>Nama Penerima</td>
+          <td><?php echo $data_penerima['nama_penerima']; ?></td>
+        </tr>
+        <tr>
+          <td>Telp</td>
+          <td><?php echo $data_penerima['nohp_penerima']; ?></td>
+        </tr>
+        <tr>
+          <td>Alamat Lengkap</td>
+          <td><?php echo $data_penerima['alamat_penerima']; ?></td>
+        </tr>
+        <tr>
+          <td>Kota / Kabupaten</td>
+          <td><?php echo $data_penerima['kabkota_penerima']; ?></td>
+        </tr>
+        <tr>
+          <td>Provinsi</td>
+          <td><?php echo $data_penerima['provinsi_penerima']; ?></td>
+        </tr>
+        <tr>
+          <td>Ongkir</td>
+          <td>Rp <?php echo $data_penerima['ongkir_paket']; ?> (<?php echo strtoupper($data_penerima['kurir_pengiriman']); ?> Paket <?php echo $data_penerima['paket_pengiriman']; ?>)</td>
+        </tr>
+        <tr>
+          <?php 
+            $total_akhir = $total_belanja + $data_penerima['ongkir_paket'];
+           ?>
+          <td>Total Akhir dan Ongkir</td>
+          <th>Rp <?php echo $total_akhir; ?></th>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div class="col-lg-7">
     <div class="form-register">
       <h6>Tolong Lengkapi Form Berikut untuk Menkonfirmasi Pembayaran Anda</h6>
       <form method="POST" id="form_konfirmasipembayaran" autocomplete="off">
