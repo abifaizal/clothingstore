@@ -1,6 +1,6 @@
 <?php 
-	// $conn = new mysqli("localhost", "blacksha_admin", "aFsPgun]09]w", "blacksha_dbase");
-  $conn = new mysqli("localhost", "root", "", "blacksha_sidang");
+	$conn = new mysqli("localhost", "blacksha_admin", "aFsPgun]09]w", "blacksha_dbase");
+  // $conn = new mysqli("localhost", "root", "", "blacksha_sidang");
 
   function tgl_indo($tgl) {
     $tanggal = substr($tgl,8,2);
@@ -60,5 +60,40 @@
     } else if($bulan==12) {
       return "Desember";
     } 
+  }
+
+  function tgl_grafik($tgl) {
+    $tanggal = substr($tgl,8,2);
+    $bulan = substr($tgl,5,2);
+    if($bulan==1) {
+      $bulan = "Jan";
+    } else if($bulan==2) {
+      $bulan = "Feb";
+    } else if($bulan==3) {
+      $bulan = "Mar";
+    } else if($bulan==4) {
+      $bulan = "Apr";
+    } else if($bulan==5) {
+      $bulan = "Mei";
+    } else if($bulan==6) {
+      $bulan = "Jun";
+    } else if($bulan==7) {
+      $bulan = "Jul";
+    } else if($bulan==8) {
+      $bulan = "Agu";
+    } else if($bulan==9) {
+      $bulan = "Sep";
+    } else if($bulan==10) {
+      $bulan = "Okt";
+    } else if($bulan==11) {
+      $bulan = "Nov";
+    } else if($bulan==12) {
+      $bulan = "Des";
+    } 
+
+    if($tanggal < 10) {
+      $tanggal = "0".$tanggal;
+    }
+    return $tanggal.' '.$bulan;     
   }
  ?>

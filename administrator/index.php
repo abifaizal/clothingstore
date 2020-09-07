@@ -204,6 +204,7 @@
 		<!-- Select 2 JS -->
 		<!-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script> -->
 		<script src="assets/adminLTE/bower_components/select2/dist/js/select2.full.min.js"></script>
+		<script src="assets/ChartJs/Chart.min.js"></script>
 
 	  <!-- Content Wrapper. Contains page content -->
 	  <div class="content-wrapper">

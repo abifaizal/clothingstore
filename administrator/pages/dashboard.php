@@ -142,6 +142,94 @@
     </div>
     <!-- ./col -->
   </div>
+  <?php 
+    $tanggal_now = date('Y-m-d');
+    $hari= substr($tanggal_now, 8, 2);
+    $bulan = substr($tanggal_now, 5, 2);
+    $tahun = substr($tanggal_now, 0, 4);
 
+    $label_tgl = array();
+    $data_total = array();
+    
+    for($i = 1; $i <= $hari; $i++) {
+      $tgl_penjualan = $tahun."-".$bulan."-".$i;
+      $label_tgl[] = tgl_grafik($tgl_penjualan);
+
+      $qry = "SELECT IFNULL(SUM(total_penjualan), 0) AS total_pjl FROM tbl_penjualan WHERE tgl_penjualan = '$tgl_penjualan'";
+      $sql = mysqli_query($conn, $qry) or die ($conn->error);
+      $data = mysqli_fetch_array($sql);
+      $data_total[] = $data['total_pjl'];
+    }
+   ?>
+  <div class="row">
+    <div class="col-lg-5">
+      <h5 align="center"><strong>Tabel Total Penjualan Bulan ini (<?=bulan_indo(date('m'))?>) per Hari</strong></h5>
+      <table class="table table-bordered table-striped" id="example" style="font-size: 12px;">
+        <thead>
+          <tr>
+            <td align="center"><strong>Tanggal</strong></td>
+            <td align="center"><strong>Total Penjualan</strong></td>
+          </tr>
+        </thead>
+        <tbody>
+          <?php 
+            for($i = 0; $i < count($data_total); $i++) {
+           ?>
+              <tr>
+                <td><?=$label_tgl[$i]?></td>
+                <td align="right">Rp<?=number_format($data_total[$i])?></td>
+              </tr>
+          <?php } ?>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-lg-7">
+      <style>
+        .canvas {
+          padding: 20px;
+          height: 350px;
+          /*width: 90%;*/
+        }
+      </style>
+      <div class="canvas">
+        <canvas id="myChart">
+        
+        </canvas>
+      </div>
+    </div>
+  </div>
 </section>
+<script>
+  var ctx = document.getElementById('myChart').getContext('2d');
+  var myChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+          labels: <?php echo json_encode($label_tgl); ?>,
+          datasets: [{
+              label: 'Grafik Total Penjualan Bulan ini per Hari',
+              fill: false,
+              // borderDash: [5, 5],
+              data: <?php echo json_encode($data_total); ?>,
+              backgroundColor: [
+                  'rgba(0, 0, 255, 0.1)'
+              ],
+              borderColor: [
+                  'rgba(0, 0, 255, 1)'
+              ],
+              borderWidth: 1
+          }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+          scales: {
+              yAxes: [{
+                  ticks: {
+                      beginAtZero: true
+                  }
+              }]
+          }
+      }
+  });
+</script>
 <!-- /.content -->
