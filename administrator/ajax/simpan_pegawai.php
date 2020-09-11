@@ -26,7 +26,7 @@
   if($hasil_username) {
     echo "gagal-username";
   } else {
-    $query_simpan = "INSERT INTO tbl_pegawai VALUES ('$id_pgw', '$nama_pgw', '$gender_pgw', '$lahir_pgw', '$posisi_pgw', '$alamat_pgw', '$username_pgw', '$password_pgw')";
+    $query_simpan = "INSERT INTO tbl_pegawai (id_pgw, nama_pgw, gender_pgw, lahir_pgw, posisi_pgw, alamat_pgw, username_pgw, password_pgw, aktif_pgw) VALUES ('$id_pgw', '$nama_pgw', '$gender_pgw', '$lahir_pgw', '$posisi_pgw', '$alamat_pgw', '$username_pgw', '$password_pgw', 'Aktif')";
     mysqli_query($conn, $query_simpan) or die ($conn->error);
     echo "berhasil";
   }
