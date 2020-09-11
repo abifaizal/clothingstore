@@ -31,6 +31,7 @@
               <th>Nama</th>
               <th>Jenis Kelamin</th>
               <th>Posisi</th>
+              <th>Status</th>
               <th>Opsi</th>
             </tr>
           </thead>
@@ -45,6 +46,11 @@
               <td><?php echo $data_pegawai['nama_pgw']; ?></td>
               <td><?php echo $data_pegawai['gender_pgw']; ?></td>
               <td><?php echo $data_pegawai['posisi_pgw']; ?></td>
+              <td>
+                <small class="label <?=$data_pegawai['aktif_pgw'] == 'Aktif' ? 'bg-blue' : 'bg-red' ?>">
+                  <?php echo $data_pegawai['aktif_pgw']; ?>
+                </small>
+              </td>
               <td class="text-center">
                 <button class="btn btn-xs btn-success tmb_detail" id="tmb_detail" title="detail" data-toggle="modal" data-target="#modal-default" 
                   data-idpgw = "<?php echo $data_pegawai['id_pgw']; ?>"
@@ -55,6 +61,7 @@
                   data-alamat = "<?php echo $data_pegawai['alamat_pgw']; ?>"
                   data-username = "<?php echo $data_pegawai['username_pgw']; ?>"
                   data-password = "<?php echo $data_pegawai['password_pgw']; ?>"
+                  data-aktif = "<?php echo $data_pegawai['aktif_pgw']; ?>"
                   >
                   <i class="fa fa-eye"></i>
                 </button>
@@ -167,7 +174,7 @@
     Swal.fire({
       title: 'Anda akan menghapus '+id_pgw,
       text: "Data yang telah dihapus tidak dapat dipulihkan kembali",
-      icon: 'warning',
+      type: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',

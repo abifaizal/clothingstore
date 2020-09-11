@@ -89,7 +89,16 @@
                   <button type="button" class="btn btn-default btn-flat" id="lihat_pass"><i class="fa fa-eye"></i></button>
                 </span>
               </div>
-              <!-- <input type="password" class="form-control" name="password_pgw" id="password_pgw" placeholder="masukkan password"> -->
+            </div>
+            <div class="form-group">
+              <label for="aktif_pgw">Status Pegawai</label>
+              <?php 
+                $status = $data_pgw['aktif_pgw'];
+              ?>
+              <select class="form-control" name="aktif_pgw" id="aktif_pgw">
+                <option value="Aktif" <?php if($status=='Aktif') {echo "selected";} ?>>Aktif</option>
+                <option value="Non-aktif" <?php if($status=='Non-aktif') {echo "selected";} ?>>Non-aktif</option>
+              </select>
             </div>
           </div>
           <!-- /.box-body -->
