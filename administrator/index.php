@@ -45,7 +45,7 @@
 	  <!-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" /> -->
 	  <link rel="stylesheet" href="assets/adminLTE/bower_components/select2/dist/css/select2.min.css">
 	</head>
-	<body class="hold-transition skin-blue sidebar-mini">
+	<body class="hold-transition skin-purple sidebar-mini sidebar-collapse">
 	<!-- Site wrapper -->
 	<div class="wrapper">
 
@@ -53,7 +53,7 @@
 	    <!-- Logo -->
 	    <a href="./" class="logo">
 	      <!-- mini logo for sidebar mini 50x50 pixels -->
-	      <span class="logo-mini" style="font-size: 14px;">BSB</span>
+	      <span class="logo-mini" style="font-size: 14px;">BSD</span>
 	      <!-- logo for regular state and mobile devices -->
 	      <span class="logo-lg">Black Shadow | distro</span>
 	    </a>
