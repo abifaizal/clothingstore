@@ -225,7 +225,7 @@
     Swal.fire({
       title: 'Anda akan menghapus '+id_prd,
       text: "Data yang telah dihapus tidak dapat dipulihkan kembali",
-      icon: 'warning',
+      type: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',

@@ -1,29 +1,5 @@
 <?php 
-  // if(@$_POST['upload']) {
-  //   $gambar_prd = $_FILES['file']['name'];
-  //   $sumber = $_FILES['file']['tmp_name'];
-  //   $upload = move_uploaded_file($sumber, "../../img/".$gambar_prd);
-
-  //   echo $gambar_prd;
-
-  //   if($upload) {
-  //     echo "berhasil";
-  //   } else {
-  //     echo "gagal";
-  //   }
-  // }
- ?>
-
-<!-- <html>
-  <form action="" method="post" enctype="multipart/form-data">
-    <input type="file" name="file[]" id="file">
-    <input type="text" name="text">
-    <input type="submit" name="upload" value="upload">
-  </form>
-</html> -->
-
-
-<?php 
+  session_start();
   include "../../koneksi.php";
 
   $carikode = mysqli_query($conn, "SELECT MAX(id_prd) FROM tbl_produk") or die (mysql_error());
@@ -37,6 +13,7 @@
     $hasilkode = "PRD001";
   }
 
+  $id_pgw = $_SESSION['id_pgw'];
   $nama_prd = $_POST['nama_prd'];
   $kategori_prd = $_POST['kategori_prd'];
   $berat_prd = $_POST['berat_prd'];
@@ -49,7 +26,7 @@
   $sumber = $_FILES['gambar_prd']['tmp_name'];
   move_uploaded_file($sumber, "../../img/produk/".$gambar_prd);
 
-  $query_produk = "INSERT INTO tbl_produk VALUES ('$hasilkode', '$nama_prd', '$kategori_prd', '$harga_prd', '0', '$stok_prd', '$berat_prd', '$deskripsi_prd', '$gambar_prd')";
+  $query_produk = "INSERT INTO tbl_produk (id_prd, nama_prd, kategori_prd, harga_prd, diskon_prd, stok_prd, berat_prd, deskripsi_prd, gambar_prd, id_pgw) VALUES ('$hasilkode', '$nama_prd', '$kategori_prd', '$harga_prd', '0', '$stok_prd', '$berat_prd', '$deskripsi_prd', '$gambar_prd', '$id_pgw')";
   mysqli_query($conn, $query_produk) or die ($conn->error);
 
   for($i=0; $i < count($_POST['ukuran_prd']); $i++) {

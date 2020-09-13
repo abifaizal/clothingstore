@@ -11,7 +11,7 @@
   $deskripsi_prd = $_POST['deskripsi_prd'];
   $gambar_baru = $_FILES['gambar_prd']['name'];
 
-  $query_edprd = "UPDATE tbl_produk SET nama_prd = '$nama_prd', kategori_prd = '$kategori_prd', berat_prd = '$berat_prd', harga_prd = '$harga_prd', diskon_prd = '$diskon_prd', stok_prd = '$stok_prd', deskripsi_prd = '$deskripsi_prd'";
+  $query_edprd = "UPDATE tbl_produk SET nama_prd = '$nama_prd', kategori_prd = '$kategori_prd', berat_prd = '$berat_prd', harga_prd = '$harga_prd', diskon_prd = '$diskon_prd', stok_prd = '$stok_prd', deskripsi_prd = '$deskripsi_prd', updated = CURRENT_TIMESTAMP()";
   if($gambar_baru == "") {
   	$query_edprd .= " WHERE id_prd = '$id_prd'";
   	mysqli_query($conn, $query_edprd) or die ($conn->error);
